@@ -1,0 +1,23 @@
+# Secrets: keys live only in .env (here or in the parent folder), never in git
+.env
+.env.*
+!.env.example
+*.key
+kaggle.json
+
+# Data, captures, databases, and large models are rebuilt by scripts
+data/raw/
+data/processed/
+data/captures/
+data/*.sqlite3
+models/*.joblib
+models/*.gguf
+!models/*.card.json
+
+# Python and editor clutter
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+web/_qa/
+results/train_log.txt

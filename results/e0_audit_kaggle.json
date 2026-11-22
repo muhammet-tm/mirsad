@@ -1,0 +1,110 @@
+{
+ "rows": 651191,
+ "classes": {
+  "benign": 428103,
+  "defacement": 96457,
+  "phishing": 94111,
+  "malware": 32520
+ },
+ "per_class": {
+  "benign": {
+   "rows": 428103,
+   "share_with_scheme": 0.0826,
+   "share_with_www": 0.031,
+   "median_length": 46.0,
+   "unique_registered_domains": 105036,
+   "rows_per_domain": 4.08,
+   "top10_domains_share": 0.1444,
+   "top10_domains": {
+    "wikipedia.org": 12876,
+    "youtube.com": 8626,
+    "facebook.com": 8321,
+    "blogspot.com": 7811,
+    "yahoo.com": 5121,
+    "linkedin.com": 5021,
+    "amazon.com": 4722,
+    "imdb.com": 3470,
+    "myspace.com": 3014,
+    "mylife.com": 2822
+   }
+  },
+  "defacement": {
+   "rows": 96457,
+   "share_with_scheme": 1.0,
+   "share_with_www": 0.698,
+   "median_length": 81.0,
+   "unique_registered_domains": 2122,
+   "rows_per_domain": 45.46,
+   "top10_domains_share": 0.0165,
+   "top10_domains": {
+    "allaroundrental.com": 265,
+    "bruynzeelmultipanel.be": 222,
+    "ninopizzaria.com.br": 209,
+    "tandemimmobilier.fr": 191,
+    "zibae.ir": 188,
+    "holidayclub-mtb.com": 108,
+    "artedesignsas.it": 102,
+    "asociacionkaribu.org": 102,
+    "musimagen.com": 102,
+    "fondazioneunivaq.it": 102
+   }
+  },
+  "malware": {
+   "rows": 32520,
+   "share_with_scheme": 0.9628,
+   "share_with_www": 0.094,
+   "median_length": 49.0,
+   "unique_registered_domains": 7065,
+   "rows_per_domain": 4.6,
+   "top10_domains_share": 0.3406,
+   "top10_domains": {
+    "9779.info": 3984,
+    "mixh.jp": 2881,
+    "apbfiber.com": 1147,
+    "pastebin.com": 987,
+    "toulousa.com": 501,
+    "grasslandhotel.com.vn": 354,
+    "hotlinegsm.com": 349,
+    "3cf.ru": 295,
+    "chinesevie.com": 290,
+    "live.com": 289
+   }
+  },
+  "phishing": {
+   "rows": 94111,
+   "share_with_scheme": 0.2641,
+   "share_with_www": 0.3883,
+   "median_length": 35.0,
+   "unique_registered_domains": 45644,
+   "rows_per_domain": 2.06,
+   "top10_domains_share": 0.113,
+   "top10_domains": {
+    "ietf.org": 3212,
+    "angelfire.com": 1306,
+    "000webhostapp.com": 1193,
+    "pastehtml.com": 944,
+    "tripod.com": 871,
+    "sourceforge.net": 713,
+    "google.com": 710,
+    "yahoo.com": 686,
+    "wikipedia.org": 550,
+    "blogspot.com": 450
+   }
+  }
+ },
+ "exact_duplicates": 10072,
+ "canonical_duplicates": 18630,
+ "canonical_urls_with_conflicting_labels": 4017,
+ "random_split": {
+  "test_rows": 130239,
+  "test_rows_whose_domain_is_in_train": 105408,
+  "share_test_rows_domain_seen_in_train": 0.8093,
+  "test_rows_whose_exact_url_is_in_train": 2383
+ },
+ "scheme_only_rule": {
+  "rule": "malicious if the URL starts with a scheme",
+  "accuracy": 0.8375,
+  "share_malicious_with_scheme": 0.6841,
+  "share_benign_with_scheme": 0.0826
+ }
+}
