@@ -11,7 +11,9 @@ makes one and says so:
   2^20 columns, so the model cannot learn which source list a URL came from.
 - PCA on sparse TF-IDF is done with truncated SVD (100 components); tree and KNN learners use those
   components plus 25 handcrafted lexical features, linear learners use the sparse TF-IDF directly.
-- AdaBoost boosts logistic regression, the best AdaBoost row of the paper's Table 4.
+- AdaBoost boosts depth-3 decision trees on the SVD and lexical block. The paper's best AdaBoost row
+  (Table 4) boosts logistic regression; on hashed TF-IDF that variant collapsed to a constant output
+  in our first runs, so we report the tree-based variant.
 - KNN is fitted on a 50,000-row sample, because exact KNN over 500,000 rows is too slow to score
   live links; this is stated in the model card.
 """
@@ -147,10 +149,12 @@ def _svm():
 def build(ensemble: str, representation: str = "ours", random_state: int = 42) -> Pipeline:
     """One of the four DaE2 ensembles as a pipeline that takes raw URL strings."""
     if ensemble == "adaboost":
-        clf = _sparse(AdaBoostClassifier(estimator=_lr(), n_estimators=10, learning_rate=0.5,
-                                         random_state=random_state))
+        # Boosting logistic regression on the hashed TF-IDF (the paper's best AdaBoost row) collapsed to a
+        # constant output in our runs, so AdaBoost boosts shallow trees on the SVD and lexical block.
+        clf = _dense(AdaBoostClassifier(estimator=DecisionTreeClassifier(max_depth=3), n_estimators=150,
+                                        learning_rate=0.5, random_state=random_state))
     elif ensemble == "bagging":
-        clf = _dense(BaggingClassifier(estimator=DecisionTreeClassifier(min_samples_leaf=2),
+        clf = _dense(BaggingClassifier(estimator=DecisionTreeClassifier(max_depth=22, min_samples_leaf=2),
                                        n_estimators=30, max_samples=0.5, n_jobs=-1,
                                        random_state=random_state))
     elif ensemble == "stacking":
@@ -178,6 +182,34 @@ def build(ensemble: str, representation: str = "ours", random_state: int = 42) -
 ENSEMBLES = ("adaboost", "bagging", "stacking", "voting")
 
 
+def for_live_scoring(model):
+    """Switch every fitted estimator to one thread.
+
+    Training uses all cores (n_jobs=-1). For one link at a time, starting a pool of workers costs far
+    more than the prediction, so live scoring runs single-threaded.
+    """
+    seen = set()
+
+    def walk(obj):
+        if id(obj) in seen:
+            return
+        seen.add(id(obj))
+        if isinstance(obj, BaseEstimator):
+            if hasattr(obj, "n_jobs"):
+                obj.n_jobs = 1
+            for v in vars(obj).values():
+                walk(v)
+        elif isinstance(obj, (list, tuple)):
+            for v in obj:
+                walk(v)
+        elif isinstance(obj, dict):
+            for v in obj.values():
+                walk(v)
+
+    walk(model)
+    return model
+
+
 class DaE2(ClassifierMixin, BaseEstimator):
     """All four ensembles sharing one featurizer; scores are each ensemble's probability and their mean.
 
@@ -190,7 +222,9 @@ class DaE2(ClassifierMixin, BaseEstimator):
         self.random_state = random_state
 
     def fit(self, urls, y):
-        self.features_ = URLFeaturizer(self.representation, random_state=self.random_state).fit(urls)
+        # y is passed so the chi-squared selection runs before the SVD (without it the SVD would span
+        # all 524,288 hashed columns: a 500 MB model and seconds per URL).
+        self.features_ = URLFeaturizer(self.representation, random_state=self.random_state).fit(urls, y)
         X = self.features_.transform(urls)
         self.models_ = {}
         for name in ENSEMBLES:

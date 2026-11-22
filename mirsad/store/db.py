@@ -75,7 +75,9 @@ def redact(url: str) -> str:
 
 
 class Store:
-    def __init__(self, path: Path = DB_PATH):
+    def __init__(self, path: Path | None = None):
+        # Read the module-level path at call time, so tests (and a second database) can redirect it.
+        path = path or globals()["DB_PATH"]
         path.parent.mkdir(parents=True, exist_ok=True)
         self.path = path
         with self.conn() as c:

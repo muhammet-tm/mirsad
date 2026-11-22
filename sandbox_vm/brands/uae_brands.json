@@ -1,0 +1,257 @@
+{
+ "source": "mirsad/features/brands.py",
+ "generated": "2026-11-23",
+ "note": "Brand name (Phishpedia folder name) to official domains. Regenerate from brands.py; do not edit by hand.",
+ "brands": [
+  {
+   "name": "Abu Dhabi Police",
+   "sector": "Police",
+   "domains": [
+    "adpolice.gov.ae"
+   ],
+   "verified": true
+  },
+  {
+   "name": "UAE government portal",
+   "sector": "Federal government",
+   "domains": [
+    "u.ae"
+   ],
+   "verified": true
+  },
+  {
+   "name": "Dubai Police",
+   "sector": "Police",
+   "domains": [
+    "dubaipolice.gov.ae",
+    "ecrime.ae"
+   ],
+   "verified": false
+  },
+  {
+   "name": "Ministry of Interior",
+   "sector": "Federal government",
+   "domains": [
+    "moi.gov.ae"
+   ],
+   "verified": false
+  },
+  {
+   "name": "ICP",
+   "sector": "Federal government",
+   "domains": [
+    "icp.gov.ae"
+   ],
+   "verified": false
+  },
+  {
+   "name": "UAE Pass",
+   "sector": "Digital identity",
+   "domains": [
+    "uaepass.ae"
+   ],
+   "verified": false
+  },
+  {
+   "name": "TAMM",
+   "sector": "Abu Dhabi government",
+   "domains": [
+    "tamm.abudhabi"
+   ],
+   "verified": false
+  },
+  {
+   "name": "Darb (ITC)",
+   "sector": "Abu Dhabi tolls",
+   "domains": [
+    "itc.gov.ae"
+   ],
+   "verified": false
+  },
+  {
+   "name": "Salik",
+   "sector": "Dubai tolls",
+   "domains": [
+    "salik.ae"
+   ],
+   "verified": false
+  },
+  {
+   "name": "RTA",
+   "sector": "Dubai transport and fines",
+   "domains": [
+    "rta.ae"
+   ],
+   "verified": false
+  },
+  {
+   "name": "ADDED consumer protection",
+   "sector": "Abu Dhabi economy",
+   "domains": [
+    "added.gov.ae"
+   ],
+   "verified": false
+  },
+  {
+   "name": "Ministry of Economy",
+   "sector": "Consumer protection",
+   "domains": [
+    "moec.gov.ae"
+   ],
+   "verified": false
+  },
+  {
+   "name": "Federal Tax Authority",
+   "sector": "Federal government",
+   "domains": [
+    "tax.gov.ae"
+   ],
+   "verified": false
+  },
+  {
+   "name": "MOHRE",
+   "sector": "Work permits",
+   "domains": [
+    "mohre.gov.ae"
+   ],
+   "verified": false
+  },
+  {
+   "name": "Central Bank of the UAE",
+   "sector": "Regulator",
+   "domains": [
+    "centralbank.ae"
+   ],
+   "verified": false
+  },
+  {
+   "name": "First Abu Dhabi Bank",
+   "sector": "Bank",
+   "domains": [
+    "bankfab.com"
+   ],
+   "verified": false
+  },
+  {
+   "name": "ADCB",
+   "sector": "Bank",
+   "domains": [
+    "adcb.com"
+   ],
+   "verified": false
+  },
+  {
+   "name": "ADIB",
+   "sector": "Bank",
+   "domains": [
+    "adib.ae"
+   ],
+   "verified": false
+  },
+  {
+   "name": "Emirates NBD",
+   "sector": "Bank",
+   "domains": [
+    "emiratesnbd.com"
+   ],
+   "verified": false
+  },
+  {
+   "name": "Dubai Islamic Bank",
+   "sector": "Bank",
+   "domains": [
+    "dib.ae"
+   ],
+   "verified": false
+  },
+  {
+   "name": "Mashreq",
+   "sector": "Bank",
+   "domains": [
+    "mashreq.com"
+   ],
+   "verified": false
+  },
+  {
+   "name": "RAKBANK",
+   "sector": "Bank",
+   "domains": [
+    "rakbank.ae"
+   ],
+   "verified": false
+  },
+  {
+   "name": "e& (Etisalat)",
+   "sector": "Telecom",
+   "domains": [
+    "etisalat.ae",
+    "eand.com"
+   ],
+   "verified": false
+  },
+  {
+   "name": "du",
+   "sector": "Telecom",
+   "domains": [
+    "du.ae"
+   ],
+   "verified": false
+  },
+  {
+   "name": "Emirates Post",
+   "sector": "Courier",
+   "domains": [
+    "emiratespost.ae"
+   ],
+   "verified": false
+  },
+  {
+   "name": "Aramex",
+   "sector": "Courier",
+   "domains": [
+    "aramex.com"
+   ],
+   "verified": false
+  },
+  {
+   "name": "ADDC",
+   "sector": "Utility",
+   "domains": [
+    "addc.ae"
+   ],
+   "verified": false
+  },
+  {
+   "name": "DEWA",
+   "sector": "Utility",
+   "domains": [
+    "dewa.gov.ae"
+   ],
+   "verified": false
+  },
+  {
+   "name": "SEWA",
+   "sector": "Utility",
+   "domains": [
+    "sewa.gov.ae"
+   ],
+   "verified": false
+  },
+  {
+   "name": "Etihad Airways",
+   "sector": "Airline",
+   "domains": [
+    "etihad.com"
+   ],
+   "verified": false
+  },
+  {
+   "name": "Emirates",
+   "sector": "Airline",
+   "domains": [
+    "emirates.com"
+   ],
+   "verified": false
+  }
+ ]
+}

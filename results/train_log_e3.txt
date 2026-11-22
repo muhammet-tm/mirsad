@@ -1,0 +1,8 @@
+﻿[00:39:17] === e3 (sample 200000) ===
+[00:39:18] e3a_our_repr_phreshphish_temporal: fitting DaE2 (ours) on 180,000 URLs
+[00:54:51] e3a_our_repr_phreshphish_temporal: fitted in 933 s; choosing thresholds on 20,000 validation URLs
+[00:55:09] e3a_our_repr_phreshphish_temporal: scoring 168,060 test URLs
+[00:56:24] e3a_our_repr_phreshphish_temporal: wrote results/e3a_our_repr_phreshphish_temporal.json; adaboost acc=0.5439 f1=0.0038 fpr=1e-05; bagging acc=0.8739 f1=0.8427 fpr=0.01269; stacking acc=0.9293 f1=0.9175 fpr=0.01189; voting acc=0.927 f1=0.9147 fpr=0.01384; dae2_mean acc=0.9269 f1=0.9143 fpr=0.01157
+[00:56:53] e3b: applying the E1a (paper setting) model to the PhreshPhish test period
+[00:57:54] e3b_paper_model_on_phreshphish_test: wrote results/e3b_paper_model_on_phreshphish_test.json; adaboost acc=0.5452 f1=0.0152 fpr=0.00242; bagging acc=0.4877 f1=0.5853 fpr=0.76769; stacking acc=0.5268 f1=0.6508 fpr=0.84171; voting acc=0.5714 f1=0.6714 fpr=0.75377; dae2_mean acc=0.5182 f1=0.6486 fpr=0.8646
+[00:57:54] === e4 (sample 200000) ===

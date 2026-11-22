@@ -93,20 +93,44 @@ def build_case(store: Store, cid: str) -> dict | None:
 
 
 def _graph(case: dict) -> dict:
+    """Evidence graph in the dashboard's node vocabulary: domain (center), search_ad, certificate, page,
+    form_target, brand, listing, phone, and link (reputation lists)."""
     nodes = [{"id": "domain", "label": case["domain"], "kind": "domain"}]
     edges = []
+    have = set()
+
+    def add(nid, kind, label, src, dst, rel):
+        if nid not in have:
+            nodes.append({"id": nid, "label": label, "kind": kind})
+            have.add(nid)
+        edges.append({"from": src, "to": dst, "label": rel})
+
+    cap = case.get("capture") or {}
+    page_present = cap.get("available") or any(e["kind"] in ("form_target", "logo_match") for e in case["evidence"])
+    if page_present:
+        add("page", "page", cap.get("title") or "Captured page", "domain", "page", "serves")
     for e in case["evidence"]:
-        kind = e["kind"]
-        node = {"id": e["id"], "label": e["label"], "kind": kind, "source": e["source"]}
-        nodes.append(node)
-        rel = {"certificate": ("issued for", e["id"], "domain"), "domain": ("registered", e["id"], "domain"),
-               "search_ad": ("links to", e["id"], "domain"), "search_result": ("links to", e["id"], "domain"),
-               "form_target": ("posts card data to", "domain", e["id"]), "logo_match": ("imitates", "domain", e["id"]),
-               "listing": ("listing points to", e["id"], "domain"), "reputation": ("lists", e["id"], "domain")}.get(kind, ("related", e["id"], "domain"))
-        edges.append({"from": rel[1], "to": rel[2], "label": rel[0]})
-    if case.get("imitates"):
-        nodes.append({"id": "brand", "label": case["imitates"], "kind": "brand"})
-        edges.append({"from": "domain", "to": "brand", "label": "imitates"})
+        k = e["kind"]
+        if k in ("search_ad", "search_result"):
+            add("search_ad", "search_ad", e["label"].replace("Search ", "").capitalize(), "search_ad", "domain", "links to")
+        elif k == "certificate":
+            add("certificate", "certificate", e["label"].replace("Certificate issued ", "Issued "), "certificate", "domain", "issued for")
+        elif k == "form_target":
+            target = e["label"].split(" posts to ")[-1].split(" (")[0]
+            add("form_target", "form_target", target, "page" if page_present else "domain", "form_target", "posts card data to")
+        elif k == "logo_match":
+            add("brand", "brand", case.get("imitates") or e["label"].split(":")[-1].split(",")[0].strip(),
+                "page" if page_present else "domain", "brand", "imitates")
+        elif k == "listing":
+            if "phone" in e["label"].lower():
+                add("listing", "listing", (case.get("listing") or {}).get("category", "Maps listing"), "listing", "domain", "points to")
+                add("phone", "phone", e["label"], "phone", "listing", "shared phone")
+            else:
+                add("listing", "listing", (case.get("listing") or {}).get("category", "Maps listing"), "listing", "domain", "points to")
+        elif k == "reputation":
+            add("reputation", "link", e["label"], "reputation", "domain", "lists")
+    if case.get("imitates") and "brand" not in have:
+        add("brand", "brand", case["imitates"], "domain", "brand", "imitates")
     return {"nodes": nodes, "edges": edges}
 
 

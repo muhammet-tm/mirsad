@@ -1,0 +1,9 @@
+{"items": [
+  {"at": "2026-11-22T17:41:00Z", "actor": "Sandbox", "action": "capture", "target": "MR-0142", "detail": "Page captured, no form submitted"},
+  {"at": "2026-11-22T17:40:00Z", "actor": "Search monitor", "action": "flag", "target": "MR-0142", "detail": "Risk 0.97, votes 4 of 4"},
+  {"at": "2026-11-22T17:39:00Z", "actor": "Sandbox", "action": "capture", "target": "MR-0151", "detail": "Page captured, no form submitted"},
+  {"at": "2026-11-22T17:38:00Z", "actor": "Maps check", "action": "flag", "target": "MR-0151", "detail": "Website unrelated to business name; phone on 6 listings"},
+  {"at": "2026-11-22T17:20:00Z", "actor": "Duty analyst", "action": "view", "target": "MR-0138", "detail": "Case opened"},
+  {"at": "2026-11-22T16:05:00Z", "actor": "Duty analyst", "action": "export", "target": "MR-0140", "detail": "Evidence package exported"},
+  {"at": "2026-11-22T16:02:00Z", "actor": "Duty analyst", "action": "confirm", "target": "MR-0140", "detail": "Confirmed after hold"},
+  {"at": "2026-11-22T15:10:00Z", "actor": "Duty analyst", "action": "reviewing", "target": "MR-0133", "detail": "Marked as reviewing"}]}

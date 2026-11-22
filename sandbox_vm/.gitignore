@@ -1,0 +1,4 @@
+# Brand logos are the brands' intellectual property: fetched at setup time, never committed.
+brands/logos/
+# The host's SSH public key for the VM is personal configuration.
+host_key.pub

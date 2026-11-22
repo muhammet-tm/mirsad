@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mirsad case file</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css">
+</head>
+<body class="page-case" data-page="case">
+<a class="skip" href="#sheet" data-i18n="Skip to the case file">Skip to the case file</a>
+
+<!-- A. navigation (same as the Watch screen) -->
+<header class="top">
+  <a class="brand" data-href="watch" href="index.html" aria-label="Mirsad">
+    <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true">
+      <rect width="30" height="30" rx="8" fill="#034A89"/>
+      <path d="M7.5 20.5a7.5 7.5 0 0 1 15 0" fill="none" stroke="#FEFDFE" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M10.8 20.5a4.2 4.2 0 0 1 8.4 0" fill="none" stroke="#FEFDFE" stroke-width="1.6" stroke-linecap="round" opacity=".7"/>
+      <circle cx="15" cy="20.5" r="1.7" fill="#9CC3EA"/>
+      <path d="M15 7.5v3.5" stroke="#FEFDFE" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+    <span class="name"><span class="ar" lang="ar">مرصاد</span><span>Mirsad</span></span>
+  </a>
+  <nav class="nav" data-i18n-aria="Primary" aria-label="Primary">
+    <a data-href="watch" href="index.html" data-i18n="Watch">Watch</a>
+    <a class="on" data-href="cases" href="case.html" aria-current="page" data-i18n="Cases">Cases</a>
+    <a data-href="search" href="index.html#search" data-i18n="Search monitor">Search monitor</a>
+    <a data-href="maps" href="index.html#maps" data-i18n="Maps check">Maps check</a>
+    <button type="button" data-nav="early" data-i18n="Early warning">Early warning</button>
+    <button type="button" data-nav="model" data-i18n="Model">Model</button>
+    <button type="button" data-nav="audit" data-i18n="Audit log">Audit log</button>
+    <button type="button" data-nav="settings" data-i18n="Settings">Settings</button>
+  </nav>
+  <div class="topr">
+    <div class="check">
+      <form id="checkForm" role="search" autocomplete="off">
+        <svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5 14 14"/></svg>
+        <input id="checkInput" type="text" inputmode="url" spellcheck="false" placeholder="Check a link" data-i18n-ph="Check a link" aria-label="Check a link or open a case by number" data-i18n-aria="Check a link or open a case by number">
+        <kbd aria-hidden="true">/</kbd>
+      </form>
+      <div class="pop" id="checkPop" hidden aria-live="polite"></div>
+    </div>
+    <div class="lang" role="group" aria-label="Language" data-i18n-aria="Language">
+      <button type="button" data-lang="en" aria-pressed="true" aria-label="English">EN</button>
+      <button type="button" data-lang="ar" class="ar" aria-pressed="false" aria-label="العربية" lang="ar">ع</button>
+    </div>
+    <div class="user"><div class="avatar" aria-hidden="true">DA</div><div><div class="n" data-i18n="Duty analyst">Duty analyst</div><div class="u" data-i18n="Cybercrime unit (demo)">Cybercrime unit (demo)</div></div></div>
+  </div>
+</header>
+
+<!-- B. status strip -->
+<div class="status" role="status" aria-live="off">
+  <div id="statusItems" style="display:flex;align-items:center"></div>
+  <div class="it end">
+    <span class="conn" id="conn" hidden data-i18n="Connection lost, showing the last data">Connection lost, showing the last data</span>
+    <button type="button" class="demo" id="demoBadge" hidden><i aria-hidden="true"></i><span>Demo data</span></button>
+    <span class="model"><span data-i18n="Model">Model</span><span class="pill" id="modelPill"></span></span>
+  </div>
+</div>
+
+<!-- C. key figures, quiet line -->
+<div class="ledger" id="ledger" aria-label="Key figures for today" data-i18n-aria="Key figures for today"></div>
+
+<div class="cwrap">
+  <!-- D. case list -->
+  <aside class="left" aria-labelledby="lTitle">
+    <div class="lh">
+      <div class="t"><h2 id="lTitle" data-i18n="Watch queue">Watch queue</h2><span class="c tn" id="lcount"></span></div>
+      <div class="lg"><span class="votes" aria-hidden="true"><i></i><i></i><i></i><i class="n"></i></span><span data-i18n="Votes: AdaBoost, Bagging, Stacking, Voting">Votes: AdaBoost, Bagging, Stacking, Voting</span></div>
+      <div class="lg" style="margin-top:2px"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true" style="width:11px;height:11px"><circle cx="8" cy="8" r="5.5"/><path d="M8 5v3.2l2 1.3"/></svg><span data-i18n="First seen">First seen</span></div>
+    </div>
+    <ol class="list" id="list"></ol>
+    <div class="lact">
+      <div class="t"><h3 id="lactTitle" data-i18n="Activity">Activity</h3><span class="s" data-i18n="flagged links per hour, last 24 hours">flagged links per hour, last 24 hours</span></div>
+      <svg id="lchart" role="img" aria-labelledby="lactTitle"></svg>
+    </div>
+  </aside>
+
+  <!-- E. case file sheet -->
+  <main class="sheet" id="sheet" tabindex="-1" aria-live="off"><p class="loading" data-i18n="Loading">Loading</p></main>
+
+  <!-- right column: summary, decision, receipt -->
+  <aside class="right">
+    <section class="card" id="sumCard" aria-label="Summary"></section>
+
+    <section class="card" aria-labelledby="decTitle">
+      <div class="ch3"><h3 id="decTitle" data-i18n="Decision">Decision</h3><span id="decPill" style="margin-inline-start:auto"></span></div>
+      <div class="stampz" id="stampz" aria-hidden="true">
+        <svg class="stamp" id="stamp" width="156" height="55" viewBox="0 0 176 62">
+          <rect x="2.5" y="2.5" width="171" height="57" rx="7" fill="none" stroke="#034A89" stroke-width="2.5"/>
+          <rect x="8" y="8" width="160" height="46" rx="4" fill="none" stroke="#034A89" stroke-width="1"/>
+          <text id="stampWord" x="88" y="35" text-anchor="middle" font-family="Inter" font-size="21" font-weight="700" letter-spacing="3" fill="#034A89">CONFIRMED</text>
+          <text id="stampId" x="88" y="49" text-anchor="middle" font-family="Inter" font-size="11" font-weight="600" letter-spacing="1" fill="#034A89"></text>
+        </svg>
+      </div>
+      <ul class="hist" id="hist"></ul>
+      <button type="button" class="hold" id="holdBtn"><span class="fill" aria-hidden="true"></span><svg class="ring" viewBox="0 0 18 18" aria-hidden="true"><circle class="rt" cx="9" cy="9" r="7"/><circle class="rp" cx="9" cy="9" r="7" transform="rotate(-90 9 9)" stroke-dasharray="43.98" stroke-dashoffset="32.99"/></svg><span class="lbl">Hold to confirm and export evidence</span></button>
+      <div class="hint" id="holdHint" aria-live="polite"></div>
+      <div class="btns">
+        <button type="button" class="btn" id="dismissBtn"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg><span data-i18n="Dismiss">Dismiss</span></button>
+        <button type="button" class="btn" id="assignBtn"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="5.5" r="2.5"/><path d="M3 13.5c.6-2.6 2.6-4 5-4s4.4 1.4 5 4"/></svg><span data-i18n="Assign">Assign</span></button>
+      </div>
+    </section>
+
+    <section class="card rcw" aria-labelledby="rcTitle">
+      <div class="t"><h3 id="rcTitle" data-i18n="Export receipt">Export receipt</h3><span data-i18n="preview, prints after confirm">preview, prints after confirm</span></div>
+      <div class="printer" aria-hidden="true"></div>
+      <div class="paper"><div class="receipt" id="receipt"></div></div>
+      <button type="button" class="btn" id="exportBtn"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2.5v7M5 6.5l3 3 3-3M3 11.5v2h10v-2"/></svg><span data-i18n="Export evidence package">Export evidence package</span></button>
+    </section>
+  </aside>
+</div>
+
+<footer class="cfoot"><span data-i18n="All times Gulf Standard Time (UTC+4)">All times Gulf Standard Time (UTC+4)</span><span data-i18n="Mirsad prototype. Detection engine: DaE2 (Omolara and Alawida, 2025).">Mirsad prototype. Detection engine: DaE2 (Omolara and Alawida, 2025).</span></footer>
+
+<div class="toasts" id="toasts"></div>
+
+<div class="dlg" id="auditDlg" hidden role="dialog" aria-modal="true" aria-labelledby="auditTitle">
+  <div class="box">
+    <div class="bh"><h2 class="pt" id="auditTitle" data-i18n="Audit log">Audit log</h2><span class="pm" data-i18n="Append-only record of views, decisions, and exports">Append-only record of views, decisions, and exports</span>
+      <button type="button" class="x openbtn" aria-label="Close" data-i18n-aria="Close"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg></button></div>
+    <div class="bb"></div>
+  </div>
+</div>
+
+<script src="case.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

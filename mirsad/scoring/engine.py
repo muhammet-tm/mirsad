@@ -55,7 +55,8 @@ def _model():
         if path.exists():
             card = MODELS_DIR / name.replace(".joblib", ".card.json")
             meta = json.loads(card.read_text()) if card.exists() else {}
-            return joblib.load(path), meta, name
+            from ..models.dae2 import for_live_scoring
+            return for_live_scoring(joblib.load(path)), meta, name
     return None, {}, None
 
 

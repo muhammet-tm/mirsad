@@ -1,0 +1,5 @@
+# These files run inside the Ubuntu VM; Windows line endings would break the shell script.
+*.sh   text eol=lf
+*.py   text eol=lf
+*.json text eol=lf
+*.md   text eol=lf

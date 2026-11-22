@@ -1,0 +1,6 @@
+{"channels": [
+  {"id": "search", "label": "Search monitor", "state": "live", "last_run": "2026-11-22T17:40:00Z", "detail": "52 queries"},
+  {"id": "maps", "label": "Maps check", "state": "live", "last_run": "2026-11-22T17:38:00Z", "detail": "31 listings"},
+  {"id": "certificates", "label": "Certificate stream", "state": "live", "last_run": "2026-11-22T17:41:00Z", "detail": "1,240 certificates a minute"},
+  {"id": "feeds", "label": "Feeds", "state": "synced", "last_run": "2026-11-22T17:30:00Z", "detail": "OpenPhish, URLhaus"}],
+ "model": {"name": "DaE2 v1", "threshold": 0.8}, "now": "2026-11-22T17:42:00Z"}

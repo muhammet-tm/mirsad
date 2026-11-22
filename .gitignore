@@ -21,3 +21,6 @@ __pycache__/
 .pytest_cache/
 web/_qa/
 results/train_log.txt
+
+# Local tooling
+.claude/

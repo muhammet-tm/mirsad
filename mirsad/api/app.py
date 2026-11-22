@@ -106,7 +106,7 @@ def export(cid: str):
         raise HTTPException(404, "case not found")
     raw = store.one("SELECT url FROM candidates WHERE id = ?", (cid,))["url"]
     package = {
-        "package": "Mirsad evidence package", "version": 1, "generated": now(), "case": cid,
+        "package": "Mirsad evidence package", "version": 1, "generated_at": now(), "case": cid,
         "purpose": "Supports a registrar abuse report, an aeDA complaint, or an Abu Dhabi Police blocking request "
                    "(Federal Decree-Law No. 34 of 2021, Articles 62 and 66). Mirsad recommends; an officer decides.",
         "link": {"url": raw, "url_redacted": case["url_redacted"], "domain": case["domain"]},

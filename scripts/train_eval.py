@@ -164,7 +164,11 @@ def e3(sample):
 
 
 def e4():
-    model = joblib.load(MODELS_DIR / "dae2_deploy.joblib")
+    from mirsad.models.dae2 import for_live_scoring
+
+    t_load = time.perf_counter()
+    model = for_live_scoring(joblib.load(MODELS_DIR / "dae2_deploy.joblib"))
+    load_s = time.perf_counter() - t_load
     test = load_phresh("test", 2000)
     urls = test["url"].tolist()
     model.votes(urls[:20])  # warm up
@@ -180,6 +184,8 @@ def e4():
            "median_ms_single_url": round(float(np.median(times)), 2),
            "p95_ms_single_url": round(float(np.percentile(times, 95)), 2),
            "batch_ms_per_url": round(batch_ms, 3), "urls_per_second_batch": int(1000 / batch_ms),
+           "model_load_seconds": round(load_s, 1),
+           "model_file_mb": round((MODELS_DIR / "dae2_deploy.joblib").stat().st_size / 2 ** 20, 1),
            "machine": "AMD Ryzen 5 4600H, 6 cores, 15.4 GB RAM, Windows 11, one process"}
     save("e4_scoring_speed", out)
 
@@ -194,6 +200,7 @@ def main() -> None:
     for e in a.exp.split(","):
         log(f"=== {e} (sample {sample}) ===")
         {"e1": lambda: e1(sample), "e2": lambda: e2(sample), "e3": lambda: e3(sample), "e4": e4}[e.strip()]()
+        log(f"=== {e} done ===")
 
 
 if __name__ == "__main__":
