@@ -1,3 +1,4 @@
+<!-- Generated from DATA.src.md by scripts/build_docs.py. Edit the source. -->
 # Data and services
 
 Every dataset and service Mirsad uses, with its license or terms and what the code keeps. Checked on 22 and 23 November 2026.
@@ -9,7 +10,7 @@ Every dataset and service Mirsad uses, with its license or terms and what the co
 | malicious_phish (Kaggle, sid321axn) | 651,191 URLs labeled benign, defacement, phishing, or malware, pooled from ISCX-URL2016, PhishTank, PhishStorm, a malware domain list, and a benign list | CC0 (public domain), per the Kaggle API | Reproduction of the DaE2 paper (E1) and the domain-split test (E2). Downloaded with `scripts/download_data.py kaggle`; not committed. |
 | PhreshPhish (Hugging Face, phreshphish/phreshphish) | Phishing and benign web pages collected from July 2024 to December 2025, with a strictly later test split | CC BY 4.0 | Only the `url`, `label`, `target`, `date`, and `lang` columns are read (about 27 MB of the 36.6 GB dataset) with `scripts/phreshphish_columns.py`. Training data of the deployed model (E3). |
 | Tranco top 1 million (list 46YLX, 21 November 2026) | Research ranking of popular sites, aggregated from several providers | Cite the Tranco paper; input lists carry their own licenses (tranco-list.eu) | Benign reference for live evaluation. |
-| UAE brand list (`mirsad/features/brands.py`) | 31 brands and their official domains | Team-compiled from public sources | Brand-mismatch and lookalike checks. Only 3 domains are verified from a source; the rest exist in DNS and need ownership checks before a deployment. |
+| UAE brand list (`mirsad/features/brands.py`) | 31 brands and their official domains | Team-compiled from public sources | Brand-mismatch and lookalike checks. Only 2 brands have domains verified from a source; the rest exist in DNS and need ownership checks before a deployment. |
 
 ## Live services
 

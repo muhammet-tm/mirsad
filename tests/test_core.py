@@ -144,3 +144,31 @@ def test_threshold_and_report():
     rep = report(y, s, t)
     assert rep["false_positive_rate"] == 0.0 and rep["fraud_class"]["recall"] > 0
     assert rep["macro_average"] and rep["weighted_average"]
+
+
+def test_summary_fact_check():
+    from mirsad.llm.summary import _facts, fact_check
+
+    case = {"display": "info-facture-prime.com", "channel_detail": "Feed (PhishStats)", "imitates": None,
+            "risk": 0.7876, "reasons": ["Domain first seen 4 days ago"],
+            "evidence": [{"label": "Domain registered 19 Nov 2026"}]}
+    facts = _facts(case)
+    stale = "info-facture-prime.com imitates the Dubai Police and carries a risk score of 0.86."
+    assert len(fact_check(stale, case, facts)) == 3  # wrong number, unnamed brand, invented imitation
+    good = ("info-facture-prime.com has a risk of 0.79; the domain was registered on 19 Nov 2026. "
+            "No brand imitation was identified.")
+    assert fact_check(good, case, facts) == []
+    arabic = "تم تسجيل النطاق في ١٩ نوفمبر ٢٠٢٦ ولم يتم تحديد أي تقليد لعلامة تجارية."
+    assert fact_check(arabic, case, facts) == []
+    branded = dict(case, imitates="Salik")
+    assert fact_check("The site imitates Salik.", branded, _facts(branded)) == []
+
+
+def test_hosting_platform():
+    from mirsad.features.url import hosting_platform, registered_domain
+
+    assert hosting_platform("http://blessed-let-256047.framer.app/") == "framer.app"
+    assert hosting_platform("https://x.github.io/login") == "github.io"
+    assert hosting_platform("https://info-facture-prime.com/index.php") is None
+    assert hosting_platform("https://www.salik.ae/") is None
+    assert registered_domain("http://blessed-let-256047.framer.app/") == "framer.app"  # unchanged for brand checks

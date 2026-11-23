@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mirsad, ScamShield AI</title>
+<meta name="description" content="Mirsad finds fraudulent links in search results, ads, map listings, and new certificates, scores them with DaE2, and hands an analyst the evidence.">
+<!-- Source of the presenting deck. Numbers in double braces are filled from results/*.json by
+     scripts/build_docs.py, and include comments pull in the isometric drawings from assets/.
+     Edit this file, then run the build; never edit Mirsad_Deck.html by hand.
+     Motion: titles rise in, drawings trace their outlines before the faces fill, numbers count up
+     to their generated values, bars grow from the axis, and the red block wipes in from the right. -->
+<link rel="stylesheet" href="vendor/fonts/fonts.css">
+<link rel="stylesheet" href="deck.css">
+</head>
+<body>
+<main id="deck">
+
+<!-- ============================================================ 01 cover -->
+<section class="slide swiss" id="s1" data-title="Cover">
+  <div class="block" data-a="wipe"><div class="brule"></div><div class="folio">01 / 14</div>
+    <svg class="sig" width="260" height="260" viewBox="0 0 260 260" aria-hidden="true" data-a="signal">
+      <rect x="0" y="232" width="28" height="28" fill="#fff"/>
+      <path d="M14 166 A80 80 0 0 1 94 246" fill="none" stroke="#fff" stroke-width="16"/>
+      <path d="M14 96 A150 150 0 0 1 164 246" fill="none" stroke="#fff" stroke-width="16"/>
+      <path d="M14 26 A220 220 0 0 1 234 246" fill="none" stroke="#fff" stroke-width="16"/>
+    </svg>
+    <div class="ar" lang="ar" data-a="rise">مرصاد</div>
+  </div>
+  <div class="meta" data-a="rise">ScamShield AI hackathon, Abu Dhabi Police and 42 Abu Dhabi, November 2026</div>
+  <div class="word" data-a="rise">Mirsad<i></i></div>
+  <h1 class="title" data-a="rise">Finding fraudulent links in search results and maps before victims do</h1>
+  <div class="credits" data-a="rise">
+    <p><b>Detection engine</b>DaE2 (Omolara and Alawida, Computers &amp; Security, 2025)</p>
+    <p><b>Academic mentor</b>Dr. Moatsum Alawida, Abu Dhabi University</p>
+    <p><b>Team</b>Muhammet Yalkapov (lead), Sulaymon Sadullo, and Ahmed Mohamed Almheiri</p>
+  </div>
+  <aside class="notes">Mirsad means the watchtower. It watches the places where people in the UAE meet fraudulent links, and it hands the police evidence before victims report. The detection engine is DaE2, published by Omolara and Alawida in 2025; Dr. Alawida mentors our team, and all code is our own.</aside>
+</section>
+
+<!-- ============================================================ 02 problem -->
+<section class="slide swiss" id="s2" data-title="The problem">
+  <div class="kicker" data-a="rise">The problem</div>
+  <h2 data-a="rise">Fraud finds people where they search</h2>
+  <div class="dates">
+    <div data-a="rise"><span class="big">{{facts.adp_warnings_2026.0}}</span><span class="cap">Fake sites that rank near the top of search results</span></div>
+    <div data-a="rise"><span class="big">{{facts.adp_warnings_2026.1}}</span><span class="cap">Fraudulent links and misleading ads in search results</span></div>
+    <div data-a="rise"><span class="big">{{facts.adp_warnings_2026.2}}</span><span class="cap">Fake consumer protection sites found through search</span></div>
+  </div>
+  <p class="lede" data-a="rise">Abu Dhabi Police warned three times in 2026 that fraudulent sites reach people through search results and paid search ads.</p>
+  <div class="targets" data-a="rise"><span>Traffic fines</span><span>Tolls</span><span>Parcels</span><span>Consumer protection</span><span>Visas</span><span>Bank support lines</span></div>
+  <div class="block" data-a="wipe"><div class="brule"></div><div class="folio">02 / 14</div>
+    <div class="big" data-count>{{int:facts.adp_online_fraud_cases_two_years}}</div>
+    <p class="cap" style="top:420px" data-a="rise">online fraud cases handled by Abu Dhabi Police in the two years to October 2025</p>
+    <p class="cap" style="top:600px" data-a="rise"><b>AED {{facts.adp_recovered_aed_million_two_years}} million</b> recovered for victims in the same period</p>
+    <p class="src" data-a="rise">Source: {{facts.adp_figures_source}}. The amount is money recovered, not money lost.</p>
+  </div>
+  <aside class="notes">Abu Dhabi Police itself points at search: three warnings in 2026 about fake sites in search results and search ads. The scale is real: {{int:facts.adp_online_fraud_cases_two_years}} online fraud cases in two years. The AED {{facts.adp_recovered_aed_million_two_years}} million is money recovered, not lost; no sourced loss total exists, so we do not quote one.</aside>
+</section>
+
+<!-- ============================================================ 03 gap -->
+<section class="slide swiss" id="s3" data-title="The gap">
+  <div class="kicker" data-a="rise">The gap</div>
+  <div class="folio">03 / 14</div>
+  <h2 data-a="rise">Today, protection starts at the moment of contact</h2>
+  <div class="track" data-a="grow"></div>
+  <div class="stops">
+    <div class="stop us" data-a="rise"><span class="n">01</span><i class="dot"></i><h3>The link is placed</h3><p>A search result, a paid ad, a map listing, or a new domain</p>
+      <div class="tool"><b>Mirsad</b>watches here, before anyone clicks</div></div>
+    <div class="stop" data-a="rise"><span class="n">02</span><i class="dot"></i><h3>A person searches</h3><p>For a fine, a toll, a parcel, or a bank's support line</p></div>
+    <div class="stop" data-a="rise"><span class="n">03</span><i class="dot"></i><h3>A person makes contact</h3><p>Opens the site or receives a message</p>
+      <div class="tool"><b>RZAM (Dubai Electronic Security Center)</b>blocks known malicious sites in the browser</div>
+      <div class="tool"><b>Digital FraudHunter (TDRA)</b>checks a message a person received</div></div>
+    <div class="stop" data-a="rise"><span class="n">04</span><i class="dot"></i><h3>A person reports</h3><p>Usually after the loss</p>
+      <div class="tool"><b>Aman (Abu Dhabi Police)</b>takes reports from victims</div></div>
+  </div>
+  <p class="missing" data-a="rise">Missing: watching where scammers place their links, early, and turning what is found into evidence.</p>
+  <aside class="notes">The UAE already protects people at the moment of contact. RZAM blocks known sites in the browser, Digital FraudHunter checks a message, and Aman takes the report. Mirsad works one step earlier, where the scammer places the link, and it complements these tools rather than replacing them.</aside>
+</section>
+
+<!-- ============================================================ 04 solution -->
+<section class="slide dark" id="s4" data-title="The solution">
+  <div class="kicker" data-a="rise">The solution</div>
+  <div class="folio">04 / 14</div>
+  <h2 data-a="rise">Mirsad watches upstream</h2>
+  <!--include:assets/iso_tower.svg-->
+  <ul class="list">
+    <li data-a="rise"><span class="mono">01</span><b>Search results and paid ads</b> for {{app.search_queries}} UAE service queries, in English and Arabic</li>
+    <li data-a="rise"><span class="mono">02</span><b>Map listings</b> around Abu Dhabi: websites and phone numbers that do not fit the business</li>
+    <li data-a="rise"><span class="mono">03</span><b>New certificates</b> that imitate {{app.brands}} UAE brands, often before the link circulates</li>
+    <li data-a="rise"><span class="mono">04</span><b>Public threat feeds</b> for fresh labels</li>
+    <li class="act" data-a="rise"><span class="mono">05</span>One queue for an analyst, one case file per site, and one evidence package per decision</li>
+  </ul>
+  <aside class="notes">Mirsad watches four channels: search results and ads, map listings, newly issued certificates, and public feeds. Everything it finds lands in one queue, with one case file per site and one evidence package per decision.</aside>
+</section>
+
+<!-- ============================================================ 05 product -->
+<section class="slide swiss" id="s5" data-title="The working product">
+  <div class="kicker" data-a="rise">The working product</div>
+  <div class="folio">05 / 14</div>
+  <h2 data-a="rise">Running on live data from the event</h2>
+  <figure class="shot" data-a="rise"><img src="assets/watch_live.png" alt="Mirsad watch screen with the risk-ranked queue, the map check around Abu Dhabi, and a case panel"></figure>
+  <div class="side">
+    <div class="stat" data-a="rise"><span class="big" data-count>{{int:counts.screened_total}}</span><span>links screened across four channels</span></div>
+    <div class="stat hot" data-a="rise"><span class="big" data-count>{{int:counts.flagged_total}}</span><span>flagged at the frozen threshold</span></div>
+    <p data-a="rise">Live run of {{counts.first_run_gst}}. Median scoring time {{n2:e4.median_ms_single_url}} ms per link on a laptop CPU.</p>
+  </div>
+  <aside class="notes">This is the Watch screen with live data: the risk-ranked queue on the left, the map check around Abu Dhabi in the middle, and the selected case on the right. Every number on this slide comes from the live run.</aside>
+</section>
+
+<!-- ============================================================ 06 architecture -->
+<section class="slide dark" id="s6" data-title="Architecture">
+  <div class="folio">06 / 14</div>
+  <h2 data-a="rise" style="top:64px">How Mirsad works</h2>
+  <!--include:assets/iso_stack.svg-->
+  <div class="stage" style="top:238px" data-a="rise"><div class="nm"><span class="n">01</span><span class="t">Discover</span></div><ul><li><b>Search results and ads</b> ({{app.search_queries}} UAE service queries, English and Arabic)</li><li><b>Map listings</b> (Google Places, Abu Dhabi)</li><li><b>New certificates</b> (lookalikes of {{app.brands}} UAE brands)</li><li><b>Threat feeds</b> (OpenPhish, URLhaus, PhishStats)</li></ul></div>
+  <div class="stage" style="top:437px" data-a="rise"><div class="nm"><span class="n">02</span><span class="t">Enrich</span><span class="tag">(passive only)</span></div><ul><li><b>Domain age</b> (RDAP, first certificate)</li><li><b>Reputation</b> (URLhaus, VirusTotal)</li><li><b>Sandbox capture</b> in an isolated VM</li><li><b>Phishpedia logo match</b></li></ul></div>
+  <div class="stage" style="top:636px" data-a="rise"><div class="nm"><span class="n">03</span><span class="t">Score</span></div><ul><li><b>Stage 1, DaE2 ensemble</b> on every URL (AdaBoost, Bagging, Stacking, Voting)</li><li><b>Stage 2, evidence rules</b> that only raise risk</li><li><b>Official-domain cap</b></li><li><b>Plain-language reasons</b></li></ul></div>
+  <div class="stage" style="top:835px" data-a="rise"><div class="nm"><span class="n">04</span><span class="t">Act</span></div><ul><li><b>Risk-ranked analyst queue</b></li><li><b>Case file</b> with numbered exhibits</li><li><b>Hold to confirm</b></li><li><b>Evidence package</b> for a registrar, aeDA, or a police blocking request</li></ul></div>
+  <p class="note" style="left:652px;top:990px" data-a="rise">The host laptop never loads a suspicious page. Summaries by Jais (or a local Falcon) never decide.</p>
+  <aside class="notes">Four stages. Discover collects links from the four channels. Enrich adds passive evidence only: domain age, reputation, a sandbox capture in an isolated VM, and a logo match. Score runs DaE2 on every URL and then evidence rules that can only raise the risk. Act gives the analyst a queue, a case file, and an evidence package.</aside>
+</section>
+
+<!-- ============================================================ 07 model -->
+<section class="slide dark" id="s7" data-title="Model choices">
+  <div class="kicker" data-a="rise">Model choices</div>
+  <div class="folio">07 / 14</div>
+  <h2 data-a="rise">DaE2, reproduced first, then hardened</h2>
+  <!--include:assets/iso_ensemble.svg-->
+  <div class="cols">
+    <section data-a="rise"><h3>What it is</h3><p>DaE2 combines four ensembles (AdaBoost, Bagging, Stacking, and Voting) over character patterns and {{app.lexical_features}} lexical features of the URL. Omolara and Alawida published it in 2025.</p></section>
+    <section data-a="rise"><h3>Why an ensemble</h3><p>Fast enough to screen every link on a laptop CPU, explainable through four votes per link, and steadier than any one of its models alone.</p></section>
+    <section data-a="rise"><h3>What we changed</h3><p>We reproduced the paper's setting first, then changed only what our data audit showed was wrong: canonical URLs, a split by domain, retraining on 2024 to 2025 data, and a threshold fixed at a 1% false-positive rate.</p></section>
+  </div>
+  <div class="speed" style="left:1000px;top:850px">
+    <div data-a="rise"><span class="v" data-count>{{n2:e4.median_ms_single_url}}</span>ms per link</div>
+    <div data-a="rise"><span class="v" data-count>{{int:e4.urls_per_second_batch}}</span>links a second, batched</div>
+    <div data-a="rise"><span class="v" data-count>{{n2:e3a.at_validation_threshold.dae2_mean.threshold}}</span>frozen threshold</div>
+  </div>
+  <aside class="notes">We chose DaE2 because it is published, fast on a laptop CPU, and explainable: each link gets four votes. We reproduced the paper's setting first so the comparison is fair, and then changed only what the audit showed was wrong.</aside>
+</section>
+
+<!-- ============================================================ 08 evaluation -->
+<section class="slide swiss" id="s8" data-title="Evaluation">
+  <div class="kicker" data-a="rise">Evaluation</div>
+  <h2 data-a="rise">We tested DaE2 where it is hardest: sites it has never seen</h2>
+  <div class="grid" data-a="fade"><i style="left:0"></i><i style="left:212px"></i><i style="left:424px"></i><i style="left:636px"></i><i style="left:848px"></i></div>
+  <div class="axis" data-a="fade"><span style="left:0">0</span><span style="left:212px">25</span><span style="left:424px">50</span><span style="left:636px">75</span><span style="left:848px">100%</span></div>
+  <div class="row" style="top:318px;--v:{{e1a.at_validation_threshold.dae2_mean.accuracy}}"><div class="v" data-count data-split>{{pct:e1a.at_validation_threshold.dae2_mean.accuracy}}</div><div class="lab" data-a="rise">Paper's setting, random split</div><i class="bar" data-a="grow"></i></div>
+  <div class="row" style="top:438px;--v:{{e1b.at_validation_threshold.dae2_mean.accuracy}}"><div class="v" data-count data-split>{{pct:e1b.at_validation_threshold.dae2_mean.accuracy}}</div><div class="lab" data-a="rise">Same split, source artifacts removed</div><i class="bar" data-a="grow"></i></div>
+  <div class="row" style="top:558px;--v:{{e2o.at_validation_threshold.dae2_mean.accuracy}}"><div class="v" data-count data-split>{{pct:e2o.at_validation_threshold.dae2_mean.accuracy}}</div><div class="lab" data-a="rise">Split by domain, never-seen sites</div><i class="bar" data-a="grow"></i></div>
+  <div class="row" style="top:678px;--v:{{e3a.at_validation_threshold.dae2_mean.accuracy}}"><div class="v" data-count data-split>{{pct:e3a.at_validation_threshold.dae2_mean.accuracy}}</div><div class="lab" data-a="rise">Retrained on 2024 to 2025, tested on later months <em>(false-positive rate {{pct2:e3a.at_validation_threshold.dae2_mean.false_positive_rate}})</em></div><i class="bar" data-a="grow"></i></div>
+  <div class="row hot" style="top:798px;--v:{{e3b.at_validation_threshold.dae2_mean.accuracy}}"><div class="v" data-count data-split>{{pct:e3b.at_validation_threshold.dae2_mean.accuracy}}</div><div class="lab" data-a="rise">The paper's model on those later months <em>(false-positive rate {{pct:e3b.at_validation_threshold.dae2_mean.false_positive_rate}})</em></div><i class="bar" data-a="grow"></i></div>
+  <div class="ref" style="--v:{{e0.scheme_only_rule.accuracy}}" data-a="fade"><span>One rule, {{pct:e0.scheme_only_rule.accuracy}}</span></div>
+  <div class="block" data-a="wipe"><div class="brule"></div><div class="folio">08 / 14</div>
+    <div class="big" data-count data-split>{{pct:e0.scheme_only_rule.accuracy}}</div>
+    <p class="q" data-a="rise">One rule, "malicious if the URL starts with http", already scores {{pct:e0.scheme_only_rule.accuracy}} on the paper's dataset.</p>
+    <p class="src" data-a="rise">Accuracy of the DaE2 mean at a threshold fixed on validation data. Measured by our code; every value is generated from results/*.json.</p>
+  </div>
+  <aside class="notes">This is the slide that earns trust. The paper's dataset rewards recognizing which list a URL came from: one rule about the scheme already scores {{pct:e0.scheme_only_rule.accuracy}}. On never-seen sites accuracy drops to {{pct:e2o.at_validation_threshold.dae2_mean.accuracy}}. On real later traffic, a model trained the paper's way flags most legitimate sites, with a false-positive rate of {{pct:e3b.at_validation_threshold.dae2_mean.false_positive_rate}}. Our deployed model keeps false alarms near 1% on months it never saw.</aside>
+</section>
+
+<!-- ============================================================ 09 evidence -->
+<section class="slide dark" id="s9" data-title="Evidence">
+  <div class="kicker" data-a="rise">Evidence</div>
+  <div class="folio">09 / 14</div>
+  <h2 data-a="rise">Beyond the URL: evidence an officer can read</h2>
+  <ol class="rules">
+    <li data-a="rise"><span class="mono">01</span>Domain age, from RDAP and the first certificate</li>
+    <li data-a="rise"><span class="mono">02</span>A card or password form on the page</li>
+    <li data-a="rise"><span class="mono">03</span>A form that posts to another domain</li>
+    <li data-a="rise"><span class="mono">04</span>A brand's logo on a domain the brand does not own</li>
+    <li data-a="rise"><span class="mono">05</span>A paid ad or top result for a brand query, off the brand's domain</li>
+    <li data-a="rise"><span class="mono">06</span>A phone number shared across map listings</li>
+  </ol>
+  <p class="floor" style="top:770px" data-a="rise">Each rule can only raise the risk, and each adds a plain reason, such as "Domain first seen 4 days ago".</p>
+  <figure class="shot" style="top:220px;height:590px" data-a="rise"><img src="assets/case_live.png" alt="Mirsad case file with ensemble votes, timeline, evidence exhibits, plain reasons, and a Jais summary"></figure>
+  <div class="base">
+    <div class="v" data-count data-split>{{pct:e3a.at_validation_threshold.dae2_mean.precision_at_1pct_prevalence}}</div>
+    <p data-a="rise">If 1% of links are fraudulent, even this model is right on about this share of its flags. The queue therefore ranks cases, and an officer confirms each one.</p>
+  </div>
+  <aside class="notes">A URL alone is not enough. At a realistic prevalence of 1% fraudulent links, even a strong model would be right on about {{pct:e3a.at_validation_threshold.dae2_mean.precision_at_1pct_prevalence}} of its flags. So on live channels a link needs either a very high model score or one piece of evidence that agrees, and every case reaches an officer with plain reasons.</aside>
+</section>
+
+<!-- ============================================================ 10 privacy -->
+<section class="slide dark" id="s10" data-title="Privacy design">
+  <div class="kicker" data-a="rise">Privacy design</div>
+  <div class="folio">10 / 14</div>
+  <h2 data-a="rise">The subject is websites, not people</h2>
+  <!--include:assets/iso_sandbox.svg-->
+  <p class="side" data-a="rise">Suspicious pages load only in an isolated VM. The host receives a screenshot and the page facts, never the page itself.</p>
+  <ul class="pts">
+    <li data-a="rise">No visitor data, cookies, or form inputs are collected</li>
+    <li data-a="rise">Query strings that may carry victim data are stored only as keyed hashes</li>
+    <li data-a="rise">Inside the sandbox, private addresses are blocked and no form is ever submitted</li>
+    <li data-a="rise">Summaries come from Mirsad's own facts, never the attacker's page text; a local Falcon gives a zero-egress mode</li>
+    <li data-a="rise">Every view, decision, and export is written to an append-only audit log</li>
+    <li data-a="rise">An officer decides; nothing is blocked automatically</li>
+  </ul>
+  <p class="law" data-a="rise">Legal frame: Federal Decree-Law No. 34 of 2021. Articles 11, 15, 40, and 48 describe what Mirsad detects; Articles 1 to 4 and 12 bound how it collects; Articles 62 and 66 are the powers its evidence package serves. Principles of the Personal Data Protection Law are applied by design.</p>
+  <aside class="notes">Privacy by design: the subject is websites, not people. Victim data that can hide in query strings is stored only as keyed hashes. Suspicious pages load only in an isolated VM. The language model never reads the attacker's page, so a page cannot instruct it. Every action is audited, and an officer decides.</aside>
+</section>
+
+<!-- ============================================================ 11 live -->
+<section class="slide swiss" id="s11" data-title="Found during the event">
+  <div class="kicker" data-a="rise">Live results</div>
+  <h2 data-a="rise">What Mirsad found during the event</h2>
+  <div class="kpis">
+    <div data-a="rise"><span class="big" data-count>{{int:counts.screened_total}}</span><span>links screened</span></div>
+    <div class="hot" data-a="rise"><span class="big" data-count>{{int:counts.flagged_total}}</span><span>flagged for review</span></div>
+  </div>
+  <table data-a="rise">
+    <thead><tr><th>Channel</th><th class="n">Screened</th><th class="n">Flagged</th></tr></thead>
+    <tbody>
+      <tr><td>Search results and ads</td><td class="n">{{int:counts.screened_by_channel.search}}</td><td class="n hot">{{int:counts.flagged_by_channel.search}}</td></tr>
+      <tr><td>Map listings</td><td class="n">{{int:counts.screened_by_channel.maps}}</td><td class="n hot">{{int:counts.flagged_by_channel.maps}}</td></tr>
+      <tr><td>New certificates</td><td class="n">{{int:counts.screened_by_channel.certificates}}</td><td class="n hot">{{int:counts.flagged_by_channel.certificates}}</td></tr>
+      <tr><td>Threat feeds</td><td class="n">{{int:counts.screened_by_channel.feeds}}</td><td class="n hot">{{int:counts.flagged_by_channel.feeds}}</td></tr>
+    </tbody>
+  </table>
+  <div class="block" data-a="wipe"><div class="brule"></div><div class="folio">11 / 14</div>
+    <p class="q" data-a="rise">A flag is a lead, not a verdict. Each flagged site waits in the queue until an officer confirms it or dismisses it.</p>
+    <p class="src" data-a="rise">Live run of {{counts.first_run_gst}}. Counts are generated from results/counts.json.</p>
+  </div>
+  <aside class="notes">These are the counts from our live run during the event. Every flag is a lead with its reasons and exhibits; an officer confirms or dismisses it.</aside>
+</section>
+
+<!-- ============================================================ 12 pilot -->
+<section class="slide swiss" id="s12" data-title="Pilot">
+  <div class="kicker" data-a="rise">Next</div>
+  <h2 data-a="rise">A 90-day pilot with the Cybercrime unit</h2>
+  <div class="phases">
+    <div data-a="rise"><span class="w">Weeks 1 to 4</span><h3>Run on the unit's lists</h3><p>Mirsad runs on the unit's own query list and brand list, and officers label the cases.</p></div>
+    <div data-a="rise"><span class="w">Weeks 5 to 8</span><h3>Learn from decisions</h3><p>The second stage learns from officer decisions, and registrar and aeDA abuse channels are connected.</p></div>
+    <div data-a="rise"><span class="w">Weeks 9 to 12</span><h3>Measure the gain</h3><p>Time from first certificate to takedown is measured against today's baseline.</p></div>
+  </div>
+  <div class="block" data-a="wipe"><div class="brule"></div><div class="folio">12 / 14</div>
+    <div class="lab" data-a="rise">The ask</div>
+    <p class="ask" data-a="rise">A pilot partner in Abu Dhabi Police, and introductions to two UAE banks and the .ae registry.</p>
+  </div>
+  <aside class="notes">We propose a 90-day pilot. First, Mirsad runs on the unit's own lists while officers label cases. Second, it learns from those decisions and connects to the abuse channels. Third, we measure the time from first certificate to takedown against today's baseline.</aside>
+</section>
+
+<!-- ============================================================ 13 team -->
+<section class="slide swiss" id="s13" data-title="Team and credits">
+  <div class="kicker" data-a="rise">Team and credits</div>
+  <h2 data-a="rise">Built by a team from Abu Dhabi University</h2>
+  <ul class="names">
+    <li data-a="rise"><b>Muhammet Yalkapov</b><span>lead</span></li>
+    <li data-a="rise"><b>Sulaymon Sadullo</b><span>team member</span></li>
+    <li data-a="rise"><b>Ahmed Mohamed Almheiri</b><span>team member</span></li>
+  </ul>
+  <div class="credits" data-a="rise">
+    <p><b>Academic mentor</b>Dr. Moatsum Alawida, Abu Dhabi University</p>
+    <p><b>Detection method</b>DaE2, Omolara and Alawida, Computers &amp; Security 148 (2025). All code written by the team; open data and services are credited in docs/DATA.md.</p>
+  </div>
+  <div class="block" data-a="wipe"><div class="brule"></div><div class="folio">13 / 14</div>
+    <div class="thanks" data-a="rise">Thank you.</div>
+    <div class="ar" lang="ar" data-a="rise">مرصاد</div>
+  </div>
+  <aside class="notes">Thank you. We are happy to show the live dashboard and walk one case from the queue to the evidence package.</aside>
+</section>
+
+<!-- ============================================================ 14 appendix -->
+<section class="slide swiss" id="s14" data-title="Appendix">
+  <div class="kicker" data-a="rise">Appendix</div>
+  <div class="folio">14 / 14</div>
+  <h2 data-a="rise">Results in full, and the limits we know</h2>
+  <table data-a="rise">
+    <thead><tr><th>DaE2 mean, at the validation threshold</th><th>Accuracy</th><th>Precision</th><th>Recall</th><th>False-positive rate</th><th>ROC AUC</th><th>Precision at 1% prevalence</th></tr></thead>
+    <tbody>
+      <tr><td>E1a Paper's setting, random split</td><td>{{pct:e1a.at_validation_threshold.dae2_mean.accuracy}}</td><td>{{pct:e1a.at_validation_threshold.dae2_mean.fraud_class.precision}}</td><td>{{pct:e1a.at_validation_threshold.dae2_mean.fraud_class.recall}}</td><td>{{pct2:e1a.at_validation_threshold.dae2_mean.false_positive_rate}}</td><td>{{n2:e1a.at_validation_threshold.dae2_mean.roc_auc}}</td><td>{{pct:e1a.at_validation_threshold.dae2_mean.precision_at_1pct_prevalence}}</td></tr>
+      <tr><td>E1b Source artifacts removed</td><td>{{pct:e1b.at_validation_threshold.dae2_mean.accuracy}}</td><td>{{pct:e1b.at_validation_threshold.dae2_mean.fraud_class.precision}}</td><td>{{pct:e1b.at_validation_threshold.dae2_mean.fraud_class.recall}}</td><td>{{pct2:e1b.at_validation_threshold.dae2_mean.false_positive_rate}}</td><td>{{n2:e1b.at_validation_threshold.dae2_mean.roc_auc}}</td><td>{{pct:e1b.at_validation_threshold.dae2_mean.precision_at_1pct_prevalence}}</td></tr>
+      <tr><td>E2 Split by domain</td><td>{{pct:e2o.at_validation_threshold.dae2_mean.accuracy}}</td><td>{{pct:e2o.at_validation_threshold.dae2_mean.fraud_class.precision}}</td><td>{{pct:e2o.at_validation_threshold.dae2_mean.fraud_class.recall}}</td><td>{{pct2:e2o.at_validation_threshold.dae2_mean.false_positive_rate}}</td><td>{{n2:e2o.at_validation_threshold.dae2_mean.roc_auc}}</td><td>{{pct:e2o.at_validation_threshold.dae2_mean.precision_at_1pct_prevalence}}</td></tr>
+      <tr><td>E3a Deployed model, later months</td><td>{{pct:e3a.at_validation_threshold.dae2_mean.accuracy}}</td><td>{{pct:e3a.at_validation_threshold.dae2_mean.fraud_class.precision}}</td><td>{{pct:e3a.at_validation_threshold.dae2_mean.fraud_class.recall}}</td><td>{{pct2:e3a.at_validation_threshold.dae2_mean.false_positive_rate}}</td><td>{{n2:e3a.at_validation_threshold.dae2_mean.roc_auc}}</td><td>{{pct:e3a.at_validation_threshold.dae2_mean.precision_at_1pct_prevalence}}</td></tr>
+      <tr class="hot"><td>E3b Paper's model, later months</td><td>{{pct:e3b.at_validation_threshold.dae2_mean.accuracy}}</td><td>{{pct:e3b.at_validation_threshold.dae2_mean.fraud_class.precision}}</td><td>{{pct:e3b.at_validation_threshold.dae2_mean.fraud_class.recall}}</td><td>{{pct2:e3b.at_validation_threshold.dae2_mean.false_positive_rate}}</td><td>{{n2:e3b.at_validation_threshold.dae2_mean.roc_auc}}</td><td>{{pct:e3b.at_validation_threshold.dae2_mean.precision_at_1pct_prevalence}}</td></tr>
+    </tbody>
+  </table>
+  <ul class="limits" data-a="rise">
+    <li><b>Samples.</b> Each experiment trains on a sample of up to 200,000 URLs, to fit the 24-hour build.</li>
+    <li><b>Rules.</b> The second-stage rules are hand-set floors; they should be learned from officer decisions.</li>
+    <li><b>Brands.</b> {{app.brands}} UAE brands are protected; only {{app.brands_verified}} have domains verified from a source.</li>
+    <li><b>Services.</b> Free tiers (OpenPhish community, VirusTotal public) are non-commercial; a deployment needs commercial terms.</li>
+    <li><b>Documents.</b> Data sources in docs/DATA.md, legal articles in docs/PRIVACY.md, and every table in docs/MODEL.md.</li>
+    <li><b>Speed.</b> Measured on an {{e4.machine}}.</li>
+  </ul>
+  <aside class="notes">For questions: the full results, the data sources, and the limits we already know.</aside>
+</section>
+
+</main>
+<div id="hud"><i></i></div>
+<div id="help">arrows to move, F for full screen</div>
+<script src="vendor/gsap.min.js"></script>
+<script src="deck.js"></script>
+</body>
+</html>

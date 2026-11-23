@@ -6,6 +6,9 @@ Every results/*.json file is flattened into dotted keys (for example
 replacing {{key}}, {{pct:key}} (percent, one decimal), {{pct2:key}} (two decimals),
 {{int:key}} (thousands separators), and {{n2:key}} (two decimals). A missing key stops the build.
 
+Deck sources (deck/*.src.html) may also pull in a file with <!--include:assets/name.svg-->, so the
+isometric drawings stay in their own files.
+
 Usage: python scripts/build_docs.py
 """
 
@@ -14,6 +17,7 @@ from __future__ import annotations
 import json
 import re
 import sys
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -21,7 +25,7 @@ RESULTS = ROOT / "results"
 SHORT = {"e0_audit_kaggle": "e0", "e1a_paper_repr_random_split": "e1a", "e1b_our_repr_random_split": "e1b",
          "e2_paper_repr_domain_split": "e2p", "e2_ours_repr_domain_split": "e2o",
          "e3a_our_repr_phreshphish_temporal": "e3a", "e3b_paper_model_on_phreshphish_test": "e3b",
-         "e4_scoring_speed": "e4", "live_eval": "live", "counts": "counts"}
+         "e4_scoring_speed": "e4", "live_eval": "live", "counts": "counts", "external_facts": "facts"}
 
 
 def flatten(obj, prefix: str, out: dict) -> None:
@@ -47,8 +51,34 @@ def numbers() -> dict:
     return out
 
 
+CHANNELS = ("search", "maps", "certificates", "feeds")
+GST = timezone(timedelta(hours=4), "GST")
+
+
+def app_numbers(n: dict) -> None:
+    """Sizes read from the code itself: protected brands and watch queries."""
+    sys.path.insert(0, str(ROOT))
+    from mirsad.collectors.sources import MAPS_QUERIES, SEARCH_QUERIES
+    from mirsad.features.brands import BRANDS
+    from mirsad.features.url import lexical_features
+
+    n["app.brands"] = len(BRANDS)
+    n["app.brands_verified"] = sum(b.verified for b in BRANDS)
+    n["app.search_queries"] = len(SEARCH_QUERIES)
+    n["app.maps_queries"] = len(MAPS_QUERIES)
+    n["app.lexical_features"] = len(lexical_features("https://example.com/"))
+
+
 def derived(n: dict) -> None:
     """Numbers computed from other numbers (never typed)."""
+    app_numbers(n)
+    for group in ("screened_by_channel", "flagged_by_channel"):
+        for ch in CHANNELS:
+            n.setdefault(f"counts.{group}.{ch}", 0)
+    if n.get("counts.first_run"):
+        t = datetime.fromisoformat(n["counts.first_run"]).astimezone(GST)
+        n["counts.first_run_gst"] = f"{t.day} {t:%B %Y}, {t:%H:%M} GST"
+        n["counts.first_run_day"] = f"{t.day} {t:%B %Y}"
     a, b = "e1a.at_validation_threshold.dae2_mean.accuracy", "e1b.at_validation_threshold.dae2_mean.accuracy"
     if a in n and b in n:
         n["delta.e1.accuracy_points"] = round(100 * (n[a] - n[b]), 2)
@@ -118,15 +148,27 @@ def render(text: str, nums: dict, source: str) -> str:
     return out
 
 
+def include(text: str, base: Path) -> str:
+    """Replace <!--include:relative/path--> with that file's contents."""
+    return re.sub(r"<!--include:([\w./-]+)-->", lambda m: (base / m.group(1)).read_text(encoding="utf-8"), text)
+
+
 def main() -> None:
     nums = numbers()
     (RESULTS / "numbers.json").write_text(json.dumps(nums, indent=1, default=str), encoding="utf-8")
-    sources = [ROOT / "README.src.md", *sorted((ROOT / "docs").glob("*.src.md")), *sorted((ROOT / "deck").glob("*.src.md"))]
+    sources = [ROOT / "README.src.md", *sorted((ROOT / "docs").glob("*.src.md")),
+               *sorted((ROOT / "deck").glob("*.src.md")), *sorted((ROOT / "deck").glob("*.src.html"))]
     for src in sources:
         if src.exists():
-            dst = src.with_name(src.name.replace(".src.md", ".md"))
-            dst.write_text("<!-- Generated from " + src.name + " by scripts/build_docs.py. Edit the source. -->\n"
-                           + render(src.read_text(encoding="utf-8"), nums, src.name), encoding="utf-8")
+            dst = src.with_name(src.name.replace(".src.", "."))
+            text = include(src.read_text(encoding="utf-8"), src.parent)
+            text = render(text, nums, src.name)
+            note = f"Generated from {src.name} by scripts/build_docs.py. Edit the source."
+            if src.suffix == ".html":
+                text = text.replace("<!doctype html>", f"<!doctype html>\n<!-- {note} -->", 1)
+            else:
+                text = f"<!-- {note} -->\n" + text
+            dst.write_text(text, encoding="utf-8")
             print(f"wrote {dst.relative_to(ROOT)}")
 
 

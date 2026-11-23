@@ -79,7 +79,7 @@ const AR = {
   'Time': 'الوقت', 'Actor': 'المنفّذ', 'Action': 'الإجراء', 'Target': 'الهدف', 'Detail': 'التفاصيل', 'Append-only record of views, decisions, and exports': 'سجل إلحاقي فقط للمشاهدات والقرارات والتصدير',
   /* case page */
   'Ensemble, score per model': 'المجموعة، النتيجة لكل نموذج', 'threshold': 'العتبة', 'Timeline': 'التسلسل الزمني',
-  '{n} events': '{n} أحداث', 'How the evidence connects': 'كيف ترتبط الأدلة', 'Captured page': 'الصفحة الملتقطة',
+  '{n} events': '{n} أحداث', 'one event': 'حدث واحد', 'one exhibit, with its source': 'دليل واحد مع مصدره', 'How the evidence connects': 'كيف ترتبط الأدلة', 'Captured page': 'الصفحة الملتقطة',
   'drawn copy': 'نسخة مرسومة', 'screenshot': 'لقطة شاشة', '{n} exhibits, each with its source': '{n} أدلة، لكل منها مصدره',
   'Exhibit': 'الدليل', 'Finding': 'النتيجة', 'Source': 'المصدر', 'Reasons, in plain words': 'الأسباب بلغة واضحة',
   'why the model flagged it': 'لماذا أشار إليه النموذج', 'Decision': 'القرار',
@@ -123,6 +123,10 @@ function applyStatic(root) {
 /* ================================================================ formatting */
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
 const ltr = s => '<bdi class="ltr" dir="ltr">' + esc(s) + '</bdi>';
+/* Latin runs (domains, feed and model names) inside Arabic text: isolate each run so the browser keeps it
+   left to right and never breaks a domain at its hyphen. The text is escaped first. */
+const latinRuns = text => esc(text).replace(/[A-Za-z0-9][A-Za-z0-9._\/()&;: -]*[A-Za-z0-9)]/g,
+  m => '<bdi class="ltr nw" dir="ltr">' + m.trim() + '</bdi>' + (m.endsWith(' ') ? ' ' : ''));
 const pad = n => String(n).padStart(2, '0');
 function gst(iso) { const ms = Date.parse(iso); return isNaN(ms) ? null : new Date(ms + GST_MS); }
 function fmtTime(iso) { const d = gst(iso); return d ? pad(d.getUTCHours()) + ':' + pad(d.getUTCMinutes()) : ''; }
@@ -747,7 +751,7 @@ function initCore() {
 }
 
 /* Exports for case.js */
-window.Mirsad = {S, t, setLang, esc, ltr, smart, host, clone, fmtTime, fmtDate, fmtWhen, dayKey, days, num, rk, statusLabel, votesAbove, splitDetail, chipText,
+window.Mirsad = {S, t, setLang, esc, ltr, latinRuns, smart, host, clone, fmtTime, fmtDate, fmtWhen, dayKey, days, num, rk, statusLabel, votesAbove, splitDetail, chipText,
   imitatesHtml, highlightDomains, I, chIcon, reasonIcon, votesHtml, stHtml, api, decide, exportCase, toast, renderStatusStrip, renderBars, Pending,
   holdMarkup, wireHold, paintHold, startPending, undoPending, holdState, lastDecisionTime, caseHref, homeHref, isTyping, EXPORT_LABEL, QS, CHANNELS,
   onLang: cb => S.langCbs.push(cb), onRetry: cb => S.retryCbs.push(cb), REFRESH_MS};
@@ -955,7 +959,7 @@ function jaisHtml(c) {
   const s = c.summary; if (!s || (!s.en && !s.ar)) return '';
   const note = !s.note || s.note === 'model writes, does not decide' ? t('model writes, does not decide') : s.note;
   return '<div class="jais"><div class="jl">' + I.lines + '<span><b>' + esc(t('Summary by {m}', {m: s.model || 'Jais'})) + '</b>, ' + esc(note) + '</span></div>' +
-    (s.en ? '<div class="jen" lang="en" dir="ltr">' + esc(smart(s.en)) + '</div>' : '') + (s.ar ? '<div class="jar" lang="ar" dir="rtl">' + esc(s.ar) + '</div>' : '') + '</div>';
+    (s.en ? '<div class="jen" lang="en" dir="ltr">' + esc(smart(s.en)) + '</div>' : '') + (s.ar ? '<div class="jar" lang="ar" dir="rtl">' + latinRuns(s.ar) + '</div>' : '') + '</div>';
 }
 function renderCase() {
   const id = W.sel; if (!id) return;

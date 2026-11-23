@@ -1,4 +1,6 @@
-# Mirsad deck copy (source)
+# Mirsad deck copy (first draft)
+
+The slide text and speaker notes now live in `Mirsad_Deck.src.html`, which builds the HTML deck, the PDF, and the PPTX. This file is the first copy draft, kept for reference; edit the deck source, not this file.
 
 Slide text and speaker notes for the ScamShield AI presentation. Numbers come from `results/*.json` through `scripts/build_docs.py` (placeholders in double braces). The design direction is chosen separately; this copy fits every direction. Target: 12 main slides for about 5 minutes, plus an appendix for questions. The terms require slides on architecture, model choices, and privacy design (slides 6, 7, and 10).
 
@@ -7,14 +9,14 @@ Slide text and speaker notes for the ScamShield AI presentation. Numbers come fr
 - Finding fraudulent links in search results and maps before victims do
 - ScamShield AI hackathon, Abu Dhabi Police and 42 Abu Dhabi, November 2026
 - Detection engine: DaE2 (Omolara and Alawida, Computers & Security, 2025). Academic mentor: Dr. Moatsum Alawida, Abu Dhabi University
-- Team: [names to be confirmed]
+- Team: Muhammet Yalkapov (lead), Sulaymon Sadullo, and Ahmed Mohamed Almheiri, Abu Dhabi University
 
 Notes: Mirsad means the watchtower. It watches the places where people in the UAE meet fraudulent links, and it hands the police evidence before victims report.
 
 ## 2. Fraud finds people where they search
-- Abu Dhabi Police warned three times in 2026 about fake sites in search results and search ads: 17 April, 7 June, and 13 June.
+- Abu Dhabi Police warned three times in 2026 about fake sites in search results and search ads: {{facts.adp_warnings_2026.0}}, {{facts.adp_warnings_2026.1}}, and {{facts.adp_warnings_2026.2}}.
 - Targets: traffic fines, tolls, parcels, consumer protection, visas, and bank support lines.
-- 15,642 online fraud cases handled and AED 140 million recovered by Abu Dhabi Police in the two years to October 2025 (The National, 22 October 2025).
+- {{int:facts.adp_online_fraud_cases_two_years}} online fraud cases handled and AED {{facts.adp_recovered_aed_million_two_years}} million recovered by Abu Dhabi Police in the two years to October 2025 ({{facts.adp_figures_source}}).
 
 Notes: The money figure is recovered, not lost; no sourced loss total exists, so we do not quote one.
 
@@ -25,9 +27,9 @@ Notes: The money figure is recovered, not lost; no sourced loss total exists, so
 - Missing: watching where scammers place their links, early, and turning what is found into evidence.
 
 ## 4. Mirsad watches upstream
-- Search results and paid ads for 23 UAE service queries, in English and Arabic
+- Search results and paid ads for {{app.search_queries}} UAE service queries, in English and Arabic
 - Map listings around Abu Dhabi: websites and phone numbers that do not fit the business
-- New certificates that imitate 31 UAE brands, often before the link circulates
+- New certificates that imitate {{app.brands}} UAE brands, often before the link circulates
 - Public threat feeds for fresh labels
 - One queue for an analyst, one case file per site, one evidence package per decision
 
@@ -82,7 +84,7 @@ Notes: This is the slide that earns trust. The paper's dataset rewards recognizi
 - Ask: a pilot partner in Abu Dhabi Police, and introductions to two UAE banks and the .ae registry
 
 ## 13. Team and credits
-- Team: [names to be confirmed]
+- Team: Muhammet Yalkapov (lead), Sulaymon Sadullo, and Ahmed Mohamed Almheiri, Abu Dhabi University
 - Academic mentor: Dr. Moatsum Alawida, Abu Dhabi University
 - Detection method: DaE2, Omolara and Alawida, Computers & Security 148 (2025)
 - All code written by the team; open data and services credited in docs/DATA.md
@@ -91,4 +93,4 @@ Notes: This is the slide that earns trust. The paper's dataset rewards recognizi
 - A1 Data sources and terms (docs/DATA.md)
 - A2 Legal articles (docs/PRIVACY.md)
 - A3 Full results tables E1 to E4 (docs/MODEL.md)
-- A4 Limits: samples of up to 200,000 rows; 31 brands, 3 verified; free tiers non-commercial; rules are hand-set floors
+- A4 Limits: samples of up to 200,000 rows; {{app.brands}} brands, {{app.brands_verified}} verified; free tiers non-commercial; rules are hand-set floors

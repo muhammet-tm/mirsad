@@ -1,3 +1,4 @@
+<!-- Generated from ARCHITECTURE.src.md by scripts/build_docs.py. Edit the source. -->
 # Architecture
 
 ```

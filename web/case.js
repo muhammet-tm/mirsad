@@ -12,6 +12,7 @@ const KIND = {search_ad: 'Search ad', certificate: 'Certificate', domain: 'Domai
 const KIND_SHORT = {search_ad: 'ad', certificate: 'certificate', domain: 'domain', page: 'page', brand: 'brand', form_target: 'form target', listing: 'listing', phone: 'phone'};
 const EV_KIND = {search_ad: ['search_ad', 'search_result'], certificate: ['certificate'], domain: ['domain'], brand: ['logo_match', 'brand'], form_target: ['form_target'], listing: ['listing'], phone: ['phone']};
 const RISK_KINDS = ['brand', 'form_target', 'phone'];
+const latinRuns = M.latinRuns;
 
 /* ---------------------------------------------------------------- boot */
 C.id = (M.QS.get('id') || '').trim() || null;
@@ -175,7 +176,7 @@ function renderSheet(c) {
   /* timeline */
   const tl = (c.timeline || []).slice().sort((a, b) => Date.parse(a.at) - Date.parse(b.at));
   const evById = {}; (c.evidence || []).forEach(e => { evById[e.id] = e; });
-  h += '<section class="tl"><div class="secT"><h3>' + esc(t('Timeline')) + '</h3><span>' + esc(t('{n} events', {n: count(tl.length)})) + '</span></div>';
+  h += '<section class="tl"><div class="secT"><h3>' + esc(t('Timeline')) + '</h3><span>' + esc(tl.length === 1 ? t('one event') : t('{n} events', {n: count(tl.length)})) + '</span></div>';
   if (tl.length) {
     const cols = tl.length;
     h += '<ol class="track" style="grid-template-columns:repeat(' + cols + ',minmax(0,1fr));--trk-end:calc((100% - ' + ((cols - 1) * 14) + 'px) / ' + cols + ' - 5px)">' + tl.map((e, i) => {
@@ -196,7 +197,7 @@ function renderSheet(c) {
     '<section class="capw"><div class="secT"><h3>' + esc(t('Captured page')) + '</h3><span>' + esc(t(real ? 'screenshot' : 'drawn copy')) + '</span></div>' + capture(c) + '</section></div>';
   /* evidence table */
   const ev = c.evidence || [];
-  h += '<section class="evt"><div class="secT"><h3>' + esc(t('Evidence')) + '</h3><span>' + esc(t('{n} exhibits, each with its source', {n: count(ev.length)})) + '</span></div>';
+  h += '<section class="evt"><div class="secT"><h3>' + esc(t('Evidence')) + '</h3><span>' + esc(ev.length === 1 ? t('one exhibit, with its source') : t('{n} exhibits, each with its source', {n: count(ev.length)})) + '</span></div>';
   h += ev.length ? '<table><thead><tr><th scope="col">' + esc(t('Exhibit')) + '</th><th scope="col">' + esc(t('Finding')) + '</th><th scope="col">' + esc(t('Source')) + '</th></tr></thead><tbody>' +
     ev.map(e => '<tr><td class="e"><span class="ex">' + esc(e.id) + '</span></td><td dir="auto">' + highlightDomains(e.label, c.domain) + '</td><td class="s" dir="auto">' + esc(e.source) + '</td></tr>').join('') + '</tbody></table>'
     : '<p style="color:var(--muted)">' + esc(t('No exhibits yet.')) + '</p>';
@@ -395,7 +396,7 @@ function renderSummary(c) {
   const note = !s.note || s.note === 'model writes, does not decide' ? t('model writes, does not decide') : s.note;
   box.setAttribute('aria-label', t('Summary by {m}', {m: s.model || 'Jais'}));
   box.innerHTML = '<div class="jl"><span><b>' + esc(t('Summary by {m}', {m: s.model || 'Jais'})) + '</b>, ' + esc(note) + '</span></div>' +
-    (s.en ? '<div class="jen" lang="en" dir="ltr">' + esc(smart(s.en)) + '</div>' : '') + (s.ar ? '<div class="jar" lang="ar" dir="rtl">' + esc(s.ar) + '</div>' : '');
+    (s.en ? '<div class="jen" lang="en" dir="ltr">' + esc(smart(s.en)) + '</div>' : '') + (s.ar ? '<div class="jar" lang="ar" dir="rtl">' + latinRuns(s.ar) + '</div>' : '');
 }
 function renderDecision() {
   const c = C.c; if (!c) return;

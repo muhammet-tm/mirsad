@@ -45,7 +45,7 @@ The detection engine implements and extends DaE2 (Omolara and Alawida, Computers
 
 - Trained on samples of up to 200,000 URLs per experiment instead of the full datasets, to fit the 24-hour build.
 - The second-stage rules are hand-set floors, not learned weights; with a few hundred analyst decisions they should be learned and calibrated.
-- The brand list covers 31 UAE brands; only 3 official domains are verified from a source, and an operational version needs each brand to confirm its domains and phone numbers.
+- The brand list covers 31 UAE brands; only 2 have their official domains verified from a source, and an operational version needs each brand to confirm its domains and phone numbers.
 - Map checks use Google Places; Google's terms forbid storing business names, so the case file shows category and place ID. A police deployment would agree data terms with the map provider.
 - Search ads vary by time and location; a deployment would query from UAE locations on a schedule and use the Google Ads Transparency Center as a second source.
 - Free tiers (OpenPhish community, VirusTotal public) are non-commercial; an operational deployment needs commercial tiers.
@@ -97,7 +97,20 @@ Tests and documents:
 
 ## Documents
 
-[Architecture](docs/ARCHITECTURE.md), [model and results](docs/MODEL.md), [privacy design](docs/PRIVACY.md), [data and services](docs/DATA.md), [API](docs/API.md), [use of AI tools](docs/AI_USE.md). The presentation is in `deck/`.
+[Architecture](docs/ARCHITECTURE.md), [model and results](docs/MODEL.md), [privacy design](docs/PRIVACY.md), [data and services](docs/DATA.md), [API](docs/API.md), [use of AI tools](docs/AI_USE.md).
+
+The presentation is in `deck/`: `Mirsad_Deck.html` is the animated deck for presenting (open it in a browser; arrow keys move, F gives full screen), `Mirsad_Deck.pdf` is the same deck as a PDF, and `Mirsad_Deck.pptx` is an editable PowerPoint copy. All three come from one source, `deck/Mirsad_Deck.src.html`, whose numbers are filled from `results/*.json` like the documents. The PowerPoint copy uses Inter and Consolas in place of the deck's web fonts, so the PDF is the exact version. To rebuild the deck after new results (needs Node.js and Playwright with Chromium):
+
+```powershell
+.\.venv\Scripts\python.exe scripts\build_docs.py
+npm install --prefix deck\tools
+node deck\tools\render_slides.cjs
+node deck\tools\build_pptx.cjs
+```
+
+## Team
+
+Muhammet Yalkapov (lead), Sulaymon Sadullo, and Ahmed Mohamed Almheiri, Abu Dhabi University.
 
 ## Credits
 

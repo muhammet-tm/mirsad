@@ -6,13 +6,13 @@ Built for ScamShield AI (Abu Dhabi Police and 42 Abu Dhabi, 24 and 25 November 2
 
 ## The problem
 
-Abu Dhabi Police warned three times in 2026 (17 April, 7 June, and 13 June) about fake websites that rank near the top of search results or buy search ads for government services, consumer protection, fines, and deliveries. Abu Dhabi Police handled 15,642 online fraud cases and recovered AED 140 million for victims in the two years to October 2025 (The National, 22 October 2025). The UAE already protects individuals at the moment of contact: the RZAM browser extension (Dubai Electronic Security Center) blocks known malicious sites, and TDRA's Digital FraudHunter checks a suspicious message a person received. What is missing is the step before contact: finding the fraudulent site where the scammer placed it, early, and handing investigators the evidence.
+Abu Dhabi Police warned three times in 2026 ({{facts.adp_warnings_2026.0}}, {{facts.adp_warnings_2026.1}}, and {{facts.adp_warnings_2026.2}}) about fake websites that rank near the top of search results or buy search ads for government services, consumer protection, fines, and deliveries. Abu Dhabi Police handled {{int:facts.adp_online_fraud_cases_two_years}} online fraud cases and recovered AED {{facts.adp_recovered_aed_million_two_years}} million for victims in the two years to October 2025 ({{facts.adp_figures_source}}). The UAE already protects individuals at the moment of contact: the RZAM browser extension (Dubai Electronic Security Center) blocks known malicious sites, and TDRA's Digital FraudHunter checks a suspicious message a person received. What is missing is the step before contact: finding the fraudulent site where the scammer placed it, early, and handing investigators the evidence.
 
 ## The solution
 
 | Challenge clause | Mirsad |
 |---|---|
-| Search engine results | Runs 23 UAE service queries in English and Arabic ("salik recharge", "pay traffic fine abu dhabi", "تتبع شحنة بريد الإمارات") and screens every organic result and paid ad against the official domain of the brand the query names |
+| Search engine results | Runs {{app.search_queries}} UAE service queries in English and Arabic ("salik recharge", "pay traffic fine abu dhabi", "تتبع شحنة بريد الإمارات") and screens every organic result and paid ad against the official domain of the brand the query names |
 | Maps | Checks Google Maps listings around Abu Dhabi for websites unrelated to the business, brand names on non-official domains, and phone numbers shared across listings |
 | Early identification | Watches Certificate Transparency for new certificates that contain or imitate a protected brand, often before the link circulates; domain age is a core signal |
 | Detecting fraudulent links | DaE2 ensemble on every URL in milliseconds, then evidence rules (domain age, card or password forms, forms posting to another domain, logo on the wrong domain, reputation lists) |
@@ -44,7 +44,7 @@ The detection engine implements and extends DaE2 (Omolara and Alawida, Computers
 
 - Trained on samples of up to 200,000 URLs per experiment instead of the full datasets, to fit the 24-hour build.
 - The second-stage rules are hand-set floors, not learned weights; with a few hundred analyst decisions they should be learned and calibrated.
-- The brand list covers 31 UAE brands; only 3 official domains are verified from a source, and an operational version needs each brand to confirm its domains and phone numbers.
+- The brand list covers {{app.brands}} UAE brands; only {{app.brands_verified}} have their official domains verified from a source, and an operational version needs each brand to confirm its domains and phone numbers.
 - Map checks use Google Places; Google's terms forbid storing business names, so the case file shows category and place ID. A police deployment would agree data terms with the map provider.
 - Search ads vary by time and location; a deployment would query from UAE locations on a schedule and use the Google Ads Transparency Center as a second source.
 - Free tiers (OpenPhish community, VirusTotal public) are non-commercial; an operational deployment needs commercial tiers.
@@ -96,7 +96,20 @@ Tests and documents:
 
 ## Documents
 
-[Architecture](docs/ARCHITECTURE.md), [model and results](docs/MODEL.md), [privacy design](docs/PRIVACY.md), [data and services](docs/DATA.md), [API](docs/API.md), [use of AI tools](docs/AI_USE.md). The presentation is in `deck/`.
+[Architecture](docs/ARCHITECTURE.md), [model and results](docs/MODEL.md), [privacy design](docs/PRIVACY.md), [data and services](docs/DATA.md), [API](docs/API.md), [use of AI tools](docs/AI_USE.md).
+
+The presentation is in `deck/`: `Mirsad_Deck.html` is the animated deck for presenting (open it in a browser; arrow keys move, F gives full screen), `Mirsad_Deck.pdf` is the same deck as a PDF, and `Mirsad_Deck.pptx` is an editable PowerPoint copy. All three come from one source, `deck/Mirsad_Deck.src.html`, whose numbers are filled from `results/*.json` like the documents. The PowerPoint copy uses Inter and Consolas in place of the deck's web fonts, so the PDF is the exact version. To rebuild the deck after new results (needs Node.js and Playwright with Chromium):
+
+```powershell
+.\.venv\Scripts\python.exe scripts\build_docs.py
+npm install --prefix deck\tools
+node deck\tools\render_slides.cjs
+node deck\tools\build_pptx.cjs
+```
+
+## Team
+
+Muhammet Yalkapov (lead), Sulaymon Sadullo, and Ahmed Mohamed Almheiri, Abu Dhabi University.
 
 ## Credits
 

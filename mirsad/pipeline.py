@@ -14,7 +14,7 @@ from .collectors import sources
 from .collectors.sources import Found
 from .config import PROCESSED_DIR
 from .enrich import passive
-from .features.url import registered_domain
+from .features.url import hosting_platform, registered_domain
 from .llm.summary import summarize
 from .sandbox import client as sandbox
 from .scoring.engine import Signals, score, threshold
@@ -51,11 +51,17 @@ def process(store: Store, f: Found, use_sandbox: bool, summaries: bool = True) -
 
     if res.risk >= thr - NEAR or res.rules:
         domain = registered_domain(f.url)
-        created = passive.rdap_created(domain)
-        cert = None
+        platform = hosting_platform(f.url)
+        created, cert = None, None
+        if platform:
+            # The platform's own registration date and wildcard certificate say nothing about this site.
+            store.add_evidence(cid, "domain", f"Hosted on {platform}, a shared site platform; domain age does not apply",
+                               "Public Suffix List")
+        else:
+            created = passive.rdap_created(domain)
         if created:
             store.add_evidence(cid, "domain", f"Domain registered {_fmt_day(created)}", "RDAP", observed_at=created)
-        if not created or f.channel == "certificates":
+        if not platform and (not created or f.channel == "certificates"):
             cert = passive.first_certificate(domain)
             if cert:
                 store.add_evidence(cid, "certificate", f"Certificate issued {_fmt_day(cert['not_before'])}",

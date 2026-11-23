@@ -78,5 +78,5 @@ The E3 table shows why a model score alone is not enough on live traffic: if 1% 
 - Training used samples of up to 200,000 rows, not the full datasets, because of the 24-hour build.
 - malicious_phish reflects URLs from roughly 2007 to 2021 from mixed sources; PhreshPhish ends in December 2025.
 - At realistic prevalence, precision falls sharply even for good models; the queue ranks cases and an officer confirms each one.
-- The brand list has 31 brands; only 3 official domains are verified from a source.
+- The brand list has {{app.brands}} brands; only {{app.brands_verified}} have their official domains verified from a source.
 - This document reports only our own measurements under the protocol above; it does not re-analyze the paper's tables.

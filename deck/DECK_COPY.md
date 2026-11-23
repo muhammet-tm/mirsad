@@ -1,5 +1,7 @@
 <!-- Generated from DECK_COPY.src.md by scripts/build_docs.py. Edit the source. -->
-# Mirsad deck copy (source)
+# Mirsad deck copy (first draft)
+
+The slide text and speaker notes now live in `Mirsad_Deck.src.html`, which builds the HTML deck, the PDF, and the PPTX. This file is the first copy draft, kept for reference; edit the deck source, not this file.
 
 Slide text and speaker notes for the ScamShield AI presentation. Numbers come from `results/*.json` through `scripts/build_docs.py` (placeholders in double braces). The design direction is chosen separately; this copy fits every direction. Target: 12 main slides for about 5 minutes, plus an appendix for questions. The terms require slides on architecture, model choices, and privacy design (slides 6, 7, and 10).
 
@@ -8,7 +10,7 @@ Slide text and speaker notes for the ScamShield AI presentation. Numbers come fr
 - Finding fraudulent links in search results and maps before victims do
 - ScamShield AI hackathon, Abu Dhabi Police and 42 Abu Dhabi, November 2026
 - Detection engine: DaE2 (Omolara and Alawida, Computers & Security, 2025). Academic mentor: Dr. Moatsum Alawida, Abu Dhabi University
-- Team: [names to be confirmed]
+- Team: Muhammet Yalkapov (lead), Sulaymon Sadullo, and Ahmed Mohamed Almheiri, Abu Dhabi University
 
 Notes: Mirsad means the watchtower. It watches the places where people in the UAE meet fraudulent links, and it hands the police evidence before victims report.
 
@@ -83,7 +85,7 @@ Notes: This is the slide that earns trust. The paper's dataset rewards recognizi
 - Ask: a pilot partner in Abu Dhabi Police, and introductions to two UAE banks and the .ae registry
 
 ## 13. Team and credits
-- Team: [names to be confirmed]
+- Team: Muhammet Yalkapov (lead), Sulaymon Sadullo, and Ahmed Mohamed Almheiri, Abu Dhabi University
 - Academic mentor: Dr. Moatsum Alawida, Abu Dhabi University
 - Detection method: DaE2, Omolara and Alawida, Computers & Security 148 (2025)
 - All code written by the team; open data and services credited in docs/DATA.md
@@ -92,4 +94,4 @@ Notes: This is the slide that earns trust. The paper's dataset rewards recognizi
 - A1 Data sources and terms (docs/DATA.md)
 - A2 Legal articles (docs/PRIVACY.md)
 - A3 Full results tables E1 to E4 (docs/MODEL.md)
-- A4 Limits: samples of up to 200,000 rows; 31 brands, 3 verified; free tiers non-commercial; rules are hand-set floors
+- A4 Limits: samples of up to 200,000 rows; 31 brands, 2 verified; free tiers non-commercial; rules are hand-set floors

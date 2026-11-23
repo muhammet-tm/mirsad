@@ -1,0 +1,9 @@
+{
+ "_note": "Cited facts, not measured by our code. Each value is typed once here, with its source, and filled into the documents by scripts/build_docs.py. Read from research/03_uae_context_privacy.md on 22 November 2026.",
+ "adp_online_fraud_cases_two_years": 15642,
+ "adp_recovered_aed_million_two_years": 140,
+ "adp_figures_source": "The National, 22 October 2025",
+ "adp_figures_url": "https://www.thenationalnews.com/news/uae/2025/10/22/abu-dhabi-police-return-38-million-to-victims-of-online-fraudsters",
+ "adp_warnings_2026": ["17 April", "7 June", "13 June"],
+ "adp_warnings_note": "Abu Dhabi Police warnings about fake sites in search results and search ads; 17 April is the page's last-updated date"
+}

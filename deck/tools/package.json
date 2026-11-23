@@ -1,0 +1,18 @@
+{
+  "name": "mirsad-deck-tools",
+  "private": true,
+  "description": "Builds the Mirsad deck: editable PPTX, slide PNGs, and PDF from deck/Mirsad_Deck.html and results/numbers.json.",
+  "license": "UNLICENSED",
+  "scripts": {
+    "pptx": "node build_pptx.cjs",
+    "render": "node render_slides.cjs"
+  },
+  "dependencies": {
+    "@fontsource/ibm-plex-mono": "5.2.6",
+    "@fontsource/ibm-plex-sans-arabic": "5.2.6",
+    "@fontsource/inter-tight": "5.2.6",
+    "@fontsource/noto-naskh-arabic": "5.2.6",
+    "gsap": "3.13.0",
+    "pptxgenjs": "4.0.1"
+  }
+}

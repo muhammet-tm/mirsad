@@ -90,6 +90,20 @@ def host_of(url: str) -> str:
     return split(url).host
 
 
+_EXTRACT_PRIVATE = tldextract.TLDExtract(suffix_list_urls=(), cache_dir=None, include_psl_private_domains=True)
+
+
+def hosting_platform(url_or_host: str) -> str | None:
+    """The shared site platform a host lives on (framer.app, vercel.app, github.io), or None.
+
+    The Public Suffix List's private section names these platforms. A site on one of them has no
+    domain of its own, so the platform's registration date says nothing about the site's age.
+    """
+    host = host_of(url_or_host) if "/" in url_or_host or ":" in url_or_host else url_or_host.lower()
+    ext = _EXTRACT_PRIVATE(host)
+    return ext.suffix if getattr(ext, "is_private", False) and ext.domain else None
+
+
 def registered_domain(url_or_host: str) -> str:
     host = host_of(url_or_host) if "/" in url_or_host or ":" in url_or_host else url_or_host.lower()
     ext = _EXTRACT(host)
