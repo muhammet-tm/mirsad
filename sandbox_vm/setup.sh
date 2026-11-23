@@ -710,16 +710,27 @@ step_health() {
   code=$(post_json http://127.0.0.1:8601/capture "$TMP/req_capture.json" "$TMP/res_capture.json" 120)
   log "    capture of https://example.com/: HTTP $code, ok=$(json_get "$TMP/res_capture.json" 'd.get("ok")'), status=$(json_get "$TMP/res_capture.json" 'd.get("status")'), title=$(json_get "$TMP/res_capture.json" 'repr(d.get("title"))'), screenshot=$(json_get "$TMP/res_capture.json" 'd.get("screenshot")'), error=$(json_get "$TMP/res_capture.json" 'd.get("error")')"
 
-  local shot="$PP_DIR/datasets/test_sites/accounts.g.cdcde.com/shot.png"
-  if [ -f "$shot" ]; then
+  # Phishpedia's bundled test screenshot is an empty file at the pinned commit (0 bytes), which the
+  # service rightly refuses with 422. Use it only when it has content; otherwise send the example.com
+  # screenshot from the capture test above, which checks the same path (decode, detect, match).
+  local shot="$PP_DIR/datasets/test_sites/accounts.g.cdcde.com/shot.png" pp_label
+  if [ -s "$shot" ]; then
+    pp_label="its own test page"
     python3 - "$shot" > "$TMP/req_pp.json" <<'PY'
 import base64, json, sys
 print(json.dumps({"url": "https://accounts.g.cdcde.com/",
                   "screenshot_b64": base64.b64encode(open(sys.argv[1], "rb").read()).decode()}))
 PY
-    code=$(post_json http://127.0.0.1:8601/phishpedia "$TMP/req_pp.json" "$TMP/res_pp.json" 240)
-    log "    Phishpedia on its own test page: HTTP $code, $(json_get "$TMP/res_pp.json" '{k: d.get(k) for k in ("available", "brand", "confidence", "domain_matches_brand", "verdict", "elapsed_ms", "reason")}')"
+  else
+    pp_label="the example.com capture"
+    python3 - "$TMP/res_capture.json" > "$TMP/req_pp.json" <<'PY'
+import json, sys
+d = json.load(open(sys.argv[1]))
+print(json.dumps({"url": "https://example.com/", "screenshot_b64": d.get("screenshot_b64") or ""}))
+PY
   fi
+  code=$(post_json http://127.0.0.1:8601/phishpedia "$TMP/req_pp.json" "$TMP/res_pp.json" 240)
+  log "    Phishpedia on $pp_label: HTTP $code, $(json_get "$TMP/res_pp.json" '{k: d.get(k) for k in ("available", "brand", "confidence", "domain_matches_brand", "verdict", "elapsed_ms", "reason")}')"
 
   log "    waiting for the Falcon model to load (up to 5 minutes)"
   for ((i = 0; i < 100; i++)); do
