@@ -122,10 +122,10 @@ def run(channel: str, store: Store | None = None, use_sandbox: bool | None = Non
             found += live
             stats["stream"] = live_stats
             if live_stats.get("certificates"):
-                detail = (f"{live_stats.get('per_minute', 0):,} certificates a minute, "
-                          f"{live_stats.get('domains_checked', 0):,} names checked for lookalikes")
+                detail = (f"{live_stats.get('per_minute', 0):,} a minute, "
+                          f"{live_stats.get('domains_checked', 0):,} names checked")
                 if stats.get("note"):
-                    detail += f"; {stats['note']}"
+                    detail += "; crt.sh down"
             elif stats["errors"] == stats["queries"]:
                 detail = (f"crt.sh unavailable ({stats.get('last_status')}); stream "
                           f"{'unreachable' if live_stats.get('error') else 'idle'}")

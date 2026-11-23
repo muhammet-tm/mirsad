@@ -1,25 +1,30 @@
 {
  "threshold": 0.6574,
- "screened_total": 336,
+ "screened_total": 337,
  "screened_by_channel": {
-  "certificates": 0,
+  "certificates": 1,
   "feeds": 6,
   "maps": 134,
   "search": 196
  },
- "stored_total": 263,
+ "stored_total": 264,
  "stored_by_channel": {
+  "certificates": 1,
   "feeds": 6,
   "maps": 83,
   "search": 174
  },
- "flagged_total": 4,
+ "flagged_total": 5,
  "flagged_by_channel": {
-  "feeds": 4
+  "feeds": 4,
+  "certificates": 1
  },
- "imitated_brands": {},
+ "imitated_brands": {
+  "Emirates": 1
+ },
  "rules_fired": {
   "openphish": 3,
+  "brand_off_domain": 1,
   "young_domain": 1
  },
  "top_flagged_hosts": [
@@ -40,6 +45,12 @@
    "channel": "feeds",
    "risk": 0.95,
    "imitates": null
+  },
+  {
+   "host": "emirates-airlines.battery.cam",
+   "channel": "certificates",
+   "risk": 0.8,
+   "imitates": "Emirates"
   },
   {
    "host": "info-facture-prime.com",
@@ -84,9 +95,27 @@
    "flagged": 0,
    "state": "error",
    "detail": "crt.sh unavailable (502); stream idle"
+  },
+  {
+   "channel": "certificates",
+   "started": "2026-11-23T14:38:13+00:00",
+   "finished": "2026-11-23T15:00:49+00:00",
+   "items": 0,
+   "flagged": 0,
+   "state": "error",
+   "detail": "crt.sh unavailable (502); stream unreachable"
+  },
+  {
+   "channel": "certificates",
+   "started": "2026-11-23T15:18:12+00:00",
+   "finished": "2026-11-23T15:24:35+00:00",
+   "items": 19,
+   "flagged": 11,
+   "state": "ok",
+   "detail": "213,118 a minute, 119,568 names checked; crt.sh down"
   }
  ],
  "first_run": "2026-11-22T23:59:27+00:00",
- "last_run": "2026-11-23T00:34:43+00:00",
- "written": "2026-11-23T00:38:09+00:00"
+ "last_run": "2026-11-23T15:24:35+00:00",
+ "written": "2026-11-23T15:29:50+00:00"
 }

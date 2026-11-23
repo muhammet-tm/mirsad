@@ -177,11 +177,16 @@ def test_hosting_platform():
 def test_ct_candidate_precision():
     from mirsad.features.brands import ct_candidate
 
+    # real-looking targets of UAE brands
     for host in ["salik-pay.com", "emiratespost-track.top", "adpolice-fines.ae", "tamm-pay.xyz",
-                 "dubai-rta-fines.com", "emiratesp0st-delivery.com", "uaepass-login.net"]:
+                 "dubai-rta-fines.com", "emiratesp0st-delivery.com", "uaepass-login.net", "sa1ik-recharge.com",
+                 "saliktopup.ae", "emiratespst-track.com", "emirates-airlines.battery.cam", "salikk-pay.com"]:
         assert ct_candidate(host) is not None, host
+    # false matches seen in the first live stream runs (23 November 2026)
     for host in ["old.itc.edu", "rta.engineering.ucsc.edu", "cap-du-jour.pages.dev", "paddedmoth4.chatgpt.site",
-                 "com.alt-itc.ca", "www.mariesschmuckwelt.de", "xn--80ak6aa92e.com"]:
+                 "com.alt-itc.ca", "www.mariesschmuckwelt.de", "xn--80ak6aa92e.com", "t05.4-sadik.ru",
+                 "nkolay-salikhov.workers.dev", "www.salia.co", "allan-salih.workers.dev",
+                 "moore-elizabeth-5-00.pages.dev", "conception.ecrire-a-mes-elus.lacfdtaltice.com"]:
         assert ct_candidate(host) is None, host
 
 

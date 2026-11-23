@@ -36,7 +36,7 @@ Notes: The money figure is recovered, not lost; no sourced loss total exists, so
 
 ## 5. The working product
 - Screenshot of the Watch screen with live data from the event (map, queue, case panel)
-- Caption: live data collected on 2026-11-22T23:59:27+00:00; 336 links screened, 4 flagged at the frozen threshold.
+- Caption: live data collected on 2026-11-22T23:59:27+00:00; 337 links screened, 5 flagged at the frozen threshold.
 
 ## 6. How Mirsad works (architecture)
 - Discover: search results and ads, map listings, new certificates, threat feeds
@@ -74,7 +74,7 @@ Notes: This is the slide that earns trust. The paper's dataset rewards recognizi
 - Legal frame: Federal Decree-Law No. 34 of 2021 (Articles 11, 15, 40, and 48 describe what we detect; Articles 1 to 4 and 12 bound how we collect; Articles 62 and 66 are the powers our evidence feeds); PDPL principles applied by design
 
 ## 11. What Mirsad found during the event
-- 336 links screened across four channels; 4 flagged
+- 337 links screened across four channels; 5 flagged
 - Flags by channel and the brands most imitated, from the live run
 - One case walked through end to end (from the queue to the evidence package)
 

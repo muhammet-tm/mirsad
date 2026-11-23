@@ -161,12 +161,20 @@ _SCAM_WORDS = {"pay", "payment", "fine", "fines", "toll", "tolls", "recharge", "
 def ct_candidate(host: str) -> Brand | None:
     """The brand a newly certified host name appears to target, for the live certificate stream.
 
-    The stream carries about 3,000 names a second, so it needs higher precision than a search result
-    for a brand query. A brand token of 5 letters or more (other than an ordinary word such as
-    "added"), or a near-miss spelling of one, counts on its own. A short token (itc, rta, du, tamm)
-    or an ordinary word counts only together with UAE context (.ae, "dubai", "uae") or a scam word
-    ("pay", "fines", "track"): so tamm-pay.xyz and dubai-rta-fines.com pass, while old.itc.edu,
-    cap-du-jour.pages.dev, and paddedmoth4.chatgpt.site do not.
+    The stream carries thousands of names a second, so it needs higher precision than a search result
+    for a brand query; the first live run (23 November 2026) showed which rules fail at that volume.
+    Words of every language are full of short brand tokens and their one-letter neighbors: 4-sadik.ru
+    (salik), salikhov (salik), moore (mohre), ecrire (ecrime). So:
+
+    - a token of 7 letters or more (emiratespost, adpolice, uaepass) counts on its own, even inside a
+      longer word, and so does a near-miss spelling of one (emiratesp0st after homoglyph folding);
+    - a token of 5 or 6 letters (salik, mohre) counts as a whole word; inside a longer word, or as a
+      near miss, it needs context;
+    - a token of 4 letters or fewer (itc, rta, du, tamm) or an ordinary word (added) always needs context.
+
+    Context is UAE context (.ae, "dubai", "uae") or a scam word ("pay", "fines", "track"). So
+    salik-pay.com, tamm-pay.xyz, and dubai-rta-fines.com pass; 4-sadik.ru, old.itc.edu, and
+    nkolay-salikhov.workers.dev do not.
     """
     host = host.lower().rstrip(".")
     if host.startswith("xn--") or ".xn--" in host:
@@ -176,14 +184,21 @@ def ct_candidate(host: str) -> Brand | None:
     context = host.endswith(".ae") or any(w in joined for w in _UAE_WORDS) or any(t in _SCAM_WORDS for t in toks)
     for b in BRANDS:
         for t in b.tokens:
-            hit = (t in toks) if len(t) <= 4 else (t in joined)
-            if not hit:
+            whole, inside = t in toks, len(t) > 4 and t in joined
+            if not (whole or inside):
                 continue
-            if (len(t) >= 5 and t not in GENERIC_TOKENS) or context:
+            if len(t) <= 4 or t in GENERIC_TOKENS:
+                if whole and context:
+                    return b
+            elif len(t) >= 7 or whole or context:
                 return b
-    labels = host.split(".")
-    for label in labels[:-1]:  # near misses (emiratesp0st, sallik) in any label but the top-level domain
-        brand, dist = lookalike(label + ".x")
-        if brand is not None and 0 < dist and not any(t in GENERIC_TOKENS for t in brand.tokens):
-            return brand
+    # Near misses, compared per word of 5 letters or more (after homoglyph folding).
+    for b in BRANDS:
+        for t in b.tokens:
+            if len(t) < 5 or t in GENERIC_TOKENS or (len(t) < 7 and not context):
+                continue
+            allowed = 1 if len(t) <= 8 else 2
+            for p in toks:
+                if len(p) >= 5 and abs(len(p) - len(t)) <= allowed and 0 < Levenshtein.distance(p, t) <= allowed:
+                    return b
     return None
