@@ -79,7 +79,20 @@ Run the service and open the dashboard at http://127.0.0.1:8600:
 .\.venv\Scripts\python.exe -m uvicorn mirsad.api.app:app --host 127.0.0.1 --port 8600
 ```
 
-Collect live cases (or use the run buttons in the dashboard):
+A fresh install has no cases, so the dashboard opens empty. Two ways to see it working:
+
+- Demo data, no network: open http://127.0.0.1:8600/?mock=1. The screen marks the data as demo data.
+- Real data without any API key: the feeds channel (OpenPhish and PhishStats) and the certificate channel need no key. The certificate channel downloads the certstream-server-go release once, checks its SHA-256, and runs it on 127.0.0.1 only while the run listens; it downloads every new certificate from the public logs, tens of megabits a second, so keep runs short on shared networks.
+
+```powershell
+.\.venv\Scripts\python.exe scripts\run_watch.py feeds
+```
+
+```powershell
+.\.venv\Scripts\python.exe scripts\run_watch.py certificates --stream-seconds 60
+```
+
+With keys in `.env` (see `.env.example`), collect from every channel; search needs SerpApi or Serper, maps needs Google Places, and summaries use Jais (a template is written without a key):
 
 ```powershell
 .\.venv\Scripts\python.exe scripts\run_watch.py all
