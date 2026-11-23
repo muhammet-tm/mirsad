@@ -110,7 +110,7 @@ node deck\tools\build_pptx.cjs
 
 ## Team
 
-Muhammet Yalkapov (lead), Sulaymon Sadullo, and Ahmed Mohamed Almheiri, Abu Dhabi University.
+Muhammet Yalkapov (team lead, security and product), Sulaymon Sadullo (data and AI), and Ahmed Mohamed Almheiri (deployment and partnerships), Abu Dhabi University. Academic mentor: Dr. Moatsum Alawida, Abu Dhabi University.
 
 ## Credits
 
