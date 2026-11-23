@@ -126,6 +126,7 @@ function describe(index) {
       const lh = cs.lineHeight === 'normal' ? parseFloat(cs.fontSize) * 1.2 : parseFloat(cs.lineHeight);
       items.push({ kind: 'text', x: r.x + pad[3], y: r.y + pad[0], w: r.w - pad[1] - pad[3], h: r.h - pad[0] - pad[2],
         align: cs.textAlign === 'end' ? 'right' : cs.textAlign === 'start' ? 'left' : cs.textAlign, lh, rtl: cs.direction === 'rtl',
+        valign: cs.verticalAlign === 'bottom' ? 'bottom' : cs.verticalAlign === 'middle' ? 'middle' : 'top',
         runs: runsOf(el) });
     }
     [...el.children].forEach((c) => visit(c, inBox || box));
@@ -216,7 +217,7 @@ function describe(index) {
           return { text: r.text, options: { fontFace: face, fontSize: +(r.size * PT).toFixed(1), bold: r.weight >= 600, italic: r.italic,
             color: c.hex, transparency: Math.round((1 - c.alpha) * 100), charSpacing: +(track * PT).toFixed(2), breakLine: !!r.br } };
         });
-        sl.addText(runs, { x: it.x * PX, y: it.y * PX, w: (it.w + 4) * PX, h: Math.max(it.h, it.lh) * PX, margin: 0, valign: 'top',
+        sl.addText(runs, { x: it.x * PX, y: it.y * PX, w: (it.w + 4) * PX, h: Math.max(it.h, it.lh) * PX, margin: 0, valign: it.valign,
           align: it.align === 'justify' ? 'left' : it.align, lineSpacing: +(it.lh * PT).toFixed(1), rtlMode: it.rtl, fit: 'none', wrap: false });
         report.texts++;
       }

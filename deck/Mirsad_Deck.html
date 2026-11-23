@@ -280,7 +280,7 @@
 <section class="slide swiss" id="s14" data-title="Appendix">
   <div class="kicker" data-a="rise">Appendix</div>
   <div class="folio">14 / 14</div>
-  <h2 data-a="rise">Results in full, and the limits we know</h2>
+  <h2 data-a="rise">Results in full, test by test</h2>
   <table data-a="rise">
     <thead><tr><th>DaE2 mean, at the validation threshold</th><th>Accuracy</th><th>Precision</th><th>Recall</th><th>False-positive rate</th><th>ROC AUC</th><th>Precision at 1% prevalence</th></tr></thead>
     <tbody>
@@ -291,15 +291,8 @@
       <tr class="hot"><td>E3b Paper's model, later months</td><td>50.9%</td><td>48.1%</td><td>97.8%</td><td>88.59%</td><td>0.63</td><td>1.1%</td></tr>
     </tbody>
   </table>
-  <ul class="limits" data-a="rise">
-    <li><b>Samples.</b> Each experiment trains on a sample of up to 200,000 URLs, to fit the 24-hour build.</li>
-    <li><b>Rules.</b> The second-stage rules are hand-set floors; they should be learned from officer decisions.</li>
-    <li><b>Brands.</b> 31 UAE brands are protected; only 2 have domains verified from a source.</li>
-    <li><b>Services.</b> Free tiers (OpenPhish community, VirusTotal public) are non-commercial; a deployment needs commercial terms.</li>
-    <li><b>Documents.</b> Data sources in docs/DATA.md, legal articles in docs/PRIVACY.md, and every table in docs/MODEL.md.</li>
-    <li><b>Speed.</b> Measured on an AMD Ryzen 5 4600H, 6 cores, 15.4 GB RAM, Windows 11, one process.</li>
-  </ul>
-  <aside class="notes">For questions: the full results, the data sources, and the limits we already know.</aside>
+  <p class="tnote" data-a="rise">Each row is the DaE2 mean at a threshold fixed on validation data. Tables for every ensemble are in docs/MODEL.md.</p>
+  <aside class="notes">For questions: every test in full. E1a is the paper's own setting, E3a is the model Mirsad deploys, and E3b is the paper's model on later months, where its false-positive rate reaches 88.6%.</aside>
 </section>
 
 </main>

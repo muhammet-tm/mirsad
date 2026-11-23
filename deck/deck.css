@@ -199,14 +199,15 @@ svg.iso text{font-family:var(--mono)}
 #s13 .block .thanks{position:absolute;left:96px;top:250px;font-size:64px;line-height:70px;font-weight:700;letter-spacing:-0.03em}
 
 /* ---------- 14 appendix ---------- */
-#s14 table{position:absolute;left:96px;top:290px;width:1728px;border-collapse:collapse;font-size:23px;line-height:30px}
-#s14 th{text-align:right;font-weight:600;font-size:22px;color:var(--grey);padding:8px 0;border-bottom:2px solid var(--ink)}
-#s14 th:first-child,#s14 td:first-child{text-align:left}
-#s14 td{text-align:right;padding:10px 0;border-bottom:1px solid var(--rule);font-variant-numeric:tabular-nums}
-#s14 tr.hot td{color:var(--red)}
-#s14 .limits{position:absolute;left:96px;top:690px;width:1728px;display:grid;grid-template-columns:1fr 1fr;column-gap:48px;row-gap:10px;list-style:none;font-size:23px;line-height:31px;color:var(--grey)}
-#s14 .limits li{border-top:1px solid var(--rule);padding-top:10px}
-#s14 .limits b{color:var(--ink);font-weight:600}
+#s14 table{position:absolute;left:96px;top:290px;width:1728px;border-collapse:collapse;table-layout:fixed;font-size:32px;line-height:40px}
+#s14 th:first-child{width:528px}
+#s14 th{text-align:right;vertical-align:bottom;font-weight:600;font-size:24px;line-height:30px;color:var(--grey);padding:0 0 16px 24px;border-bottom:3px solid var(--ink)}
+#s14 th:first-child,#s14 td:first-child{text-align:left;padding-left:0}
+#s14 td{text-align:right;padding:32px 0 32px 24px;border-bottom:1px solid var(--rule);font-variant-numeric:tabular-nums;font-weight:500}
+#s14 td:first-child{font-weight:600;color:var(--ink)}
+#s14 td:nth-child(2){font-weight:700}
+#s14 tr.hot td,#s14 tr.hot td:first-child{color:var(--red)}
+#s14 .tnote{position:absolute;left:96px;top:960px;width:1728px;font-size:22px;line-height:30px;color:var(--grey)}
 
 /* ---------- presenter chrome ---------- */
 #hud{position:fixed;left:0;right:0;bottom:0;height:4px;background:rgba(255,255,255,.08);z-index:5}
