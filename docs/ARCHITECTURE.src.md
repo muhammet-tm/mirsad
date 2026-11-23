@@ -13,7 +13,7 @@
 
 | Module | Responsibility |
 |---|---|
-| `mirsad/collectors/sources.py` | Search results and ads (SerpApi, Serper fallback) for {{app.search_queries}} UAE service queries; Google Places listings around Abu Dhabi; certificates containing or imitating protected brands (crt.sh and the live stream); OpenPhish, URLhaus, and PhishStats feeds |
+| `mirsad/collectors/sources.py` | Search results and ads (SerpApi, Serper fallback) for {{app.search_queries}} UAE service queries; Google Places listings around Abu Dhabi; certificates containing or imitating protected brands (crt.sh, and a live Certificate Transparency stream that `certstream_local.py` starts on the host for each run); OpenPhish, URLhaus, and PhishStats feeds |
 | `mirsad/enrich/passive.py` | RDAP registration date, first certificate from crt.sh (the only age signal for .ae), URLhaus and VirusTotal lookups; cached and rate-limited |
 | `mirsad/features/url.py`, `brands.py` | Robust URL parsing, canonical form, 25 lexical features, the UAE brand list, homoglyph folding, lookalike distance |
 | `mirsad/models/dae2.py` | The four DaE2 ensembles (AdaBoost, Bagging, Stacking, Voting) over shared features |

@@ -172,3 +172,23 @@ def test_hosting_platform():
     assert hosting_platform("https://info-facture-prime.com/index.php") is None
     assert hosting_platform("https://www.salik.ae/") is None
     assert registered_domain("http://blessed-let-256047.framer.app/") == "framer.app"  # unchanged for brand checks
+
+
+def test_ct_candidate_precision():
+    from mirsad.features.brands import ct_candidate
+
+    for host in ["salik-pay.com", "emiratespost-track.top", "adpolice-fines.ae", "tamm-pay.xyz",
+                 "dubai-rta-fines.com", "emiratesp0st-delivery.com", "uaepass-login.net"]:
+        assert ct_candidate(host) is not None, host
+    for host in ["old.itc.edu", "rta.engineering.ucsc.edu", "cap-du-jour.pages.dev", "paddedmoth4.chatgpt.site",
+                 "com.alt-itc.ca", "www.mariesschmuckwelt.de", "xn--80ak6aa92e.com"]:
+        assert ct_candidate(host) is None, host
+
+
+def test_certstream_local_config(tmp_path, monkeypatch):
+    from mirsad.collectors import certstream_local as cl
+
+    monkeypatch.setattr(cl, "BIN_DIR", tmp_path)
+    text = cl.write_config(8603).read_text(encoding="utf-8")
+    assert 'listen_addr: "127.0.0.1"' in text and "listen_port: 8603" in text and "enabled: false" in text
+    assert cl.is_local("ws://127.0.0.1:8603/") and not cl.is_local("wss://certstream.calidog.io/")

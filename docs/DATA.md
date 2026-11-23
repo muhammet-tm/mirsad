@@ -19,7 +19,7 @@ Every dataset and service Mirsad uses, with its license or terms and what the co
 | SerpApi | Search results and ads for 23 UAE service queries in English and Arabic | Free plan 250 searches a month; results not resold | `SERPAPI_API_KEY` |
 | Serper | Fallback search results | 2,500 free queries; ads not returned in our test | `SERPER_API_KEY` |
 | Google Places API (New), Text Search | Map listings around Abu Dhabi with website, phone, and location | Store place IDs indefinitely and coordinates for at most 30 days; do not store business names, addresses, or reviews. Mirsad keeps place ID, category, website domain, coordinates, and a hashed phone group only. | `PLACES_API_KEY` |
-| crt.sh and the Certificate Transparency stream (certstream) | Newly issued certificates that contain or imitate a protected brand | Public logs; about 5 requests a minute to crt.sh | none |
+| crt.sh and the Certificate Transparency stream (certstream-server-go 1.10.1, MIT, run on the host only during a certificate run) | Newly issued certificates that contain or imitate a protected brand | Public logs; about 5 requests a minute to crt.sh; the stream downloads every new certificate from every log while it runs, tens of megabits a second, so runs are kept to a few minutes | none |
 | RDAP (IANA bootstrap) | Domain registration date for generic top-level domains | Public; .ae has no RDAP and hides dates, so the first certificate date stands in | none |
 | OpenPhish community feed | Fresh phishing URLs | Non-commercial use only | none |
 | abuse.ch URLhaus | Malware-distribution URLs and per-URL lookups | Free under fair use | `ABUSECH_AUTH_KEY` |

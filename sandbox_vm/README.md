@@ -16,6 +16,10 @@ There are two reasons for a separate VM. The first is isolation: a phishing page
 
 The Falcon model gives Mirsad a zero-egress mode for case summaries (`MIRSAD_LLM=falcon` on the host). It writes summaries only and never decides a case.
 
+### The certificate stream does not run here
+
+The live Certificate Transparency stream (certstream-server-go) first ran in this VM, and it broke the VM's other services. It downloads every new certificate from every log, thousands a second. All of that traffic passed through VirtualBox's NAT, which also carries the port forwards, so on 23 November 2026 ports 8601 and 8602 stopped answering until the stream was stopped. Mirsad now starts the same server on the host, bound to 127.0.0.1, only for the minutes of a certificate run (`mirsad/collectors/certstream_local.py`); it downloads the official release once and checks it against a pinned SHA-256. If you installed the stream in the VM earlier, remove it with `sudo bash certstream_remove.sh`, and delete the old port forward on the host with `VBoxManage controlvm ScamShield-Sandbox natpf1 delete certstream` (already done on the development laptop).
+
 ## Files
 
 | File | Role |

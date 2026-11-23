@@ -33,3 +33,6 @@ results/*.txt
 # Deck build: node packages and review renders are rebuilt by deck/tools
 deck/tools/node_modules/
 deck/_render/
+
+# certstream-server-go binary, its config, and its log (downloaded and checked by mirsad/collectors/certstream_local.py)
+data/certstream/

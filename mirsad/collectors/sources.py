@@ -17,7 +17,7 @@ from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
 
 from ..config import http_client, settings
-from ..features.brands import BRANDS, is_official, lookalike, mentioned_brand, normalize
+from ..features.brands import BRANDS, ct_candidate, is_official, lookalike, mentioned_brand, normalize
 from ..features.url import registered_domain, strip_query
 
 # Service-intent queries that UAE residents type and scammers target (Abu Dhabi Police warnings of
@@ -226,6 +226,12 @@ def certificates_crtsh(tokens=CT_TOKENS, days: int = 30) -> tuple[list[Found], d
     seen = set()
     with http_client(timeout=60) as c:
         for i, t in enumerate(tokens):
+            # crt.sh is often down for hours (502 on 22 and 23 November); each failed query costs about
+            # 100 s of retries, so stop after two failures in a row and report the rest as skipped.
+            if stats["errors"] >= 2 and stats["errors"] == stats["queries"]:
+                stats["skipped"] = len(tokens) - i
+                stats["note"] = "crt.sh unavailable; remaining queries skipped"
+                break
             if i:
                 time.sleep(12.5)
             stats["queries"] += 1
@@ -268,20 +274,40 @@ def certificates_stream(seconds: int = 60) -> tuple[list[Found], dict]:
     import websockets
 
     found: list[Found] = []
-    stats = {"certificates": 0, "seconds": seconds}
+    stats = {"certificates": 0, "domains_checked": 0, "seconds": seconds}
 
     import ssl
 
     import truststore
 
+    from . import certstream_local
+
     url = settings.env.get("MIRSAD_CERTSTREAM_URL", "wss://certstream.calidog.io/")
-    stats["source"] = url
+    local = certstream_local.is_local(url)
+    # A local server (started per run, see certstream_local) serves the light domains-only feed.
+    feed = url.rstrip("/") + "/domains-only" if local else url
+    stats["source"] = feed
+    seen: set[str] = set()  # the same name arrives once per log and once as a precertificate
+
+    def check(names) -> None:
+        for name in names:
+            name = name.lstrip("*.").lower()
+            if not name or name in seen:
+                continue
+            seen.add(name)
+            stats["domains_checked"] += 1
+            dom = registered_domain(name)
+            if is_official(dom, name):
+                continue
+            if ct_candidate(name) is not None:
+                found.append(Found(f"https://{name}/", "certificates", "New certificate (live stream)",
+                                   first_seen=datetime.now(timezone.utc).isoformat(timespec="seconds")))
 
     async def run():
         deadline = time.monotonic() + seconds
-        ctx = truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT) if url.startswith("wss") else None
+        ctx = truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT) if feed.startswith("wss") else None
         try:
-            async with websockets.connect(url, ssl=ctx, max_size=2 ** 22, open_timeout=15) as ws:
+            async with websockets.connect(feed, ssl=ctx, max_size=2 ** 22, open_timeout=15) as ws:
                 while time.monotonic() < deadline:
                     try:
                         msg = json.loads(await asyncio.wait_for(ws.recv(), timeout=max(0.1, deadline - time.monotonic())))
@@ -290,22 +316,22 @@ def certificates_stream(seconds: int = 60) -> tuple[list[Found], dict]:
                     except Exception as exc:
                         stats["error"] = f"{type(exc).__name__}: {str(exc)[:100]}"
                         break
-                    if msg.get("message_type") != "certificate_update":
-                        continue
-                    stats["certificates"] += 1
-                    for name in msg["data"]["leaf_cert"].get("all_domains", []):
-                        name = name.lstrip("*.").lower()
-                        dom = registered_domain(name)
-                        if is_official(dom, name):
-                            continue
-                        brand, dist = lookalike(dom)
-                        if brand is not None or mentioned_brand(name):
-                            found.append(Found(f"https://{name}/", "certificates", "New certificate (live stream)",
-                                               first_seen=datetime.now(timezone.utc).isoformat(timespec="seconds")))
+                    kind = msg.get("message_type")
+                    if kind == "dns_entries":
+                        stats["certificates"] += 1
+                        check(msg.get("data") or [])
+                    elif kind == "certificate_update":
+                        stats["certificates"] += 1
+                        check(msg["data"]["leaf_cert"].get("all_domains", []))
         except Exception as exc:  # stream down: report, do not crash the run
             stats["error"] = str(exc)[:120]
 
-    asyncio.run(run())
+    try:
+        with certstream_local.running(url) as note:
+            stats["server"] = note
+            asyncio.run(run())
+    except Exception as exc:  # binary missing, port taken, or server failed to start
+        stats["error"] = str(exc)[:160]
     stats["per_minute"] = int(stats["certificates"] * 60 / max(seconds, 1))
     return found, stats
 
