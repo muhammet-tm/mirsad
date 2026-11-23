@@ -186,14 +186,14 @@ svg.iso text{font-family:var(--mono)}
 #s12 .block .ask{position:absolute;left:96px;top:300px;width:400px;font-size:38px;line-height:48px;font-weight:600;letter-spacing:-0.015em}
 
 /* ---------- 13 team ---------- */
-#s13 .people{position:absolute;left:96px;top:290px;width:1150px;display:grid;grid-template-columns:repeat(3,1fr);column-gap:40px}
+#s13 .people{position:absolute;left:96px;top:250px;width:1150px;display:grid;grid-template-columns:repeat(3,1fr);column-gap:40px}
 #s13 .person{border-top:8px solid var(--ink);padding-top:20px}
 #s13 .person.lead{border-top-color:var(--red)}
-#s13 .person h3{font-size:40px;line-height:46px;font-weight:700;letter-spacing:-0.025em;min-height:92px}
+#s13 .person h3{font-size:38px;line-height:42px;font-weight:700;letter-spacing:-0.025em;min-height:84px}
 #s13 .person .role{margin-top:12px;font-family:var(--mono);font-size:22px;line-height:28px;font-weight:500;color:var(--red);min-height:56px}
-#s13 .person ul{margin-top:18px;list-style:none}
-#s13 .person li{position:relative;padding:12px 0;border-top:1px solid var(--rule);font-size:23px;line-height:31px;color:var(--grey)}
-#s13 .credits{position:absolute;left:96px;top:860px;width:1150px;display:grid;grid-template-columns:1fr 1.6fr;column-gap:48px;border-top:2px solid var(--ink);padding-top:18px;font-size:22px;line-height:30px;color:var(--grey)}
+#s13 .person ul{margin-top:14px;list-style:none}
+#s13 .person li{position:relative;padding:9px 0;border-top:1px solid var(--rule);font-size:22px;line-height:29px;color:var(--grey)}
+#s13 .credits{position:absolute;left:96px;top:870px;width:1150px;display:grid;grid-template-columns:1fr 2fr;column-gap:48px;border-top:2px solid var(--ink);padding-top:18px;font-size:22px;line-height:30px;color:var(--grey)}
 #s13 .credits b{display:block;color:var(--ink);font-weight:600}
 #s13 .block .ar{position:absolute;right:92px;bottom:70px;font-weight:700;font-size:150px;line-height:1.3;color:#fff}
 #s13 .block .thanks{position:absolute;left:96px;top:250px;font-size:64px;line-height:70px;font-weight:700;letter-spacing:-0.03em}
