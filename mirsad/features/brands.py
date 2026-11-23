@@ -28,13 +28,13 @@ class Brand:
 
 BRANDS: tuple[Brand, ...] = (
     Brand("Abu Dhabi Police", "Police", ("adpolice.gov.ae",), ("adpolice", "abudhabipolice"), True, ("شرطة أبوظبي",)),
-    Brand("UAE government portal", "Federal government", ("u.ae",), ("uaegov", "govae"), True),
+    Brand("UAE government portal", "Federal government", ("u.ae",), ("uaegov",), True),
     Brand("Dubai Police", "Police", ("dubaipolice.gov.ae", "ecrime.ae"), ("dubaipolice", "ecrime")),
     Brand("Ministry of Interior", "Federal government", ("moi.gov.ae",), ("moi", "moiuae")),
     Brand("ICP", "Federal government", ("icp.gov.ae",), ("icp", "icpuae", "emiratesid"), arabic=("الهوية والجنسية",)),
     Brand("UAE Pass", "Digital identity", ("uaepass.ae",), ("uaepass",)),
     Brand("TAMM", "Abu Dhabi government", ("tamm.abudhabi",), ("tamm",), arabic=("تم",)),
-    Brand("Darb (ITC)", "Abu Dhabi tolls", ("itc.gov.ae",), ("darb", "itc"), arabic=("درب",)),
+    Brand("Darb (ITC)", "Abu Dhabi tolls", ("itc.gov.ae", "admobility.gov.ae", "qmobility.ae"), ("darb", "itc"), arabic=("درب",)),
     Brand("Salik", "Dubai tolls", ("salik.ae",), ("salik",), arabic=("سالك",)),
     Brand("RTA", "Dubai transport and fines", ("rta.ae",), ("rta", "rtadubai")),
     Brand("ADDED consumer protection", "Abu Dhabi economy", ("added.gov.ae",), ("added",)),
@@ -43,13 +43,13 @@ BRANDS: tuple[Brand, ...] = (
     Brand("MOHRE", "Work permits", ("mohre.gov.ae",), ("mohre",)),
     Brand("Central Bank of the UAE", "Regulator", ("centralbank.ae",), ("centralbank", "cbuae")),
     Brand("First Abu Dhabi Bank", "Bank", ("bankfab.com",), ("bankfab", "fab")),
-    Brand("ADCB", "Bank", ("adcb.com",), ("adcb",)),
-    Brand("ADIB", "Bank", ("adib.ae",), ("adib",)),
+    Brand("ADCB", "Bank", ("adcb.com", "adcb.com.eg"), ("adcb",)),
+    Brand("ADIB", "Bank", ("adib.ae", "adib.com"), ("adib",)),
     Brand("Emirates NBD", "Bank", ("emiratesnbd.com",), ("emiratesnbd", "enbd")),
     Brand("Dubai Islamic Bank", "Bank", ("dib.ae",), ("dib",)),
-    Brand("Mashreq", "Bank", ("mashreq.com",), ("mashreq",)),
+    Brand("Mashreq", "Bank", ("mashreq.com", "mashreqbank.com"), ("mashreq",)),
     Brand("RAKBANK", "Bank", ("rakbank.ae",), ("rakbank",)),
-    Brand("e& (Etisalat)", "Telecom", ("etisalat.ae", "eand.com"), ("etisalat", "eand")),
+    Brand("e& (Etisalat)", "Telecom", ("etisalat.ae", "eand.com", "eand.ae"), ("etisalat", "eand")),
     Brand("du", "Telecom", ("du.ae",), ("du",)),
     Brand("Emirates Post", "Courier", ("emiratespost.ae",), ("emiratespost", "empost"), arabic=("بريد الإمارات",)),
     Brand("Aramex", "Courier", ("aramex.com",), ("aramex",)),
@@ -80,13 +80,22 @@ def official_domains() -> set[str]:
     return {d for b in BRANDS for d in b.domains}
 
 
+GOVERNMENT = Brand("UAE government entity", "Government", ("gov.ae",), (), False)
+
+
 def is_official(registered_domain: str, host: str = "") -> Brand | None:
-    """The brand that owns this domain, if any (host may be a subdomain of an official domain)."""
+    """The brand that owns this domain, if any (host may be a subdomain of an official domain).
+
+    Any name under .gov.ae counts as a government entity: the .ae registry restricts gov.ae
+    registrations to government bodies (the adpolice.gov.ae WHOIS shows "Government Approved").
+    """
     host = (host or registered_domain).lower().rstrip(".")
     for b in BRANDS:
         for d in b.domains:
             if host == d or host.endswith("." + d) or registered_domain == d:
                 return b
+    if host.endswith(".gov.ae") or registered_domain.endswith(".gov.ae"):
+        return GOVERNMENT
     return None
 
 
@@ -130,9 +139,12 @@ def lookalike(registered_domain: str) -> tuple[Brand | None, int]:
                 continue
             if t in norm.replace("-", ""):
                 return b, 0
+            # Near misses: one edit for brand names up to 8 letters, two for longer ones, and only
+            # against words of 5 letters or more (so "uae" or "framer" never match a brand).
+            allowed = 1 if len(t) <= 8 else 2
             for p in parts + [norm.replace("-", "")]:
-                if abs(len(p) - len(t)) <= 2:
+                if len(p) >= 5 and abs(len(p) - len(t)) <= allowed:
                     d = Levenshtein.distance(p, t)
-                    if d < best[1]:
+                    if d <= allowed and d < best[1]:
                         best = (b, d)
-    return best if best[1] <= 2 else (None, 99)
+    return best

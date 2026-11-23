@@ -38,6 +38,8 @@ def main() -> None:
                              logo=json.loads(cap["brand_json"] or "{}") if cap else None)
         res = engine.score(sig)
         store.save_score(r["id"], res.risk, res.model_mean, res.votes, res.reasons, res.rules, res.threshold, res.scoring_ms)
+        with store.conn() as c:
+            c.execute("UPDATE candidates SET imitates=? WHERE id=?", (res.imitates, r["id"]))
         flagged += res.risk >= res.threshold
     print(json.dumps({"rescored": len(rows), "flagged": int(flagged), "model": engine.model_info().get("file"),
                       "threshold": engine.threshold()}))

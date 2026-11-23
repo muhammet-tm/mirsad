@@ -88,9 +88,8 @@ def process(store: Store, f: Found, use_sandbox: bool, summaries: bool = True) -
                 res = score(sig)
 
     store.save_score(cid, res.risk, res.model_mean, res.votes, res.reasons, res.rules, res.threshold, res.scoring_ms)
-    if res.imitates:
-        with store.conn() as c:
-            c.execute("UPDATE candidates SET imitates=COALESCE(imitates, ?) WHERE id=?", (res.imitates, cid))
+    with store.conn() as c:
+        c.execute("UPDATE candidates SET imitates=? WHERE id=?", (res.imitates, cid))
     if summaries and res.risk >= thr:
         from .api.cases import build_case  # local import: api depends on store, not the reverse
         case = build_case(store, cid)
@@ -116,14 +115,22 @@ def run(channel: str, store: Store | None = None, use_sandbox: bool | None = Non
             live, live_stats = sources.certificates_stream(seconds=kw.get("stream_seconds", 45))
             found += live
             stats["stream"] = live_stats
-            detail = f"{live_stats.get('per_minute', 0):,} certificates a minute" if live_stats.get("certificates") else f"{stats['certificates']} recent brand certificates"
+            if live_stats.get("certificates"):
+                detail = f"{live_stats.get('per_minute', 0):,} certificates a minute"
+            elif stats["errors"] == stats["queries"]:
+                detail = (f"crt.sh unavailable ({stats.get('last_status')}); stream "
+                          f"{'unreachable' if live_stats.get('error') else 'idle'}")
+                stats["state"] = "error"
+            else:
+                detail = f"{stats['certificates']} recent brand certificates"
         elif channel == "feeds":
             found, stats, all_urls = sources.feeds()
             detail = ", ".join(f"{k} {v}" for k, v in stats.items())
             _save_live_eval(all_urls)
         else:
             raise ValueError(channel)
-        store.count_screened(channel, len(found) + (len(extra.get("all", [])) if extra else 0))
+        # Feeds screen every URL they receive (most are not UAE-related and are not stored).
+        store.count_screened(channel, len(all_urls) if channel == "feeds" else len(found))
         flagged = 0
         for f in found:
             try:
@@ -131,7 +138,7 @@ def run(channel: str, store: Store | None = None, use_sandbox: bool | None = Non
                 flagged += risk >= threshold()
             except Exception as exc:
                 log.warning("process failed for %s: %s", f.url[:60], exc)
-        store.finish_run(run_id, len(found), int(flagged), "ok", detail)
+        store.finish_run(run_id, len(found), int(flagged), stats.get("state", "ok"), detail)
         store.audit("system", f"run:{channel}", str(run_id), json.dumps({"items": len(found), "flagged": int(flagged), **{k: v for k, v in stats.items() if not isinstance(v, dict)}}))
         return {"run_id": run_id, "channel": channel, "items": len(found), "flagged": int(flagged), "stats": stats}
     except Exception as exc:

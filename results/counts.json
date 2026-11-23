@@ -1,0 +1,92 @@
+{
+ "threshold": 0.6574,
+ "screened_total": 336,
+ "screened_by_channel": {
+  "certificates": 0,
+  "feeds": 6,
+  "maps": 134,
+  "search": 196
+ },
+ "stored_total": 263,
+ "stored_by_channel": {
+  "feeds": 6,
+  "maps": 83,
+  "search": 174
+ },
+ "flagged_total": 4,
+ "flagged_by_channel": {
+  "feeds": 4
+ },
+ "imitated_brands": {},
+ "rules_fired": {
+  "openphish": 3,
+  "young_domain": 1
+ },
+ "top_flagged_hosts": [
+  {
+   "host": "successful-plans-048821.framer.app",
+   "channel": "feeds",
+   "risk": 0.95,
+   "imitates": null
+  },
+  {
+   "host": "blessed-let-256047.framer.app",
+   "channel": "feeds",
+   "risk": 0.95,
+   "imitates": null
+  },
+  {
+   "host": "cooperative-portion-900675.framer.app",
+   "channel": "feeds",
+   "risk": 0.95,
+   "imitates": null
+  },
+  {
+   "host": "info-facture-prime.com",
+   "channel": "feeds",
+   "risk": 0.7876,
+   "imitates": null
+  }
+ ],
+ "runs": [
+  {
+   "channel": "feeds",
+   "started": "2026-11-22T23:59:27+00:00",
+   "finished": "2026-11-22T23:59:52+00:00",
+   "items": 6,
+   "flagged": 5,
+   "state": "ok",
+   "detail": "openphish 300, urlhaus 500, phishstats 100"
+  },
+  {
+   "channel": "search",
+   "started": "2026-11-22T23:59:54+00:00",
+   "finished": "2026-11-23T00:06:07+00:00",
+   "items": 196,
+   "flagged": 1,
+   "state": "ok",
+   "detail": "23 queries"
+  },
+  {
+   "channel": "maps",
+   "started": "2026-11-23T00:06:09+00:00",
+   "finished": "2026-11-23T00:11:31+00:00",
+   "items": 134,
+   "flagged": 8,
+   "state": "ok",
+   "detail": "176 listings"
+  },
+  {
+   "channel": "certificates",
+   "started": "2026-11-23T00:11:33+00:00",
+   "finished": "2026-11-23T00:34:43+00:00",
+   "items": 0,
+   "flagged": 0,
+   "state": "error",
+   "detail": "crt.sh unavailable (502); stream idle"
+  }
+ ],
+ "first_run": "2026-11-22T23:59:27+00:00",
+ "last_run": "2026-11-23T00:34:43+00:00",
+ "written": "2026-11-23T00:38:09+00:00"
+}

@@ -11,6 +11,7 @@ from __future__ import annotations
 import asyncio
 import hashlib
 import json
+import re
 import time
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
@@ -88,6 +89,9 @@ def _real_link(res: dict) -> str | None:
         return None
     parts = [p.strip() for p in shown.split("›")]
     parts = [p for p in parts if p and p != "..."]
+    # Social posts show text such as "6 interactions" instead of a host; skip anything that is not a host.
+    if not parts or not re.match(r"^(?:https?://)?[A-Za-z0-9.-]+\.[A-Za-z]{2,}(?::\d+)?/?$", parts[0]):
+        return None
     base = parts[0] if parts[0].startswith("http") else "https://" + parts[0]
     return base.rstrip("/") + ("/" + "/".join(parts[1:]) if len(parts) > 1 else "/")
 
@@ -162,12 +166,15 @@ def maps(queries=MAPS_QUERIES) -> tuple[list[Found], dict]:
             for p in r.json().get("places", []):
                 p["_query"] = q
                 listings.append(p)
-    # Phone numbers shared across listings with different names: keep only a hash and the count.
+    # Phone numbers shared across listings that point to different websites (branches of one business
+    # share a number and a website legitimately). Only a hash of the number and the count are kept.
     by_phone: dict[str, set] = {}
     for p in listings:
         phone = (p.get("nationalPhoneNumber") or "").replace(" ", "")
         if phone:
-            by_phone.setdefault(phone, set()).add(p.get("displayName", {}).get("text", ""))
+            site = p.get("websiteUri")
+            key = registered_domain(site) if site else "name:" + normalize(p.get("displayName", {}).get("text", "")).split(" ")[0]
+            by_phone.setdefault(phone, set()).add(key)
     found: list[Found] = []
     seen = set()
     for p in listings:
@@ -222,10 +229,18 @@ def certificates_crtsh(tokens=CT_TOKENS, days: int = 30) -> tuple[list[Found], d
             if i:
                 time.sleep(12.5)
             stats["queries"] += 1
-            try:
-                r = c.get("https://crt.sh/", params={"q": f"%{t}%", "output": "json", "exclude": "expired"})
-                certs = r.json() if r.status_code == 200 and r.text.strip() else []
-            except Exception:
+            certs = None
+            for attempt in range(3):  # crt.sh often answers 502 under load; back off and retry
+                try:
+                    r = c.get("https://crt.sh/", params={"q": f"%{t}%", "output": "json", "exclude": "expired"})
+                    if r.status_code == 200:
+                        certs = r.json() if r.text.strip() else []
+                        break
+                    stats["last_status"] = r.status_code
+                except Exception as exc:
+                    stats["last_status"] = type(exc).__name__
+                time.sleep(15 * (attempt + 1))
+            if certs is None:
                 stats["errors"] += 1
                 continue
             for cert in certs:
@@ -255,14 +270,25 @@ def certificates_stream(seconds: int = 60) -> tuple[list[Found], dict]:
     found: list[Found] = []
     stats = {"certificates": 0, "seconds": seconds}
 
+    import ssl
+
+    import truststore
+
+    url = settings.env.get("MIRSAD_CERTSTREAM_URL", "wss://certstream.calidog.io/")
+    stats["source"] = url
+
     async def run():
         deadline = time.monotonic() + seconds
+        ctx = truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT) if url.startswith("wss") else None
         try:
-            async with websockets.connect("wss://certstream.calidog.io/", max_size=2 ** 22, open_timeout=15) as ws:
+            async with websockets.connect(url, ssl=ctx, max_size=2 ** 22, open_timeout=15) as ws:
                 while time.monotonic() < deadline:
                     try:
-                        msg = json.loads(await asyncio.wait_for(ws.recv(), timeout=deadline - time.monotonic()))
-                    except (asyncio.TimeoutError, Exception):
+                        msg = json.loads(await asyncio.wait_for(ws.recv(), timeout=max(0.1, deadline - time.monotonic())))
+                    except asyncio.TimeoutError:
+                        break
+                    except Exception as exc:
+                        stats["error"] = f"{type(exc).__name__}: {str(exc)[:100]}"
                         break
                     if msg.get("message_type") != "certificate_update":
                         continue

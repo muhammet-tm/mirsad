@@ -121,7 +121,7 @@ def render(text: str, nums: dict, source: str) -> str:
 def main() -> None:
     nums = numbers()
     (RESULTS / "numbers.json").write_text(json.dumps(nums, indent=1, default=str), encoding="utf-8")
-    sources = [ROOT / "README.src.md", *sorted((ROOT / "docs").glob("*.src.md"))]
+    sources = [ROOT / "README.src.md", *sorted((ROOT / "docs").glob("*.src.md")), *sorted((ROOT / "deck").glob("*.src.md"))]
     for src in sources:
         if src.exists():
             dst = src.with_name(src.name.replace(".src.md", ".md"))

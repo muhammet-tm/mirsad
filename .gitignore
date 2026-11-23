@@ -11,6 +11,7 @@ data/processed/
 data/captures/
 data/*.sqlite3
 models/*.joblib
+!models/dae2_deploy.joblib
 models/*.gguf
 !models/*.card.json
 
@@ -24,3 +25,7 @@ results/train_log.txt
 
 # Local tooling
 .claude/
+
+# Run logs can contain request URLs; never commit them
+results/*.txt
+*.log

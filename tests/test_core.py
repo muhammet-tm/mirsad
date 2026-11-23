@@ -103,6 +103,35 @@ def test_young_domain_adds_reason_without_floor():
     assert "young_domain" in r.rules and r.risk == 0.0
 
 
+def test_gov_ae_hosts_count_as_government():
+    r = engine.score_url("https://www.adjd.gov.ae/en/pay-fines", channel="search", query="pay traffic fine abu dhabi")
+    assert r.rules == ["official_domain"] and r.risk <= 0.2
+
+
+def test_brand_in_path_does_not_count_as_impersonation():
+    r = engine.score(engine.Signals(url="https://www.reddit.com/r/dubai/comments/salik_recharge_help/",
+                                    channel="search", query="salik recharge"))
+    assert "brand_off_domain" not in r.rules
+
+
+def test_model_alone_needs_evidence_on_live_channels(monkeypatch):
+    class Fake:
+        def votes(self, urls):
+            import numpy as np
+            return {k: np.array([0.9]) for k in ("adaboost", "bagging", "stacking", "voting")}
+    monkeypatch.setattr(engine, "_model", lambda: (Fake(), {"threshold": 0.66}, "fake"))
+    live = engine.score(engine.Signals(url="https://ordinary-shop.com/", channel="maps"))
+    assert live.risk < 0.66
+    reported = engine.score(engine.Signals(url="https://ordinary-shop.com/", channel="report"))
+    assert reported.risk >= 0.66
+
+
+def test_display_text_is_not_a_link():
+    from mirsad.collectors.sources import _real_link
+    assert _real_link({"link": "https://www.google.ae/goto?url=x", "displayed_link": "6 تفاعل · قبل سنة واحدة"}) is None
+    assert _real_link({"link": "https://www.google.ae/goto?url=x", "displayed_link": "https://www.salik.ae › en"}) == "https://www.salik.ae/en"
+
+
 def test_base_rate_precision():
     assert at_base_rate(0.9, 0.01, 0.5) == pytest.approx(0.989, abs=1e-3)
     assert at_base_rate(0.9, 0.01, 0.001) == pytest.approx(0.0826, abs=1e-3)

@@ -71,6 +71,8 @@ On the development laptop (AMD Ryzen 5 4600H, one process), the deployed model s
 
 A URL string cannot show a domain's age, a card form, or a logo. Those signals come from passive enrichment and the sandbox, and they enter as rules in `mirsad/scoring/engine.py` that can only raise the risk (except the official-domain cap). The rules are hand-set floors, not learned weights; learning them needs labeled live cases, which the analyst decisions in the audit log will provide over time.
 
+The E3 table shows why a model score alone is not enough on live traffic: if 1% of screened links were fraudulent, only about {{pct:e3a.at_validation_threshold.dae2_mean.precision_at_1pct_prevalence}} of the model's flags would be right. The first live runs confirmed it: legitimate UAE business sites from map listings scored above the threshold on the URL alone. So on the live channels (search, maps, certificates) a link enters the analyst queue on the model alone only when the mean score is at least 0.97; below that, at least one piece of evidence (a brand on a non-official host, a card or password form, a logo on the wrong domain, a reputation listing, a reused phone number, a paid ad for a brand query) must agree. Links that miss the bar stay just under the threshold, on watch. Links an analyst checks by hand, and feed items, are scored without this bar. Hosts under .gov.ae are treated as government-owned, because the .ae registry restricts those names to government bodies.
+
 ## Limits
 
 - Training used samples of up to 200,000 rows, not the full datasets, because of the 24-hour build.

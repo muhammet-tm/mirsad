@@ -1,0 +1,13 @@
+{
+ "experiment": "e4_scoring_speed",
+ "model": "dae2_deploy.joblib",
+ "single_url_runs": 1000,
+ "median_ms_single_url": 114.73,
+ "p95_ms_single_url": 127.45,
+ "batch_ms_per_url": 0.485,
+ "urls_per_second_batch": 2060,
+ "model_load_seconds": 5.5,
+ "model_file_mb": 91.2,
+ "machine": "AMD Ryzen 5 4600H, 6 cores, 15.4 GB RAM, Windows 11, one process",
+ "written": "2026-11-22T23:37:58+00:00"
+}

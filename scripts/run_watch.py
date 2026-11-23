@@ -30,6 +30,9 @@ def main() -> None:
     ap.add_argument("--stream-seconds", type=int, default=45)
     a = ap.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
+    # httpx logs full request URLs at INFO; SerpApi takes its key as a URL parameter, so keep them out.
+    logging.getLogger("httpx").setLevel(logging.WARNING)
+    logging.getLogger("httpcore").setLevel(logging.WARNING)
     store = Store()
     channels = ["feeds", "search", "maps", "certificates"] if a.channel == "all" else [a.channel]
     for ch in channels:

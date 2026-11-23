@@ -87,6 +87,13 @@ class Settings:
 
 settings = Settings()
 
+# httpx logs every request URL at INFO level, and some providers (SerpApi) take the key in the URL.
+# Keep those loggers quiet everywhere Mirsad runs, so a key can never reach a log file.
+import logging as _logging  # noqa: E402
+
+for _name in ("httpx", "httpcore"):
+    _logging.getLogger(_name).setLevel(_logging.WARNING)
+
 
 def http_client(**kwargs):
     """An httpx client that trusts the operating system's certificate store.

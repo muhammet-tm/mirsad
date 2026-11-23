@@ -6,3 +6,1773 @@
 [00:56:53] e3b: applying the E1a (paper setting) model to the PhreshPhish test period
 [00:57:54] e3b_paper_model_on_phreshphish_test: wrote results/e3b_paper_model_on_phreshphish_test.json; adaboost acc=0.5452 f1=0.0152 fpr=0.00242; bagging acc=0.4877 f1=0.5853 fpr=0.76769; stacking acc=0.5268 f1=0.6508 fpr=0.84171; voting acc=0.5714 f1=0.6714 fpr=0.75377; dae2_mean acc=0.5182 f1=0.6486 fpr=0.8646
 [00:57:54] === e4 (sample 200000) ===
+python.exe : D:\AD Police 
+Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:359: UserWarning: 
+resource_tracker: There appear to be 440 leaked folder objects to clean up at shutdown
+At line:1 char:379
++ ... NG="utf-8"; & .\.venv\Scripts\python.exe scripts\train_eval.py --exp  ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (D:\AD Police Ha... up at shutdown:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  warnings.warn(
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_df671f7724444f6e96f20b15f231518a: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_bb27fc64c1414b16b7b32acb
+72822805_7277a7c0f9d841278f6940ea151c285b: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_77dd8f1dd6fb4505a84b23d8
+52513cd3_1d8b3e472e514de1a672614972079bbd: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_165434889b284d2abb650ab4
+af17e3a6_5073e963d03f429e8a7550081cc472c0: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_5272d07b8d124c06a7dee4c4
+57a50688_033055bae7454a618d482fae97a3247b: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_58626e310cee44f8b1c94fd64701aa61: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_c868424c19a8464caabe51a3
+8df85c3a_d1f374fb05794014a51d2cd144bc7e3d: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_6e0687bd121f4384bc3a2bbab597a520: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_ee32c599408e4f90aa05800a
+2e14733b_cf3223da5557433c9a8d6161980d61d9: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_1c74cce65495447e9d82dc02fea2207e: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_76704f98a5c14fbab6898f58
+66855bd2_1ae275ecf1ae4317ad7380788ab797a2: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_b49e23bbf83148a8a87f288476906cba: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_53829da1eae44ed4a55e7851
+ac138910_964304a75640444b9411d54d9d176a45: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_47c70b26fcf8411a968893670924e43b: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_55a0cc1f655544b8adff606b
+c77c03ef_0786e2ddb723473286d61f617088fa78: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_fc10e12ff8004e98adf1ba639c59fa14: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_2e823063eaaa4b069383dd18
+2d138967_ae6338aacc7143e78f15c3d46070c91c: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_155b8a4caedc497cb082b55c949df391: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_aa3cf36be3904a75ba5c3ac6
+13993ff4_2a337d0b27324993b676aa54fe1fae76: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_896084a5fd82445d8733900cb39d630c: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8f4aa0af4a3f4d769779862a
+56c54050_e2ddcbe6cfc84973956fd3a3fed60af6: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_54b2cbdabf7b4d508263afbd9c594169: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_1737e0b015a34096892e0144
+2d1ffa3d_f2803198fce84e51b6bb51625c05fe9a: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_822b1159a93e44ce9a7e9e1d9297a1fd: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_72cad904b06c4164bcc4a370
+21599f5d_1d6666decb534f19b944e642583485b5: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_e3d9d5665ac2453abe93f13bb7803f37: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_a99f38b098f947ad8156c77f
+e36748c4_86de5bfc72ae4c9e88b88f456bd2db81: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_3153e0a30a484c18a2e2eb1925d6ab2a: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_6bdfe500416a4e109f2423b6
+b531db30_57aae0d24a854b84be7cfaf420962add: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_7cc1df356a624495bf53e2c1db027ff3: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_1d8ceaa0679340f0bf674cec
+cf5b10d9_2adbae35b0e14c3a8d009fa364819efc: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_24d67e8e5c5c416983039f2b68fef8af: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_c51089bcc6b843b6baec26ba
+ace2b850_c5b1b0b2c6c140619823efcb994e5120: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_3ab0bc7e9d914107b9b9c533071bda6e: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_c5610990525445e1a8d2d763
+0cf68541_9c40c7d6a23c4c2485928c2e60fbc7df: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_f413cbe04bc04d9abeb23ab2f3d8a0f1: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_0f868f4b6ae946ccb01e4d3d
+17b35a82_a068a31c5ac54954bd4ff82ca7d92e61: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_68c97468a7914b6a8b7f82d9952006ac: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_6b15a440a2cb4d1e8418e82f
+60e41a27_1fd4ae66e2f34cb9b2a365de5b063399: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_0028d290aa7c4bd5a3cfa4acb8f1af91: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_c300f59803414c90991cc82f
+6180dfd3_40f70cfaecb94ee4add21d389aca6d5f: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_169a20ddb54a4091977c2633294275c4: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_7b27c35f0124444dbf7cf10e
+2db19332_0e6f37e87b7a444c957175a053ce9fab: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_38b9c90fce4d46958dcebf4e2a265202: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_53c9238f0a3744a9b6411463
+12617f8a_e6ce3d1bc0c94e4e8a7d2d1f1771a1ac: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_0067ae73c7df49af9125a0f11df885fb: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_f8025ae6463643bd948af8b1
+d7176aaa_f933b6921f7c4758923733f0a655725a: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_4f3061262aa34b2b9ba8d396560bead6: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_12efae5506724dd8ad0b9cbb
+82ebb5b4_95c0796cde6146ecb52088eba4a69903: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_5833f2a3fb854e9bb1a25748e681b76a: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_1953ff4ff33946b0bb10a04c
+c3d23671_f30ea5b3900d4e05b50d41af3ac2802b: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_deba378d6a6a4ddd8a207f09f3adc9eb: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_7d5400b89d354dc2bdfa4b69
+bd0d00cb_ead4aebf79984c9c9eadc7af312f58ee: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_2dcc68d782fb45ae9ae2ad635985e78a: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_d3ebb41de54c4fb9a8e4bf35
+fb765e78_c35a869fdff44e91949bb8d1f2a0d827: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_7ebd012e82234cf19e510a8f0bddc679: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_6d386ba820804a6587a6bb72
+64794fd2_fba9c294db9f42f7bd1b152c2c9fb2e0: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_b0bb68c472274658bb307b615d6b9c07: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_99ebad13a84842959ec528b0
+7a2e6166_05ca2985126f49ada621c09359675bf8: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_afcf49c553a34d3ebd60795087e9fd4e: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_aaaa0856df784c6b8a5d63b8
+3fb756ad_561b184c71f44d1faa982db3728ec8aa: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_6c2f6f1de74148a18d1b9845335a290c: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_1acadb6e9297431ba8624da6
+c18d0b62_3e3845ba43c04e35b98fb720bfd929a5: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_e721cdb4e86a427097fd1904874b2a11: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_e7b5f85c1dba422cacf26854
+7cae68a2_343f86a4ef744e7795c26bf1eacb2b11: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_39f9ea961a914b6f90cef4eecbee7641: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_660bf6c2339f432e80378950
+98229a09_68622e055cbc49c28b4275780b51792d: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_a8b5d072f5df40edb1579fc395e4ef0a: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_cbd80d622f7f4ea4b3f971b0
+db3060b2_5556ef0dd45b4bf0bb3ee7c7d06d8823: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_37cc544bf552441794ef610225f5d1fe: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_ad7d360cb15b42578b6eaf51
+f0be8f61_77c8a093cf6b41caae7b38ee6e7a237c: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_e0902d2bb5ba4d589b53f3ce37852921: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_4170e9cf634b4dba922f519f
+278d5d30_fb29669e28934810b84133b221189bc5: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_7d2d9aa00099477e9b42876cd77f0bb9: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_d6d16666cf6c49459e65e170
+68560d5a_32ea6b79ebed487dbf4ca81cc1d0a739: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_15949d03f0bb494db60faf311754d5a0: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_4b217fcd0b0e455e927dc8db
+74c5b992_d07348df8a6a4fbd809748aca2c6f597: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_8d64205e01874041ad9a55135ad4cd53: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_5f06927f99fc4c0384eebe93
+09e62d49_b6da3adbdb3e4395a898491c5e4d7022: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_0584f1edadf544dcad7d31b042e51787: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8c4efb6c137d4ccd99ef44d7
+1e8e4734_5dafcd483c414d3990cd8a0adb265999: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_a5e088a36eaa4b5d873e0d5cda57da5b: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_2b489fffebbd43be88813be4
+7e8978c3_f402e20365a54db6a2c8b1565cfb9340: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_04dd848c129040718bf71a4faa7cbd74: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_f257945b6f82435c8f684b4e
+dfd3d2ad_decba9f80b8f4b61bdd1b8b6cf7bb125: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_81b357e92f8e4ecba700e13ccbdb27ee: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_938c4a1eb7c64842bcc09091
+3b0a07ac_1cf10983b6f2484f92165e10ac742326: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_0d667fbd1e124f458db34c1450f16f22: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_64bc18cced5d47f0ab14f7b1
+56c1f82b_c94a56b2b3b646e4a139bb94582f671e: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_770c1a7eee454a7eab66e6c5232981cc: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_b871a4b56bb542d28631d255
+7beb0813_4461961928c24b4b8f89659a5c2cc204: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_c697274415c14785af283066b09bfc83: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_14f777d6571c4e4d9c1d6367
+e25b42e2_2e3f281a9a754ae7af5dbbda9729db5c: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_06e4eb00f79a49ab8cff0fb4e4f541fc: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_06eba1d7cfcb4b339a925b70
+6fd92663_bd89e615a21f4812b93d582a25c915c6: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_640171eb76c6480d978a83b988f2f5b0: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_35e4b7ece8b54e799fae3c5c
+144dafb6_1f8a50873241448e90e8ef2b2c09cd6b: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_676e5d52309d4f818cf6c3a2f02758dc: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_f5dae0c382194771b3073360
+7e24f5a9_dd346e4faec54274b4b9eeca689563a2: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_9ed6a1660dfe473e88ee84aae5dfb176: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_46b0370ca1f640ac9a0959cd
+b22635cd_77305ba2e80a495cabc577fc5816b5c9: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_a0fa767d14354d49a26947473b033c2c: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_6e287a1d261f414d8fae22dc
+84c71468_ced29a55fc874af7b0e378722381a828: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_961a8e52b5cc46aaa8e5bef02c87f6d6: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_3f8c5641f4dc45f3a4f4c611
+0eaf1ac6_059039f046a747e7ab52aafb8b90ed5d: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_77f6d825acf94e7db7953861645b23d7: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8d633cdbeb6b4bf796740b7e
+d9ef4a20_121fb12a7b204e25a6c18c4b4aa08a28: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_5d92d7514a6f4cfca4e715d7156fb0ae: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_996f0fc48b4b4d9887abfa88
+6bb905e9_868faa46da724f298de191aedf457fe8: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_629b9339329d44218b4393313c455323: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_d19dc8eb5d394f85a9dc0704
+e00ec0bd_df93e6ce70ed4382950eb8ab58e54bf5: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_444fa353d3d241f1a3bab5ab86830ee6: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_94c1e09edb844ee09383f0a2
+cd07cd61_499cdc193d774662abc3ccb22b05c944: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_e397224c1dca461fb4d34b0d55383a6d: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_aa86bf39ef724b79923d9dbc
+601e3204_916122a5da114c1db5f5b63a82f6c7fa: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_e98b12845e7a4cdba51ba00560daf0fc: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_743c12b495f7479ea360926f
+bc5e4000_659a4d0fca5c4250814cc1cec4d38536: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_11402baa8c534aed8c3437f0f924acce: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8cc7b720b86f401086650244
+028c11f7_faa3a75a147b485d9f74b1c4240c9bc6: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_5612aa17a95a4d40a9d52b65eed5f04a: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8e6d3f4984a94498af6bd96b
+8d1d8886_e11974090e87451ba18ee48149cd423a: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_8381a136a5f04a5cac8824eb44e49e5e: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_9672887b42d94fe9bbd1b844
+042b6422_191b5ea18745436290a7433decf57d8f: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_20bcd482630a466d944ed4151c3028b1: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_c2f18866fbde471d92167aed
+e01486f1_fee40f1217ee432881a2066c5e9aa174: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_095b3d0510a54731a820f3f1cc5022f4: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_d5ef54acb2ec42f9b801b390
+ad5a7b64_e415709a5d23455b985fb8f342b3a1b7: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_f3df8e81dc8b4fdc81764d53d1ce4a3c: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_b786d4a4f36f4b83bd8b8646
+edd061a9_8351462f0ceb492da7df7d5e4c2bf824: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_661258884a2141ad8353d0ee399c94e0: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_37e39a5ef6f8445bac98a1c7
+fc6b351d_b2fd2e79c0784ac588e6966f77ef1ace: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_dcc04d626889445c9d28b8e2c7e22461: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_c0cdc981027840c691f7087c
+d495433c_eaf1c0bcdf034d2cb5e87ab067a27893: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_2b60ed6f74a447d9af9af37e6997b4c7: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_b88981b939bd4c9283f2cc4f
+4239f331_e133f0db2cde4c92ad683847d71fd217: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_4796c00a3dd4458594043620129940c2: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_a657e5a52bf84ce9bdfb8a93
+f14389b8_8e1b541e9b6a4294b93dad2f0460a3dd: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_224e885afa7843b58213091c903e34fa: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_41722bc7fd4342dfb497c720
+734ff9fc_1382a3f625074454a7d8547f357e65bb: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_65ad2dcdb38e4652b5fbd967a56b76fb: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_b216e22de247416fb9db06f4
+1d3b1e90_5b1a0bb68d1d4c18ac0c500e5ca294b2: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_89828cd2cc3b41fabea8cdfeb0b95fc0: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_343a466243d248b9a3ace0b5
+0e7c4364_7efcc6306ae94dcf9004564809d44f0e: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_28245078d56a4b04a5248f4726e69973: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_176f8075729f499ea9d2f80a
+fe6fcacc_40e5606a82454e178d503439c12f3d82: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_2b77d036618b48b89dcf335ddbba2f0e: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_f57eedca19e74f6787f24be1
+9c592c77_659f84ccc4b944c1bded73972c3b5f57: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_fd10858b032c4da2966b9ae144274cb4: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_7c87eb4718be484c81a3adde
+f6a70a36_85843488d39a4e16a8e4d38fc74bf35b: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_ae1c192c88974e1086ddda008ace3c93: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_2945af0ce5564e8fb986c8c8
+b8bd1219_ca33a4383581453483504223aee0060a: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_67f05d89a7784da6993a56869ca9ce45: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_38445f5bcab240d7bbfef246
+73437709_23fc0f4145214e9d9ab48e16bca6ae85: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_424a758709c644f5acc0bd8047d5a0ce: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_e1accbc7c10b408c88ebd41a
+41b99f90_3d32d9584acc4e038f143d93b995ca10: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_6dfce170e3c0495395abd43f6ec96587: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_fb4d00f0673d4309ba65b952
+ce82774f_8e5517434dc34b1dbd41e9f3e2701a6f: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_5aa3d6e2af0f4d45bcbaa5ec6aa3c2da: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_212f080a002e418e8f98a9cf
+34875b69_eb88dd095e104156968402250e73e4b8: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_cd1ee44afe3b4d148403d85682cb6606: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_f69385334bc742c5a24356ae
+f914392d_c76f1ad6880a41c898e3cfe43d470ae8: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_acefa37e61d44fe2b68ba040850df424: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_c574dcb1223a4f82a34c46db
+41551dec_752a7f83bad347109dd2fb13050f02d4: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_b47dbad66a6b4256a9430dbae2a8b4d7: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_6d2a1e64316a4fae9e4da1e4
+e8ec98c8_d4eef4047d7c4651857ef72d2af94299: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_ea54aeb3a3a64b96830921678944dbc3: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_9d865982179c4ababce3166f
+dcc2698d_e3278ef2debd4a719cc1fc280e0e0f0e: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_88dab26e74c2407c8791252ece6c3efb: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_a5aad09a7d96489797e93e8d
+cae0d0c8_8e590090652c4981b9477310dc9ed016: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_d69287499fa0456c9a190e4ae109cacd: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_c85388908f9e4413b32f7400
+f0e9d81b_b64c341836754b7b86cb7144fa346200: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_9d3d51fab82d4578ab81eb70bd0af70d: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_0cbafa7b6fc0459cb9c0672d
+da81b5a0_f6e0424ea0a346ab908811da4803019f: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_abeae695e1974d26a18a57e1faff7fbc: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_a6575b2fc3004c04807f64b7
+a0c85418_01f6db3cc5994c909ea1aae83186f807: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_1bac5461d31347cc8c57aea557a8c37f: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_87a1ffbd76954a8dbfa61b0d
+6786395e_2b2ef548d27c4ca59ac54906f4d11be6: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_7ae238061faf44c1989ffa4b3735bfd4: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_d2d24c2f48f14e0f8e3666aa
+83776be7_e6529f870d5146abb358672a33374633: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_f0976c7e0b654e5eaf506ff7ca204095: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8eb17e4ac8aa4ce6ad0da9aa
+59211c9b_489f1d2768604b8c9b07abf5ef148cb2: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_489c04594923402387793243b36b885b: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_b45d9654101348f7a7b29a41
+8b79af29_e8d10de3dd3148d3819052ea91386609: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_b1dea0257d1e44ff85c33d6da33b775c: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_7b3c70715ed140209b5f2a43
+029afc94_1103713981344e07bf0f63885aa558d7: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_6ed61a07b7d343b0a24d7e20c24d6cc0: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_398779c6804d4843ae662bfb
+fc9f6937_c5f885592f6641f8ac844acb8d3ec1db: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_0388dce265884b8796acba64e11c41a8: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_7fc2a7ec544d4f9b93c2195d
+e8d04088_4c6d72e8cdab40edb18fef65e76fdb4c: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_b64d5dfca9894fadbba42a8f02731ee9: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8ddbd01496c24c3fa8167dd3
+3376f33c_3bc9110be6e64bc0adc0843d9999cafe: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_165fc135e27c4fb8b261620e9e52e304: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_0929acb568d14b1f92790757
+6797ddde_88b74a813288479f82bcc11e82d83578: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_7b3cf60b816846009cef633923d0b124: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_54ad63a771ac449b81732a48
+c7866900_d5d6f07df2694c3f9ca2ff9279bb6c22: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_c3a18d3216ed4258b00f77e640be14c5: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_3bf9df445fe148f091d853df
+23e011b1_dd6c782d3f9c43799ddc4cf9a9e9a81d: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_3768d491715744d08ca0fb6552c57ada: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_29bf0de99d5a4588a563be23
+bc5983d8_696f36cba57f41af9ea71028c7af72f5: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_4e2676aa027642fbbde5dcbcaa518e3a: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_80f1782e324845d78ef16ccc
+b654fab0_7717ae9c7c9b4407877f3a70362f0eb0: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_6fea327f99e3491cb9cde0310c9cd26e: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_9d554e2d180847f48b20d3e0
+5a153dc0_3f0b60049ac94371a7e384072920d6a5: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_089af105545749dc808bc2f89a48f9a2: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8637761a5d4744408bde602c
+64761156_97ff810989104b8f9e18cab7df839efb: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_47249830588341a485b7ff2aaea37be6: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_0d3b7e24953f46c19c3bc10f
+e10351f1_8abba1e252a248749bc932f37f3027f5: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_3828766eb73a429ea97472eb5c0575c9: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8d68178d0aa84399af3206de
+42383486_4d98fc34a8934f6bbad2bf22f289794e: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_07a7a6f7e43247179fa149660d38048f: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_86746ae78ee0451c86ac12e3
+496f873d_e75d1d09ccc841da8d822675ce3e819c: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_2fc8c48d73444f05b6fb944dda9ee370: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_7f51281e4950416e819d4844
+09f729d0_303a479f822643bb8863ba718a2ced54: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_bd30db6669864ad7a60c68b61546d1c0: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_1650cff5961e4bfc811d7812
+ad3a8a25_04b27691443e4c69a04faa029a55e4db: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_0a8f51f18fbe43aab898989eee0c5748: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_3a61e65205f74df3a5edba8c
+386b5ed8_5520fbddefe641de8c2d734e435a3d60: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_1915078249e14670bbb6990578e2bde7: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_876a233cbbee42efb257ad38
+3cdfc90b_cafab0830d264ed18464ca52090503af: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_a25bda9fced14d219568ade27e8f066e: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_f8b04dd0ce4542af9fd29136
+43bf86ee_94f6823e4c884ea78ae259c6a4308ac4: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_b7ad9f9e55fb420f8230653050666c5e: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_4c825c9bd81e43a484066a0d
+49eacd98_1c26ee83b94246adba6bb83109f3c6b6: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_c74ccd58e0c9429fac31f985df00c19c: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_e0b760a4496f4a97a6e2144e
+b20e9069_15d32206c95145f7adcdd1bcb47a8bf6: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_78a995daa5114c0bb0b17198a14cb385: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_1cb53e8c9d8942a9a9e38a12
+2778febe_047b001932b64cf4a1666cc6c2cb34fb: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_d4398c49cfd94ef7accba7d9ec800299: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_6dd8b2d4537140319ba268e1
+fd86d0ac_7b38171290ec443195c15fc8b25e791d: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_3ace7f0807e3469381cf5815e9e18fee: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_af54618b45cd439faaa57534
+13efbe0f_6bce38bfe07e4c50a1642560d5169019: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_22eb45d93ff84294a83e6fe81d08b0f1: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_83a0176ce72a447ba4fa01f7
+ae2d58a4_fb1ebae17b2c471f9c65e327ac913fd2: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_24afa8f772694140bf125473736f16d7: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_aefb05346c60479dba15d54e
+a3c0b2a5_39a899df4772477ab0822e56700d5bd8: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_42d1eb7e69124a6581fd9a6a30ca72b4: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_58766e591fd24d619a6c1465
+25d58160_3bab6e444e3e4eb98768b4bd76ca8c77: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_1f88a2ac085a43be80d61c63a3e99ed2: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_f7ae343bb4634df2a5ec9409
+b6ef90ae_16273f11849f41a3916cac8227579a80: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_29a8925fc9a84db58a40a12235937cb2: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_254a53c0707a4881a12249ae
+069c8d36_864e8f78fb0d4bc0afb9b0ad55f4d656: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_3b8647ba2750468cb2bf6e0ede4e113a: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_5b17c383108047c9a6969de7
+bb5dc785_aabad7478b404e2597d08c4d0b52eccc: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_7131c26a5b244ed68e8a8a0187de8cd9: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_142c2d1bfd9747b4bc3b3193
+116a4c28_4e127ec890bb461fb1776efb4936c200: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_e5590f7a11b047048288d364569c9fdd: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_e35447ac578a4cbbae686f4e
+8f37be52_f29d9f5378124779a08d9f5a51910b54: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_f8602bbd32d9439bb9ac1e8937fd4d6e: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_5469b71851704d6badc8cbf5
+1e5d647f_b6df3cc1ef1f477bbf9a834e13ff3b2a: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_2f6ed3076246450f88781b2558396ff0: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_58d0109ced304a87bd5078af
+8749f991_e73cc25785c2445281262f2b7f0fb004: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_ed0dc5c409264215b5580c991e3958d0: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_081096cdd6044b018cfc0359
+ed4f2433_3a75dc31ae214475ab99beb9695dfa0b: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_b5780430af8a4d8fa670e90d5f4be150: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_4b5be338d866411e87d54062
+6797bb45_67b0fb59f6ed4aadb0259ab273b8d3b2: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_02a4d6edcbfd40838a2aeca2ac610e47: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_6ebc92692816494f8c03023b
+7d0e260a_b153c73354694e35980bbab90958b0c4: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_edf0b92eba73429a8a1c776537c53078: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_823204a1e0df43718d1f9465
+536024c6_734c7a02d18e4910a1f7b430b418b629: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_a165a31f5e774ac1a72f119118ae9703: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_454d0f505d8c40a7bd0adf5f
+1f21b658_142cc77472bb44d380d954834b5f1c69: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_1331c884951e4d2dad9f859d89f22caf: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_0440f86fc68447d7801eb9a1
+ea55a87d_e656dc0c739c4100ac2b64a90fd250c8: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_a3dd6547ea714a9182f946fdbad073db: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_0c0eea21e6704a9e9555e89c
+313cff2a_8cdda924540946e480452f32696b99d7: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_fe23522401704c8daa3a9b2fcbfcfdf5: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_56eeec7da5614d72af2520d8
+92c57f8d_af6057acb00749409acd68c0d831a955: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_ce2569aa67f245428421ffa24fc060d5: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_cb71f9a199414ae582f33817
+f788b2dc_76fbd6e557614f76870d4300da4cfffa: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_a54ab68a07f94643abae0cdaeb2da394: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_56096b977ac149e8bd4c50d6
+710565b0_dc121761114f47b89834b76684782314: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_3838ef6908dd4342a002bddb912b5618: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_cdf9a777cf02494e9328111c
+a371bcb8_c842e5e816894869ab06c9e0410b89a9: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_31d90449d10e4a0eb5a955af8bc41f11: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_c5e89c78d6f042f8ada7ad69
+079ea7a5_dffa6c1a4b414bddb88f169a203c5085: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_241d9b9d7dbe4851b443010fc3b8cb18: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_5a8db082daab40f9a06e17ce
+692b943e_7e61130f369e4707b3ab6e2505f5cb47: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_dc44a79e7ad748bd9f5bc6e10ae9b010: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_2a3b3ca551ab44d5a682d0e1
+6cc9691f_a30fc9c0639a4d009d92f3a761271989: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_d5007ca6f3234d5694297b9dd100793f: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_a4f65e1877874c798785d814
+a0f061a2_530f598853d44884a0ea0fe46aeb6280: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_a55f384ae9ba4d28a96c94272dfce5d7: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_5be7df487fc04e548fbabdc0
+ee0bfc12_88bc9e0f15814e3fbbd34d79e7cd4d2c: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_3539bb4b6dc1437788c27f2c5eafb6e5: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_537a01299de54aec9048a4be
+cc0fb2ec_3a5e7339f8d74274b88043e657fd58dd: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_b0a7ef0e938f4d5282c9eeb1e9db58ec: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_5786e5da41074eb7bc0cc081
+1bf6cee6_e25bc1c0473f4a06824e60073f9104d9: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_800dcb53318b437c9aaaea3a8216595f: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_a454571a1e9b41b2bbdd4186
+9bf1e1bd_4f0c1a57c0c04a86921df074ebddda56: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_69940f8f8b2b4df887107e37ecd41097: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_19918e7305ec4608a7e00c91
+0221c934_7a9befc1e3de4f9ab5eb7c384bbff1b8: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_6df0c868e6a14213b0c5f8fed07c49bd: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_48e5ad074e554e9cab73e953
+8aa1fc42_9234eecac2514c8397e9e615f6b60cc1: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_d446440159024f288e11e62b2c2350ad: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8b10fb2330784088af4d7fd0
+300d921e_5fd0dd1221aa419ea7dd7334287992f6: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_24b91d941ad14096a8e67888fcb71865: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_d032668639e643cfb91e628f
+ba95c309_a80f0827bd9844468d1ce43828bb0911: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_1a3e5b95d7d84e269b0e15a583768d08: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_7cc59dfd902341ff9fcb005e
+bcfae4c0_8e30f713734a43dc8f167a57577e45ac: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_efcc9e61e12e4627b6076bcdc8578c96: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_3c9030a7c9dd4eeda116f209
+51012253_3b8e3f10a2874a1595d4cd3e586391dc: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_1b0a16f08268400b98e339b24d6d9f21: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_ba3ff1dce37e488388a30c52
+929f9cee_cfcfd5c859b54dbd9f0b7993bf5071e2: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_8ad5faa81cce4d5c8983c44a9b64c4d8: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_79cccd541288447784d017e0
+8dd039f4_d67da8eeb2ef4d91b92ebea49383e6a2: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_d0208eb3aaad481a9c85a05503cebc13: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_3ee3f7ba257540d58725dd9f
+d6a01338_7cef00e085ca4d5782853f99a02247fc: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_57390152bf644145b41530fa9feb72ab: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_454e83f475ac40e3ab13e375
+0ea8ae2b_40019526a487410bb02b7c1e8494ff87: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_23635878d9fa4ce1b006746e68f6300c: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_40627f0b7802420cb4da9fa6
+80f9304e_4059ba53103e4575ada5761c6512d486: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_dfbf191df192451bb4aad74d151778db: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_eea0464d66f146c6ae11f9e5
+89bbfc6d_3de52f9140d7491fbac655bb9e60f117: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_157f8d967c1e4d9a842e8d86a3437fc9: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_7627125a99004f88b647373e
+12f318a9_0c264cabd979412e8c2b2c872d2fcb36: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_1010f47592da465a914e28e8060526e5: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_d418003ae870437abfa7f4ab
+a6a7daf3_7717a352b95f4913ad0fedcffd6046d2: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_3a4bee1e35914e00b1e086b057d06ddb: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_cb726ae615424f18ad5ab2bc
+c25a3332_d530d2d961f545a19393dd92e4621aff: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_1c70d6f695fa410f964a6bcb53b1202c: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_2966a41f56ad48c2858d6b15
+41b08433_e046cfa81fac44ea85fd41c014a14970: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_4994252cb9b74662acb47f90c43b8c6e: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_6682116b31cc4625bfd18bf0
+976bcc8c_52389010e08e4c5fb0f0d8d4d747354a: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_8c5a23a9ad62455c8bc9687d639e4b74: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_e9bba82641784e91ad716b59
+2f8b362d_dd2c8b18f82b4b3aaabc9909b4df9ce1: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_a559b290c7784f7e897e2f1fa523a8c8: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_b43bd09a49c74da8a593501d
+be812225_2c966eeefe404ef9862a4b6f8523806c: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_8a1d5496b40d4f70ae951e41c2c769fe: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_986a716999404e69954498e8
+9f8a7642_5ab2b3c93f02474d8a38b19f2400c0f1: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_8dc19d8bb3b348b881ec66a2a551912a: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_c2ecb7198abd4cd9aa72546e
+3ed0e6b2_b2359afca6204b25bbb9e79d3d35f499: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_bc6a79acc33d46109c6b9a0ab122776e: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_77651bf8f3ed4d27b7830d96
+df4da6e0_9631aabb19ca4093887a9b41b4a1bd23: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_03e78cf96f5d4e4ca9ba79de6220bf53: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_44c349a5eecb4830b27cb7b8
+726dca4a_98d7f23d1b0944c793bcd6bebce786c5: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_93429886dada406db05817b296d9ff01: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_57fde35fbb6e41a99a352e75
+2a77e368_ca48c745dcfd42d1ad2822ddab0debfa: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_d177a671a7bf44dcb8cce8a3eb208e3a: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_0b2c1ed97aa846f49340f438
+ce9bd679_4b0bfd6927d94f6cb0324ff4d712d073: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_5bad58cd683d4ab5aee03c817bfd997b: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_b879a282b8864d2ab54f59ba
+a4615894_4cdf9b976a7c4b8f82baa6e4e72fa1b0: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_bdfa76480bf345d19b8762949d88e997: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_adf46219a40f4e88ac9044a6
+2bd809b8_e4ff7465a35c4128acfd1a224ed59e3f: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_a501a810aa1e4fa8a486cb7d133d3fdc: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_f575c14d1f674c3bbee22023
+ed9350aa_ee9af30be3a44442ba3d1f4af43a7485: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_ee7c76f2f300418e98690228ef2b3133: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_e662508b19be4ebbb8e57e05
+19842105_7b1ff84ac3fd41e49100e9bbb9e79849: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_9a9e053b87f54f1f92fafdec4205ad34: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_fc670b5d0b0348d18ef0dd7f
+ac378369_ab10625625984fd59b9f93ae71c942f4: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_efcd402022ce4c21940690466741c3b8: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_19ad78b2204d4002a82c2c88
+5cd24d0e_6063ba25c52046f78062ea2cddf40592: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_a458e66359734d9e9194205947a1affc: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_39110a1e684d44b1a6bd0253
+82744aff_cfe9647aa96642a9901a98f2f18856ee: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_5b40ffd5f339418e8bd904a12936ea02: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_6ef3beb6b0b04e10bb07e53f
+61dd034b_ba0fef1128264706a092a93bf786e0f0: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_38dbf0fc7e714830a9c3d2561ca4a82e: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_5f01cebbd9e8467b8d158bdf
+7eac7fde_de43df109a4b48aeb9b6a91c2f3a8771: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_bc4d4048a7bd4f509fa35e4824e83571: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_2a3704fcef964455b8ae7fc2
+bc68af0b_758d02126c21489eafacbdececef452c: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_18fb1e504cca4061a811ef0926da7550: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_f436d801f6a14d59af31de0f
+1f895b8b_e2955fc02e884d84bf7602bf928a6d77: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_d6e0ecb4d75446d08b7801e5d6c7df5d: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_7401e2b613564d50b2152c60
+ad4f6b01_da75c20982b8426db2d5b0c4a6a1e8aa: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_4e48aedf6e234deb977cc752cb6d0ada: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_ab542917fb6248378988c8fc
+a01bbce3_987b004d2b8345e2b68c7e47e8f44db8: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_e2120a43c3d84da88851495e69181ef6: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_e10a37da8b094340ba49f1e2
+5407843c_dbfdc5f069e546b7bbebbe90594cae35: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_96cad11337df4abbb2aec2611d29266e: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_81cedf14a0524a73a3767e60
+7cb85f4e_f57ab753e29242f8953cf01d550efdae: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_4a706c24fc5a4ca7beffbf279045b10d: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_1d3426f810e4455b90ba3d61
+44ed5c6a_388b092c543e458cb3d34a7e51a0ead1: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_ae43b49d943b4f969faba383be3acb05: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_305be94cf6a74190b2ec6431
+0eb9b676_cda91746f77e48949c3e39d8ef78b0ec: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_d12432abe23f4c84bad71a39750a9f30: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_f663a68e343e4ddcb7524ad9
+b481c394_c239015a90cd475b8670feefc508d689: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_c921e33cf12a4d019544551a82cc49b5: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_ea14665fb1644c1bad1a3b55
+0f190648_b50339dcdd0543c0837b0716adfb0e29: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_5dec5be274504e0195e5f7cb44e07b43: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_d3c31ecd9025470b868e9d8c
+4c605aa3_52a16139100a42278021862c0022b912: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_9c16195b317c4bccb03f4b57c60d78b1: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_2044b527941e4f18851b14f4
+b75b9761_7081d380322f4deb95048c143b4eda4b: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_8ab66ec1f81d4e8c9200f7239b96b5a0: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_a885dccc7d104155b65064a8
+eeab4baf_a2361e82e29243dd8ba613e820f42e09: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_fd4d07ccdc9c46c8bff0f8b35ddaf637: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_c7e3c766977f483ab6aea881
+15516b4f_d600353fcb8b4284871c52c399c1f224: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_52a6650b7620404c8996e1df1fcdd203: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8d8241c486a54313bbb36837
+6b95fdd5_f0569250255d47dfaa6671ccdd26059b: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_fb75b3c3e302466a8e388d8171c445b6: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_da65fa33f06f4bfbb57249d1
+6a8be419_cd9eaa5580dd4b7c9b7dce320ffd1c06: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_f66adbee8c904e1bad5688c7e46c16ba: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_9a33fef8fd744ef6ac24ac09
+fa621e8b_8f0a13e83e414913b743b23343b6abfe: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_0810a937d73b4b7cb0068faf1584b5a7: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_3b567ea5a1f54dc2bdab4482
+d2133a66_044f0a9af81a4e378d061145e04295de: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_3a746e8bdf3f4017a07e4c68649de6e5: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_9d7e76f7a0754affbb38505e
+10ce3cce_4875c727b21e4b0cac30be6cc15fc208: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_b492aebf1cd84571813ab9117975a30f: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_12ea319808ed488eb0dff393
+8814c756_79f0c857115d4414bb25b7277515f678: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_d7444f0114364841af5eae894df61cf6: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_c9e12fd58c014125b80e518a
+9285ff80_e604b7e0b2b24a69bb39cb8674660b44: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_0310071f432c49a3807ebb9b85d066a9: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_b82484cfcdae45108d0fbe78
+73e92f37_6df6b5a1aa7a4e59a758be75abfe2fba: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_f34deb59a2c1458dbaaee7530f01ed34: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_55bea4c0a742422ca82d1d36
+f3c5e043_cb392cbc63384537baedba87164465d2: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_d3a7cbfb9ce8433d96b3810f41eed107: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_731d485bf73141af97b1ce47
+fb102066_ab4b8ee88fc242e6a6cad4952a9dbac9: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_7ae85e9610bb4719a4e45331df928c05: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_1795b918634b49bbb5ee10c4
+1db19f7c_f3f5df204d6a406cb3d64e31f9f9b02a: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_a4d30b0b2b2241ea81dffa945850b15b: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_a8a31088bc1e4d828100fd65
+3d3c54f7_4c79b9120d0546fe8d16beeac89ed2cd: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_ef7554638b3f492485cbe6fda28fcf38: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_147a21ee56dd4a11aec10e9c
+f69943af_b40e55025e894451b76a01d73f9f62fc: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_ca4fb7e83971465eb8028649684d0ef1: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_336b560f39ca46068ee81275
+47de6646_dc8b1814a86b412ead82e830445050d7: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_dc105bf8cc194872bd6f8d156612acbb: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_d400df4c8d2047478e025f06
+587be7ee_657fa6a5d8a043848c9b3ef3a917b55c: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_da8c008bd5e045a1935098fdaef2a412: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_4de04c2126e742abba2007e8
+a61469a5_2b1ba42b205c4c22b18b90cf669fd0a1: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_9aaaeec320e8432f91e371433d580b62: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_2495441fa81d48068a0def12
+a0bdd42e_4cb4052f492247998457279feeacf276: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_86ebc39ab402439b845ab0d62ca2b173: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_a5f0773cc8a64d6abb719070
+5105e39f_9ecfc26024154f19a86caf13033b10a5: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_2f6d3f56216d44df85f270242c288d69: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_d265e159f9ed465097869c77
+ed14e689_154951ae00d44015a06b3630bc63392d: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_24f1fbd9fb4044f3aac7f0f4be208a14: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_5767a983fad042fa8ea58596
+2ca5895a_c5bafeadb8944b51a82336580137d808: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_11f0a09f55934d39a912c4fe4f8a3ff0: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_588980fcc1634225b8768402
+9c4d6dac_c93a119035a943caa8ca5c0a237a8bcb: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_067ff726a44b4b0085e4b2ab2c7ac7b3: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_7595db9a98874fc2aa76f319
+3c26d448_b5aa118255664507b9eab2f467c30ee0: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_522d451eb6fe440b9d4dc9654874b636: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_303df45326c7421baa72546f
+02895446_aa91a182d07e4800a30a1ac4ab5852d4: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_c38ed4521e184f64ac7c82b53a71f3bd: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_a3f6150ca85f40f3b6f1e08f
+7ca8adf9_49a1531bfcbc44a2a773cae5c3408a50: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_a783ae9b0c624a338906fefc28f3adb2: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_21daeb0c74214d7a81b67074
+297c5c24_eec2b16f3ad34bfdbb67261ca5b7e878: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_f5bba844d90740d5b6e2ea9ba3a6e38d: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_874b9649b57341208274fdd5
+355f8348_82a680cc948f4af4aef021a05892b4fb: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_59acd6591c184005a617497c14761783: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_b6f8718e6a21495c836f67f6
+39340974_21ba8a48c145455ab3840c153e1a4d50: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")
+D:\AD Police Hackathon\mirsad\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py:375: 
+UserWarning: resource_tracker: C:\Users\ASUS\AppData\Local\Temp\joblib_memmapping_folder_83328_8bda263d11ee402da83fd379
+f51e331f_586c541f4772402db1c47ef5a8efb105: FileNotFoundError(2, 'The system cannot find the path specified')
+  warnings.warn(f"resource_tracker: {name}: {e!r}")

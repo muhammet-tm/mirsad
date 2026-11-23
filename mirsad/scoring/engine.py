@@ -21,6 +21,11 @@ from ..features.brands import Brand, is_official, lookalike, mentioned_brand
 from ..features.url import canonical, host_of, registered_domain, split
 
 
+LIVE_CHANNELS = {"search", "maps", "certificates"}
+MODEL_ALONE = 0.97  # model-only score needed to enter the queue on a live channel
+WEAK_RULES = {"young_domain", "listing_site_unrelated", "organic_brand_query"}
+
+
 @dataclass
 class Signals:
     """Evidence gathered about one link before scoring."""
@@ -85,7 +90,8 @@ def score(sig: Signals) -> Result:
     host = host_of(sig.url)
     domain = registered_domain(host)
     owner = is_official(domain, host)
-    named = mentioned_brand(f"{host} {split(sig.url).path}")
+    # Only the host counts: a legitimate article or app page may mention a brand in its path.
+    named = mentioned_brand(host)
     look, dist = lookalike(domain)
     imitates = (named or look or _query_brand(sig.query))
     floors: list[float] = []
@@ -135,11 +141,16 @@ def score(sig: Signals) -> Result:
 
     if sig.listing:
         if sig.listing.get("website_unrelated"):
-            fire("listing_site_unrelated", 0.7, "Listing website is unrelated to the business name")
+            # Common for real businesses (agencies, group sites), so it adds a reason but cannot flag alone.
+            fire("listing_site_unrelated", 0.55, "Listing website is unrelated to the business name")
         if (sig.listing.get("phone_shared_with") or 0) >= 3:
             fire("listing_phone_reused", 0.75, f"Same phone number on {sig.listing['phone_shared_with']} listings")
         if sig.listing.get("brand_off_domain"):
-            fire("listing_brand_off_domain", 0.85, sig.listing["brand_off_domain"])
+            # Authorized dealers often name a brand and link to their own site, so a brand-named listing
+            # flags only when its domain is young or on a cheap TLD; otherwise it adds a reason.
+            from ..features.url import CHEAP_TLDS
+            risky = young or domain.rsplit(".", 1)[-1] in CHEAP_TLDS
+            fire("listing_brand_off_domain", 0.85 if risky else 0.55, sig.listing["brand_off_domain"])
 
     rep = sig.reputation or {}
     if rep.get("urlhaus"):
@@ -150,9 +161,19 @@ def score(sig: Signals) -> Result:
     if vt.get("malicious", 0) >= 2:
         fire("virustotal", 0.9, f"{vt['malicious']} VirusTotal engines flag it as malicious")
 
-    risk = max([model_mean] + floors)
-    if model_mean >= threshold() and not any(r for r in rules if r != "young_domain"):
-        reasons.insert(0, "Link pattern matches known fraud (DaE2 ensemble)")
+    thr = threshold()
+    # Weak signals add reasons but do not count as corroboration for a model-only score.
+    evidence = [r for r, f in zip(rules, floors) if r not in WEAK_RULES and f >= thr]
+    model_part = model_mean
+    if sig.channel in LIVE_CHANNELS and not evidence and model_mean < MODEL_ALONE:
+        # At realistic prevalence most model-only flags are false (E3: about 42% precision at a 1% base
+        # rate), so on live channels the model alone enters the queue only above MODEL_ALONE; below that
+        # it needs one piece of evidence to agree. The link is kept just under the threshold, on watch.
+        model_part = min(model_mean, round(thr - 0.01, 4))
+    risk = max([model_part] + floors)
+    if model_mean >= thr and not evidence:
+        reasons.insert(0, "Link pattern matches known fraud (DaE2 ensemble)" if model_part >= thr
+                       else "Link pattern resembles known fraud; waiting for corroborating evidence")
     if owner is not None and "search_parameter_injection" not in rules:
         risk = min(risk, 0.2)
         reasons = [f"Domain is on the official list for {owner.name}"]
