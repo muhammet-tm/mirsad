@@ -66,7 +66,7 @@ Wants=network-online.target
 [Service]
 User=${RUN_USER}
 WorkingDirectory=${ROOT}
-ExecStart=${ROOT}/certstream-server-go -config ${ROOT}/config.yaml
+ExecStart=${ROOT}/certstream-server-go --config ${ROOT}/config.yaml
 Restart=on-failure
 RestartSec=5
 NoNewPrivileges=yes
@@ -79,8 +79,11 @@ ReadWritePaths=${ROOT}
 WantedBy=multi-user.target
 EOF
 systemctl daemon-reload
-systemctl enable --now mirsad-certstream.service
-sleep 5
+systemctl enable mirsad-certstream.service >/dev/null 2>&1
+# restart, so a re-run picks up a changed unit or config even when the service is already running
+systemctl restart mirsad-certstream.service
+# The CLI uses pflag: the flag is --config (or -c). A single-dash -config is read as "-c onfig".
+for _ in $(seq 1 30); do ss -ltn | grep -q ":${PORT} " && break; sleep 1; done
 if ss -ltn | grep -q ":${PORT} "; then
   log "listening on port ${PORT}. From Windows, set MIRSAD_CERTSTREAM_URL=ws://127.0.0.1:${PORT}/ in .env"
 else
