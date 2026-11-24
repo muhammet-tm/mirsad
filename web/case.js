@@ -112,6 +112,7 @@ function renderLedger() {
   const k = C.kpis; if (!k) return;
   const s = k.channel_split || {};
   const cols = [['search', 'Search', '#034A89'], ['certificates', 'Certificates', '#4F7FB0'], ['maps', 'Maps', '#8FB0D2'], ['feeds', 'Feeds', '#C4D4E4']];
+  if (s.report) cols.push(['report', 'Reports', '#9AA7B5']);  // checked by hand or loaded as demo cases
   const ms = k.median_scoring_ms;
   $('ledger').innerHTML = '<span class="lab">' + esc(t('Today')) + '</span>' +
     '<span class="it">' + esc(t('Links screened')) + ' <b>' + num(k.links_screened_today) + '</b></span>' +

@@ -164,6 +164,16 @@ def test_summary_fact_check():
     assert fact_check("The site imitates Salik.", branded, _facts(branded)) == []
 
 
+def test_template_summary_names_the_channel_in_arabic():
+    from mirsad.llm.summary import template
+
+    case = {"display": "salik-topup.top", "channel": "feeds", "channel_detail": "Feed (OpenPhish)",
+            "imitates": "Salik", "risk": 0.8, "reasons": ["Name imitates Salik but is not on the official list"]}
+    s = template(case)
+    assert "Feed (OpenPhish)" in s["en"] and "Feed (OpenPhish)" not in s["ar"]
+    assert "موجزات التصيّد العامة" in s["ar"] and "0.80" in s["ar"]
+
+
 def test_hosting_platform():
     from mirsad.features.url import hosting_platform, registered_domain
 

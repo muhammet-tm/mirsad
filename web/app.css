@@ -128,7 +128,7 @@ body.page-watch{display:flex;flex-direction:column;height:100vh;overflow:hidden}
 .queue{inset-inline-start:12px;top:12px;bottom:12px;width:var(--qw);display:flex;flex-direction:column;overflow:hidden}
 .qh{padding:13px 16px 10px;border-bottom:1px solid var(--line);flex:none}
 .sort{margin-inline-start:auto;display:flex;align-items:center;gap:5px;font-size:12px;color:var(--muted);border:1px solid var(--line-2);border-radius:6px;padding:0 8px;height:26px;white-space:nowrap}
-.seg{display:flex;margin-top:10px;border:1px solid var(--line-2);border-radius:7px;overflow:hidden;height:28px}
+.seg{display:flex;margin-top:10px;border:1px solid var(--line-2);border-radius:7px;overflow:hidden;overflow-x:auto;scrollbar-width:none;height:28px}
 .seg button{flex:auto;display:flex;align-items:center;justify-content:center;gap:4px;font-size:11.5px;font-weight:500;color:var(--muted);white-space:nowrap;border-inline-start:1px solid var(--line-2);padding:0 4px}
 .seg button:first-child{border-inline-start:0}
 .seg button:hover{background:var(--chip)}
@@ -218,6 +218,7 @@ html[dir="rtl"] .row{padding:7px 13px 7px 16px}
 .at .pk{margin-inline-start:auto;font-weight:500;color:var(--ink);font-size:11.5px}
 #chart{margin-top:6px;width:100%;height:84px}
 .split{margin-top:9px;display:flex;flex-direction:column;gap:5px}
+.act.five{height:152px}
 .sr{display:grid;grid-template-columns:76px 1fr 20px;align-items:center;gap:8px;font-size:12px;color:var(--muted);line-height:15px}
 .sr .b{height:8px;border-radius:2px;background:#E6ECF3;overflow:hidden;direction:ltr}
 .sr .b i{display:block;height:100%;background:var(--navy);border-radius:2px}
@@ -538,6 +539,7 @@ html[dir="rtl"] .q{padding:6px 14px 7px 12px}
 }
 @media (max-height:820px){
   .act{height:112px;padding:10px 14px}
+  .act.five{height:148px}
   #chart{height:74px}
 }
 

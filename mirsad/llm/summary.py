@@ -51,14 +51,20 @@ def _endpoint(mode: str) -> tuple[str, str | None, str, dict]:
             {"chat_template_kwargs": {"reasoning_effort": settings.env.get("JAIS_REASONING_EFFORT", "low")}})
 
 
+# The channel details are English ("Feed (OpenPhish)"), so the Arabic template names the channel instead.
+_CHANNEL_AR = {"search": "البحث", "maps": "الخرائط", "certificates": "مراقبة الشهادات",
+               "feeds": "موجزات التصيّد العامة", "report": "بلاغ"}
+
+
 def template(case: dict) -> dict:
     reasons = case.get("reasons") or []
     lead = reasons[0].rstrip(".") if reasons else "Pattern matches known fraud"
     brand = case.get("imitates")
     where = case.get("channel_detail") or case.get("channel")
+    where_ar = _CHANNEL_AR.get(case.get("channel") or "", where)
     risk = f"{float(case.get('risk') or 0):.2f}"
     en = f"{case.get('display')} was found through {where}, with a risk of {risk}. {lead}."
-    ar = f"رُصد الموقع {case.get('display')} عبر {where}، ودرجة خطورته {risk}."
+    ar = f"رُصد الموقع {case.get('display')} عبر {where_ar}، ودرجة خطورته {risk}."
     if brand:
         en += f" It appears to imitate {brand}."
         ar += f" ويبدو أنه ينتحل اسم {brand}."

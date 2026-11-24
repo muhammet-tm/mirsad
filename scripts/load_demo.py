@@ -45,7 +45,7 @@ def main() -> None:
     loaded = 0
     with (ROOT / "demo" / "demo_links.csv").open(encoding="utf-8") as fh:
         for row in csv.DictReader(fh):
-            pipeline.process(store, Found(row["url"], "report", channel_detail="Demo link (invented, reserved .example domain)"),
+            pipeline.process(store, Found(row["url"], "report", channel_detail="Demo link, invented lookalike on a reserved .example domain"),
                              use_sandbox=use_sandbox)
             loaded += 1
     store.count_screened("report", loaded)

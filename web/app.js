@@ -36,7 +36,7 @@ const AR = {
   'Skip to the watch queue': 'انتقل إلى قائمة المراقبة', 'Skip to the case file': 'انتقل إلى ملف القضية',
   'Live': 'مباشر', 'live': 'مباشر', 'Synced': 'متزامن', 'synced': 'تمت المزامنة', 'Idle': 'خامل', 'Error': 'خطأ', 'Off': 'متوقف',
   'last run {t}': 'آخر تشغيل {t}', 'synced {t}': 'تمت المزامنة {t}', 'threshold {v}': 'العتبة {v}',
-  'Certificate stream': 'تدفق الشهادات', 'Feeds': 'الموجزات', 'Reports': 'البلاغات',
+  'Certificate stream': 'تدفق الشهادات', 'Feeds': 'الموجزات', 'Reports': 'البلاغات', 'not run yet': 'لم يعمل بعد',
   'Demo data': 'بيانات تجريبية', 'Connection lost, showing the last data': 'انقطع الاتصال، تُعرض آخر البيانات',
   'Demo data. The live service did not answer; select to retry.': 'بيانات تجريبية. لم تستجب الخدمة المباشرة؛ اختر لإعادة المحاولة.',
   'Demo data, as requested by the address.': 'بيانات تجريبية بطلب من العنوان.',
@@ -506,7 +506,7 @@ function renderStatusStrip(st) {
       const word = {live: 'Live', idle: 'Idle', error: 'Error', off: 'Off'}[c.state] || c.state;
       inner = '<i class="' + dot + '"></i><b>' + esc(label) + '</b><span class="lv' + (c.state === 'error' ? ' err' : '') + '">' + esc(t(word)) + '</span>' +
         (c.state === 'live' && when && c.id === 'search' ? '<span>' + esc(t('last run {t}', {t: when})) + '</span>' : '') +
-        (c.detail ? '<span class="dt"><bdi>' + esc(c.detail) + '</bdi></span>' : '');
+        (c.detail ? '<span class="dt"><bdi>' + esc(c.detail === 'not run yet' ? t(c.detail) : c.detail) + '</bdi></span>' : '');
     }
     return '<div class="it" title="' + esc(title) + '">' + inner + '</div>';
   }).join('');
@@ -846,7 +846,13 @@ function renderChips() {
   const split = (W.kpis && W.kpis.channel_split) || {};
   const all = W.kpis ? W.kpis.flagged : (W.list ? W.list.total : null);
   const defs = [['all', 'All', all], ...channelDefs(split).map(d => [d[0], d[1], split[d[0]]])];
-  $('seg').innerHTML = defs.map(d => '<button type="button" data-ch="' + d[0] + '" aria-pressed="' + (W.filter === d[0]) + '">' + esc(t(d[1])) + (d[2] != null ? ' <em>' + num(d[2]) + '</em>' : '') + '</button>').join('');
+  // A sixth chip would not fit beside the other five, so Reports shows as its flag icon with the name as a label.
+  $('seg').innerHTML = defs.map(d => {
+    const icon = d[0] === 'report';
+    return '<button type="button" data-ch="' + d[0] + '" aria-pressed="' + (W.filter === d[0]) + '"' +
+      (icon ? ' aria-label="' + esc(t(d[1]) + ' ' + num(d[2] || 0)) + '" title="' + esc(t(d[1])) + '"' : '') + '>' +
+      (icon ? I.report : esc(t(d[1]))) + (d[2] != null ? ' <em>' + num(d[2]) + '</em>' : '') + '</button>';
+  }).join('');
 }
 function itemById(id) { return W.list && W.list.items.find(i => i.id === id); }
 function currentCase() { return W.detail[W.sel] || null; }
@@ -1240,7 +1246,9 @@ function renderActivity() {
   const max = Math.max(1, ...Object.values(s));
   const total = Object.values(s).reduce((a, b) => a + b, 0);
   $('splitSub').textContent = t("today's {n} flags", {n: num(W.kpis.flagged != null ? W.kpis.flagged : total)});
-  $('split').innerHTML = channelDefs(s).map(d =>
+  const rows = channelDefs(s);
+  $('split').closest('.act').classList.toggle('five', rows.length > 4);
+  $('split').innerHTML = rows.map(d =>
     '<div class="sr"><span>' + esc(t(d[1])) + '</span><span class="b"><i style="width:' + ((s[d[0]] || 0) / max * 100).toFixed(2) + '%"></i></span><b>' + num(s[d[0]] || 0) + '</b></div>').join('');
 }
 
