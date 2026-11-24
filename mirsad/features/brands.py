@@ -45,7 +45,11 @@ BRANDS: tuple[Brand, ...] = (
     Brand("First Abu Dhabi Bank", "Bank", ("bankfab.com",), ("bankfab", "fab")),
     Brand("ADCB", "Bank", ("adcb.com", "adcb.com.eg"), ("adcb",)),
     Brand("ADIB", "Bank", ("adib.ae", "adib.com"), ("adib",)),
-    Brand("Emirates NBD", "Bank", ("emiratesnbd.com",), ("emiratesnbd", "enbd")),
+    # India and Saudi Arabia sites added 24 Nov 2026 after the daytime search run flagged them: the .in
+    # registry's RDAP names EMIRATES NBD BANK PJSC (bank.in, via IDRBT) and Emirates NBD (co.in) as
+    # registrants, and emiratesnbd.com.sa is the bank's Saudi site (its "About Emirates NBD KSA" page).
+    Brand("Emirates NBD", "Bank", ("emiratesnbd.com", "emiratesnbd.bank.in", "emiratesnbd.co.in", "emiratesnbd.com.sa"),
+          ("emiratesnbd", "enbd")),
     Brand("Dubai Islamic Bank", "Bank", ("dib.ae",), ("dib",)),
     Brand("Mashreq", "Bank", ("mashreq.com", "mashreqbank.com"), ("mashreq",)),
     Brand("RAKBANK", "Bank", ("rakbank.ae",), ("rakbank",)),

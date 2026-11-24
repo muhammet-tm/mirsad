@@ -149,8 +149,10 @@ class Store:
                       (now(), actor, action, target, detail))
 
     def next_id(self, c) -> str:
-        n = c.execute("SELECT COUNT(*) FROM candidates").fetchone()[0]
-        return f"MR-{n + 101:04d}"
+        # The highest number in use, not the row count: after a false candidate is removed, a count
+        # would hand out an id that still exists.
+        top = c.execute("SELECT MAX(CAST(SUBSTR(id, 4) AS INTEGER)) FROM candidates WHERE id LIKE 'MR-%'").fetchone()[0]
+        return f"MR-{max(top or 100, 100) + 1:04d}"
 
     def upsert_candidate(self, url: str, channel: str, *, channel_detail: str = "", query: str = "",
                          rank: int | None = None, is_ad: bool = False, listing: dict | None = None,

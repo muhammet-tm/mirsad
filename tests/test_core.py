@@ -207,3 +207,14 @@ def test_certstream_local_config(tmp_path, monkeypatch):
     text = cl.write_config(8603).read_text(encoding="utf-8")
     assert 'listen_addr: "127.0.0.1"' in text and "listen_port: 8603" in text and "enabled: false" in text
     assert cl.is_local("ws://127.0.0.1:8603/") and not cl.is_local("wss://certstream.calidog.io/")
+
+
+def test_new_ids_follow_the_highest_id_after_a_removal(tmp_path):
+    from mirsad.store import Store
+
+    s = Store(tmp_path / "ids.sqlite3")
+    ids = [s.upsert_candidate(f"https://example{i}.top/", "feeds")[0] for i in range(3)]
+    with s.conn() as c:
+        c.execute("DELETE FROM candidates WHERE id = ?", (ids[0],))  # a false candidate removed by hand
+    new, created = s.upsert_candidate("https://another.top/", "feeds")
+    assert created and new not in ids and new == f"MR-{int(ids[-1][3:]) + 1:04d}"
