@@ -14,7 +14,7 @@ const url = (q) => 'file:///' + path.join(DECK, 'Mirsad_Deck.html').replace(/\\/
 
 (async () => {
   fs.mkdirSync(path.join(OUT, 'art'), { recursive: true });
-  const browser = await pw.chromium.launch();
+  const browser = await pw.chromium.launch(process.env.CHROMIUM_PATH ? {executablePath: process.env.CHROMIUM_PATH} : {});
   const page = await browser.newPage({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 1 });
   const errors = [];
   page.on('pageerror', (e) => errors.push('pageerror: ' + e.message));

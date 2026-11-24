@@ -15,4 +15,6 @@ Public demo of Mirsad, the ScamShield AI hackathon entry from Abu Dhabi Universi
 
 What this demo holds: real cases from the team's lab runs and from public phishing feeds, with victim details removed from every link, and five invented demo links on the reserved `.example` domain. This server never opens a suspect page; page capture runs only in an isolated sandbox VM in the lab.
 
+Team: Muhammet Yalkapov (team lead), Sulaymon Sadullo, and Ahmed Mohamed Almheiri, Abu Dhabi University. Academic supervisor: Dr. Moatsum Alawida, Abu Dhabi University. The detection model follows the DaE2 ensemble design (Omolara and Alawida, Computers & Security 148, 2025, https://doi.org/10.1016/j.cose.2024.104170).
+
 Source code, documentation, and the technical report: https://github.com/muhammet-tm/mirsad

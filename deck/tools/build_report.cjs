@@ -27,7 +27,8 @@ p { margin: 0 0 6.5pt; text-align: left; }
 ul, ol { margin: 2pt 0 7pt; padding-left: 15pt; }
 li { margin-bottom: 2.5pt; }
 code { font-family: "IBM Plex Mono", Consolas, monospace; font-size: 8.6pt; background: #f3f3f1; padding: 0 2pt; }
-table { width: 100%; border-collapse: collapse; margin: 5pt 0 9pt; font-size: 8.4pt; line-height: 1.35; break-inside: avoid; }
+table { width: 100%; border-collapse: collapse; margin: 5pt 0 9pt; font-size: 8.4pt; line-height: 1.35; break-inside: auto; }
+tr { break-inside: avoid; } thead { display: table-header-group; }
 th { text-align: left; font-weight: 600; color: var(--grey); border-bottom: 1.4pt solid var(--ink); padding: 3pt 5pt 3pt 0; vertical-align: bottom; }
 td { border-bottom: 1px solid var(--rule); padding: 3.5pt 5pt 3.5pt 0; vertical-align: top; }
 a { color: var(--ink); text-decoration: none; }
@@ -44,7 +45,7 @@ h2#references + p, h2#references ~ p { font-size: 8.8pt; line-height: 1.4; }
   fs.mkdirSync(path.dirname(WORK), { recursive: true });
   fs.writeFileSync(WORK, html, 'utf8');
 
-  const browser = await pw.chromium.launch();
+  const browser = await pw.chromium.launch(process.env.CHROMIUM_PATH ? {executablePath: process.env.CHROMIUM_PATH} : {});
   const page = await browser.newPage();
   const errors = [];
   page.on('requestfailed', (r) => errors.push('requestfailed: ' + r.url()));

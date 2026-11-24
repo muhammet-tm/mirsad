@@ -138,7 +138,7 @@ function describe(index) {
 
 (async () => {
   fs.mkdirSync(IMG, { recursive: true });
-  const browser = await pw.chromium.launch();
+  const browser = await pw.chromium.launch(process.env.CHROMIUM_PATH ? {executablePath: process.env.CHROMIUM_PATH} : {});
   const page = await browser.newPage({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 2 });
   await page.goto('file:///' + path.join(DECK, 'Mirsad_Deck.html').replace(/\\/g, '/') + '?still#1');
   await page.evaluate(() => document.fonts.ready);
