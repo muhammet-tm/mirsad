@@ -130,7 +130,7 @@ Tests and documents:
 
 ## Documents
 
-[technical report](docs/TECHNICAL_REPORT.md) ([PDF](docs/Mirsad_Technical_Report.pdf)), [architecture](docs/ARCHITECTURE.md), [privacy design](docs/PRIVACY.md), [data and services](docs/DATA.md), [API](docs/API.md), [use of AI tools](docs/AI_USE.md).
+[technical report](docs/TECHNICAL_REPORT.md) ([PDF](docs/Mirsad_Technical_Report.pdf)), [architecture](docs/ARCHITECTURE.md), [privacy design](docs/PRIVACY.md), [security and the pre-launch audit](docs/SECURITY.md), [data and services](docs/DATA.md), [API](docs/API.md), [use of AI tools](docs/AI_USE.md).
 
 The presentation is in `deck/`: `Mirsad_Deck.html` is the animated deck for presenting (open it in a browser; arrow keys move, F gives full screen), `Mirsad_Deck.pdf` is the same deck as a PDF, and `Mirsad_Deck.pptx` is an editable PowerPoint copy. All three come from one source, `deck/Mirsad_Deck.src.html`, whose numbers are filled from `results/*.json` like the documents. The PowerPoint copy uses Inter and Consolas in place of the deck's web fonts, so the PDF is the exact version. To rebuild the deck after new results (needs Node.js and Playwright with Chromium):
 

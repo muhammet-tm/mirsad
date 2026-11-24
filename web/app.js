@@ -860,7 +860,6 @@ function itemById(id) { return W.list && W.list.items.find(i => i.id === id); }
 function currentCase() { return W.detail[W.sel] || null; }
 function renderRows() {
   const L = W.list; if (!L) return;
-  const total = W.filter === 'all' ? (W.kpis ? W.kpis.flagged : L.total) : L.total;
   $('qcount').textContent = t('{n} of {total} open cases', {n: L.items.length, total: num(L.total)});
   const focusId = document.activeElement && document.activeElement.classList.contains('row') ? document.activeElement.dataset.id : null;
   if (!L.items.length) { $('rows').innerHTML = '<li class="empty">' + esc(t('No cases in this channel today.')) + '</li>'; return; }

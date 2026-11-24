@@ -17,13 +17,13 @@ Not collected: visitor data, cookies, browsing histories, form inputs, credentia
 
 ## Controls
 
-1. Query-string redaction. Phishing links often carry a victim's email or a token in the query string (PhishStats records do). Mirsad stores those values only as keyed hashes in every list view, and strips query strings from feed URLs on intake.
+1. Query-string redaction. Phishing links often carry a victim's email or a token in the query string (PhishStats records do). Mirsad shows those values only as keyed hashes in every list view (the key is random per installation), strips query strings from feed URLs on intake, and on the public demo replaces every value with a plain `[redacted]`, so no one can test guesses against a hash.
 2. Personal data seen on a page. A captured page can show victim lists or leaked records; such material is flagged for the police and not kept by Mirsad.
 3. Third-party exposure. Sending a link to an outside scanner reveals it to that provider. Mirsad analyzes locally first and calls outside services only for links already flagged, and only for public links. Summaries can run on a local Falcon model inside the sandbox VM, so no case data leaves the machine in that mode; the default Jais mode sends only Mirsad's own derived facts and the page title, never the page text.
 4. Human decision. The tool recommends; an officer confirms every escalation through a deliberate hold-to-confirm action with a timed undo. Nothing is blocked automatically.
-5. Access and audit. Every case view, decision, export, and on-demand check is written to an append-only audit table. The server binds to localhost.
+5. Access and audit. Every case view, decision, export, and on-demand check is written to an append-only audit table. The lab server binds to localhost, answers only to its own host names, and refuses state-changing requests from other sites. The public demo records no visitor address and no checked link, and holds no raw links (see [SECURITY.md](SECURITY.md)).
 6. Isolation. Suspicious pages load only inside the sandbox VM, in a fresh browser context with no stored credentials, downloads blocked, every request to a private or local address blocked (so the crawler cannot reach the campus network), and no typing, clicking, or form submission.
-7. Secrets. API keys live in a `.env` file outside the repository; `.gitignore` excludes it, and commits are scanned for key patterns.
+7. Secrets. API keys live in a `.env` file outside the repository; `.gitignore` excludes it, commits are scanned for key patterns, and the git history was checked against the real key values on 24 November 2026. On the public demo, keys are Space secrets, and the deploy script refuses to upload any file that holds a key.
 
 ## Legal frame
 

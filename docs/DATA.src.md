@@ -19,7 +19,9 @@ Every dataset and service Mirsad uses, with its license or terms and what the co
 | Serper | Fallback search results | 2,500 free queries; ads not returned in our test | `SERPER_API_KEY` |
 | Google Places API (New), Text Search | Map listings around Abu Dhabi with website, phone, and location | Store place IDs indefinitely and coordinates for at most 30 days; do not store business names, addresses, or reviews. Mirsad keeps place ID, category, website domain, coordinates, and a hashed phone group only. | `PLACES_API_KEY` |
 | crt.sh and the Certificate Transparency stream (certstream-server-go 1.10.1, MIT, run on the host only during a certificate run) | Newly issued certificates that contain or imitate a protected brand | Public logs; about 5 requests a minute to crt.sh; the stream downloads every new certificate from every log while it runs, tens of megabits a second, so runs are kept to a few minutes | none |
-| RDAP (IANA bootstrap) | Domain registration date for generic top-level domains | Public; .ae has no RDAP and hides dates, so the first certificate date stands in | none |
+| RDAP (IANA bootstrap) | Domain registration date, registrar, expiry, and name servers for generic top-level domains (the registry record that replaced WHOIS) | Public; registrant contacts are redacted by registries and not read; .ae has no RDAP and hides dates, so the first certificate date stands in | none |
+| Cloudflare and Google DNS over HTTPS | The addresses a suspicious host resolves to | Public resolvers; the suspect site and its name servers never see Mirsad's address | none |
+| Team Cymru IP-to-ASN (DNS TXT, through the same resolvers) | The network that announces each address, for hosting evidence and for linking cases that share an address | Free public service | none |
 | OpenPhish community feed | Fresh phishing URLs | Non-commercial use only | none |
 | abuse.ch URLhaus | Malware-distribution URLs and per-URL lookups | Free under fair use | `ABUSECH_AUTH_KEY` |
 | PhishStats | Recent phishing URLs | 50 requests a day without a key; records can carry victim data, so query strings are stripped on intake | none |
