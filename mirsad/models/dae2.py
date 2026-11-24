@@ -1,19 +1,20 @@
-"""DaE2: the diverse and efficient ensemble of Omolara and Alawida (2025), as reproduced here.
+"""Mirsad's URL classifier: four ensembles after the DaE2 design (reference [1] in docs/TECHNICAL_REPORT.md).
 
-The paper vectorizes URLs with TF-IDF, reduces dimensions with PCA, trains several base learners
-(SVM, random forest, logistic regression, decision tree, naive Bayes, KNN), and compares four
-ensembles: AdaBoost, Bagging, Stacking with a logistic-regression meta-learner, and soft Voting
-over KNN, logistic regression, and SVM (Table 4). Where the paper leaves a choice open, this file
-makes one and says so:
+The model turns a URL into TF-IDF features, reduces them (chi-squared selection, then truncated SVD as
+the sparse form of PCA), trains diverse base learners, and combines them through four ensembles:
+AdaBoost, Bagging, Stacking with a logistic-regression meta-learner, and soft Voting over KNN,
+logistic regression, and a calibrated SVM. Mirsad scores a link with the mean of the four. The choices
+this file makes:
 
-- Text representation. "paper": word-level TF-IDF on the raw URL string, as Section 3.5 describes.
-  "ours": character 3- to 5-grams of the canonical URL (scheme and "www." removed) hashed into
-  2^20 columns, so the model cannot learn which source list a URL came from.
-- PCA on sparse TF-IDF is done with truncated SVD (100 components); tree and KNN learners use those
-  components plus 25 handcrafted lexical features, linear learners use the sparse TF-IDF directly.
-- AdaBoost boosts depth-3 decision trees on the SVD and lexical block. The paper's best AdaBoost row
-  (Table 4) boosts logistic regression; on hashed TF-IDF that variant collapsed to a constant output
-  in our first runs, so we report the tree-based variant.
+- Text representation. "paper": word-level TF-IDF on the raw URL string, the conventional benchmark
+  setting, kept for comparison (E1a, E2p). "ours": character 3- to 5-grams of the canonical URL
+  (scheme and "www." removed) hashed into 2^19 columns, so the model cannot learn which source list
+  a URL came from.
+- The dimension reduction keeps the 20,000 hashed columns most associated with the label and reduces
+  them to 100 SVD components; tree and KNN learners use those components plus the lexical features,
+  linear learners use the sparse TF-IDF directly.
+- AdaBoost boosts depth-3 decision trees on the SVD and lexical block. Boosting logistic regression on
+  the hashed TF-IDF collapsed to a constant output in our first runs, so the tree-based variant is used.
 - KNN is fitted on a 50,000-row sample, because exact KNN over 500,000 rows is too slow to score
   live links; this is stated in the model card.
 """
@@ -149,7 +150,7 @@ def _svm():
 def build(ensemble: str, representation: str = "ours", random_state: int = 42) -> Pipeline:
     """One of the four DaE2 ensembles as a pipeline that takes raw URL strings."""
     if ensemble == "adaboost":
-        # Boosting logistic regression on the hashed TF-IDF (the paper's best AdaBoost row) collapsed to a
+        # Boosting logistic regression on the hashed TF-IDF collapsed to a
         # constant output in our runs, so AdaBoost boosts shallow trees on the SVD and lexical block.
         clf = _dense(AdaBoostClassifier(estimator=DecisionTreeClassifier(max_depth=3), n_estimators=150,
                                         learning_rate=0.5, random_state=random_state))

@@ -112,7 +112,7 @@ def fmt(kind: str, value) -> str:
 
 
 LABELS = {"adaboost": "AdaBoost", "bagging": "Bagging", "stacking": "Stacking", "voting": "Voting",
-          "dae2_mean": "DaE2 (mean of the four)"}
+          "dae2_mean": "Mean of the four"}
 
 
 def table(prefix: str, nums: dict, block: str = "at_validation_threshold") -> str:

@@ -1,6 +1,6 @@
 # مرصاد Mirsad
 
-Mirsad ("the watchtower") finds fraudulent links and websites where people in the UAE meet them: search results, paid search ads, map listings, and newly issued certificates. It scores every link with DaE2, a published ensemble classifier, gathers passive evidence for the suspicious ones, and gives an Abu Dhabi Police analyst a ranked queue, a case file with numbered exhibits, and an evidence package for a takedown or blocking request.
+Mirsad ("the watchtower") finds fraudulent links and websites where people in the UAE meet them: search results, paid search ads, map listings, and newly issued certificates. It scores every link with a four-ensemble URL classifier, gathers passive evidence for the suspicious ones, and gives an Abu Dhabi Police analyst a ranked queue, a case file with numbered exhibits, and an evidence package for a takedown or blocking request.
 
 Built for ScamShield AI (Abu Dhabi Police and 42 Abu Dhabi, 24 and 25 November 2026). Challenge: "Detecting Fraudulent Links and Websites Used in Cybercrimes and Financial Fraud ... across the open internet, including those appearing in Search Engine results and Maps", with the objective of early identification and proactive measures.
 
@@ -20,10 +20,10 @@ Abu Dhabi Police warned three times in 2026 ({{facts.adp_warnings_2026.0}}, {{fa
 
 ## Results (measured by our code)
 
-The detection engine implements and extends DaE2 (Omolara and Alawida, Computers & Security 148, 2025). Every number here is generated from `results/*.json`; details in [docs/MODEL.md](docs/MODEL.md).
+The detection model combines four ensembles (AdaBoost, Bagging, Stacking, and Voting) after the DaE2 design, which we re-implemented, retrained on recent data, and tested in harder settings. The method, the experiments, and every table are in the [technical report](docs/TECHNICAL_REPORT.md) ([PDF](docs/Mirsad_Technical_Report.pdf)). Every number here is generated from `results/*.json`.
 
-- Dataset audit: in the paper's dataset, the single rule "malicious if the URL starts with a scheme" is already {{pct:e0.scheme_only_rule.accuracy}} accurate, and {{pct:e0.random_split.share_test_rows_domain_seen_in_train}} of test rows under a random split share a domain with training rows.
-- Paper's setting reproduced (random split, raw URLs): DaE2 accuracy {{pct:e1a.at_validation_threshold.dae2_mean.accuracy}} at a false-positive rate of {{pct2:e1a.at_validation_threshold.dae2_mean.false_positive_rate}}.
+- Dataset audit: in the common public benchmark (malicious_phish), the single rule "malicious if the URL starts with a scheme" is already {{pct:e0.scheme_only_rule.accuracy}} accurate, and {{pct:e0.random_split.share_test_rows_domain_seen_in_train}} of test rows under a random split share a domain with training rows.
+- Public benchmark, random split, raw URLs (the conventional setting): accuracy {{pct:e1a.at_validation_threshold.dae2_mean.accuracy}} at a false-positive rate of {{pct2:e1a.at_validation_threshold.dae2_mean.false_positive_rate}}.
 - Same split without scheme and "www." artifacts: {{pct:e1b.at_validation_threshold.dae2_mean.accuracy}}.
 - Sites never seen in training (split by domain): {{pct:e2o.at_validation_threshold.dae2_mean.accuracy}} with our representation.
 - Deployed model on later months (trained July 2024 to September 2025, tested September to December 2025): accuracy {{pct:e3a.at_validation_threshold.dae2_mean.accuracy}}, fraud recall {{pct:e3a.at_validation_threshold.dae2_mean.fraud_class.recall}}, false-positive rate {{pct2:e3a.at_validation_threshold.dae2_mean.false_positive_rate}}, ROC AUC {{n2:e3a.at_validation_threshold.dae2_mean.roc_auc}}.
@@ -31,8 +31,8 @@ The detection engine implements and extends DaE2 (Omolara and Alawida, Computers
 
 ## Reasoning behind the technical choices
 
-- DaE2 as the first stage. It is published, explainable (four ensemble votes per link), and fast enough to screen every link the collectors find. We reproduced it in the paper's setting first, so the comparison is fair, then changed only what the audit showed was wrong.
-- Canonical URLs and a domain split. The audit showed that the paper's dataset rewards recognizing which source list a URL came from. Removing the scheme and "www." and splitting by domain gives lower but honest numbers for sites the model has never seen, which is the early-identification case.
+- A four-ensemble model as the first stage. It is explainable (four votes per link), steadier than any one of its models, and fast enough to screen every link the collectors find. We first measured it in the conventional benchmark setting, so the comparison is fair, then changed only what the audit showed was wrong.
+- Canonical URLs and a domain split. The audit showed that the benchmark dataset rewards recognizing which source list a URL came from. Removing the scheme and "www." and splitting by domain gives lower but honest numbers for sites the model has never seen, which is the early-identification case.
 - Retraining on recent data. Phishing changes monthly. The deployed model trains on 2024 to 2025 URLs and is tested on later months.
 - A rules stage on top of the model. Domain age, forms, logos, and channel context cannot be learned from a URL string. They enter as floors that only raise the risk, each with a plain reason, so an officer can see why a case is in the queue.
 - Two signals before the queue. At a 1% base rate the model alone would be right on only about {{pct:e3a.at_validation_threshold.dae2_mean.precision_at_1pct_prevalence}} of its flags, and our first live run flagged ordinary business sites on the URL alone. On live channels a link therefore needs either a very high model score (0.97) or one piece of evidence that agrees.
@@ -109,7 +109,7 @@ Tests and documents:
 
 ## Documents
 
-[Architecture](docs/ARCHITECTURE.md), [model and results](docs/MODEL.md), [privacy design](docs/PRIVACY.md), [data and services](docs/DATA.md), [API](docs/API.md), [use of AI tools](docs/AI_USE.md).
+[technical report](docs/TECHNICAL_REPORT.md) ([PDF](docs/Mirsad_Technical_Report.pdf)), [architecture](docs/ARCHITECTURE.md), [privacy design](docs/PRIVACY.md), [data and services](docs/DATA.md), [API](docs/API.md), [use of AI tools](docs/AI_USE.md).
 
 The presentation is in `deck/`: `Mirsad_Deck.html` is the animated deck for presenting (open it in a browser; arrow keys move, F gives full screen), `Mirsad_Deck.pdf` is the same deck as a PDF, and `Mirsad_Deck.pptx` is an editable PowerPoint copy. All three come from one source, `deck/Mirsad_Deck.src.html`, whose numbers are filled from `results/*.json` like the documents. The PowerPoint copy uses Inter and Consolas in place of the deck's web fonts, so the PDF is the exact version. To rebuild the deck after new results (needs Node.js and Playwright with Chromium):
 
@@ -122,7 +122,7 @@ node deck\tools\build_pptx.cjs
 
 ## Team
 
-Muhammet Yalkapov (team lead, security and product), Sulaymon Sadullo (data and AI), and Ahmed Mohamed Almheiri (deployment and partnerships), Abu Dhabi University. Academic mentor: Dr. Moatsum Alawida, Abu Dhabi University.
+Muhammet Yalkapov (team lead, security and product), Sulaymon Sadullo (data and AI), and Ahmed Mohamed Almheiri (deployment and partnerships), Abu Dhabi University. Academic supervisor: Dr. Moatsum Alawida, Abu Dhabi University.
 
 ## Use of AI tools
 
@@ -130,4 +130,4 @@ The team chose the challenge, the approach, the scope, the data sources, the des
 
 ## Credits
 
-Detection method: DaE2, Omolara, A.E. and Alawida, M. (2025), Computers & Security 148, 104170, https://doi.org/10.1016/j.cose.2024.104170. Dr. Moatsum Alawida (Abu Dhabi University) mentored the team as academic advisor. Third-party components and data keep their own licenses (see [LICENSE.md](LICENSE.md) and [docs/DATA.md](docs/DATA.md)).
+The detection model follows the DaE2 ensemble design: Omolara, A.E. and Alawida, M. (2025), Computers & Security 148, 104170, https://doi.org/10.1016/j.cose.2024.104170. Third-party components and data keep their own licenses (see [LICENSE.md](LICENSE.md) and [docs/DATA.md](docs/DATA.md)).

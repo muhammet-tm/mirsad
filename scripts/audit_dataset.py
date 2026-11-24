@@ -2,7 +2,7 @@
 
 Measures, per class: share of URLs that start with a scheme or contain "www.", length, number of
 unique registered domains, the top domains, exact and canonical duplicates, and how many registered
-domains appear on both sides of a random 80/20 split (the split the DaE2 paper used).
+domains appear on both sides of a random 80/20 split (the conventional benchmark split).
 
 Usage: python scripts/audit_dataset.py   -> results/e0_audit_kaggle.json
 """
@@ -52,7 +52,7 @@ def main() -> None:
     conflicting = df.groupby("canon")["type"].nunique()
     out["canonical_urls_with_conflicting_labels"] = int((conflicting > 1).sum())
 
-    # The paper's protocol: a random 80/20 split of rows.
+    # The conventional protocol: a random 80/20 split of rows.
     tr, te = train_test_split(df, test_size=0.2, random_state=42, stratify=df["type"])
     shared = set(tr["domain"]) & set(te["domain"])
     out["random_split"] = {

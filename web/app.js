@@ -64,7 +64,7 @@ const AR = {
   'Map listing {id}, {cat}, risk {r}': 'إعلان على الخريطة {id}، {cat}، الخطورة {r}',
   'Flagged links per hour': 'الروابط المشبوهة في الساعة', 'last 24 hours': 'آخر 24 ساعة', 'Peak {n} at {t}': 'الذروة {n} عند {t}',
   'Channel split': 'التوزيع حسب القناة', "today's {n} flags": '{n} إشارة اليوم',
-  'Mirsad prototype. Detection engine: DaE2 (Omolara and Alawida, 2025).': 'نموذج أولي لمرصاد. محرك الكشف: DaE2 (Omolara وAlawida، 2025).',
+  'Mirsad prototype. Detection model: four-ensemble URL classifier (DaE2 design).': 'نموذج أولي لمرصاد. نموذج الكشف: مصنِّف روابط يجمع أربعة نماذج (تصميم DaE2).',
   'All times Gulf Standard Time (UTC+4)': 'جميع الأوقات بتوقيت الخليج (UTC+4)',
   '{id} confirmed. Evidence package ready.': 'تم تأكيد {id}. حزمة الأدلة جاهزة.', 'Download': 'تنزيل', 'Undo': 'تراجع',
   'Confirming {id} in {n} s': 'تأكيد {id} خلال {n} ث', 'Confirmation of {id} undone': 'أُلغي تأكيد {id}',
@@ -417,7 +417,7 @@ function buildExport(c, origin, at) {
     origin: origin === 'demo' ? 'Demo data. Built in the browser because the live service was unreachable.' : 'Built in the browser from the live case record because the export endpoint did not answer.',
     targets: c.exports || [], status: c.status, url: c.url, url_redacted: c.url_redacted, domain: c.domain, display: c.display,
     imitates: c.imitates, official_domains: c.official_domains, risk: c.risk, threshold: c.threshold, votes: c.votes, model_mean: c.model_mean,
-    model: 'DaE2 (Omolara and Alawida, 2025)', reasons: c.reasons, evidence: c.evidence, timeline: c.timeline, capture: c.capture,
+    model: 'Four-ensemble URL classifier (DaE2 design)', reasons: c.reasons, evidence: c.evidence, timeline: c.timeline, capture: c.capture,
     listing: c.listing, summary: c.summary, decisions: c.decisions
   };
 }

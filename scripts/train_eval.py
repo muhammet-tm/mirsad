@@ -1,7 +1,7 @@
-"""Train and evaluate DaE2 under the protocol fixed in docs/MODEL.md before any run.
+"""Train and evaluate the four-ensemble model under the protocol in docs/TECHNICAL_REPORT.md (Section 6).
 
-E1  The paper's setting: malicious_phish, random 80/20 split, binary (benign vs malicious).
-    E1a uses the paper's representation (word TF-IDF of the raw URL); E1b uses ours.
+E1  The conventional benchmark setting: malicious_phish, random 80/20 split, binary (benign vs
+    malicious). E1a uses the raw representation (word TF-IDF of the raw URL); E1b uses ours.
 E2  Sites never seen in training: duplicates and label conflicts removed, split grouped by
     registered domain so no domain is on both sides.
 E3  Recent threats: trained on PhreshPhish train (Jul 2024 to Sep 2025), tested on PhreshPhish
@@ -107,7 +107,7 @@ def save(name: str, result: dict) -> None:
 def e1(sample):
     df = load_kaggle(sample, clean=False)
     train, test = train_test_split(df, test_size=0.2, stratify=df["type"], random_state=SEED)
-    meta = {"data": "malicious_phish (Kaggle), raw rows as the paper used them", "split": "random 80/20, stratified",
+    meta = {"data": "malicious_phish (Kaggle), raw benchmark rows", "split": "random 80/20, stratified",
             "sample_rows": int(len(df))}
     model_a, res_a = fit_and_score("e1a_paper_repr_random_split", train, test, "paper", meta)
     save(res_a["experiment"], res_a)
@@ -149,7 +149,7 @@ def e3(sample):
 
     paper_model_path = MODELS_DIR / "dae2_e1a_paper.joblib"
     if paper_model_path.exists():
-        log("e3b: applying the E1a (paper setting) model to the PhreshPhish test period")
+        log("e3b: applying the E1a (benchmark setting) model to the PhreshPhish test period")
         paper_model = joblib.load(paper_model_path)
         e1a = json.loads((RESULTS_DIR / "e1a_paper_repr_random_split.json").read_text())
         thr = e1a["thresholds_fpr_1pct_on_validation"]

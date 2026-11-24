@@ -1,7 +1,7 @@
 """URL parsing and lexical features.
 
-Two views of a URL are used. The raw string reproduces the DaE2 paper, which vectorizes the URL
-text as given. The canonical form removes what differs between data sources rather than between
+Two views of a URL are used. The raw string is the conventional benchmark representation, which
+vectorizes the URL text as given. The canonical form removes what differs between data sources rather than between
 benign and fraudulent sites (scheme, "www.", trailing slash, case of the host), so that a model
 cannot score well by recognizing which list a URL came from.
 """
