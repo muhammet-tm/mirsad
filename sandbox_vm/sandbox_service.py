@@ -29,6 +29,7 @@ from __future__ import annotations
 import asyncio
 import base64
 import binascii
+import hmac
 import io
 import ipaddress
 import json
@@ -1266,6 +1267,34 @@ async def lifespan(_app: FastAPI):
 
 app = FastAPI(title="Mirsad sandbox", version=VERSION, lifespan=lifespan,
               docs_url=None, redoc_url=None, openapi_url=None)
+
+
+_ALLOWED_HOSTS = {"127.0.0.1", "localhost", "::1"} | {
+    h.strip().lower() for h in os.environ.get("MIRSAD_SANDBOX_HOSTS", "").split(",") if h.strip()}
+_TOKEN = os.environ.get("MIRSAD_SANDBOX_TOKEN", "")
+
+
+def _refuse(status: int, code: str, message: str) -> JSONResponse:
+    return JSONResponse(status_code=status, content={"ok": False, "error": {"code": code, "message": message}})
+
+
+@app.middleware("http")
+async def _guard(request: Request, call_next):
+    """Only Mirsad on the host may drive the sandbox, never a web page the analyst has open.
+
+    The Host header must name this machine (stops DNS rebinding), a POST must be JSON (a cross-site
+    page can only send JSON after a CORS preflight, which this service never grants), and when
+    MIRSAD_SANDBOX_TOKEN is set every request must carry it in X-Mirsad-Token.
+    """
+    host = request.headers.get("host", "").strip().lower()
+    host = host[1:].split("]", 1)[0] if host.startswith("[") else host.rsplit(":", 1)[0]
+    if host not in _ALLOWED_HOSTS:
+        return _refuse(400, "bad_host", "host not allowed")
+    if _TOKEN and not hmac.compare_digest(request.headers.get("x-mirsad-token", ""), _TOKEN):
+        return _refuse(401, "unauthorized", "missing or wrong token")
+    if request.method == "POST" and request.headers.get("content-type", "").split(";")[0].strip().lower() != "application/json":
+        return _refuse(415, "bad_content_type", "send JSON")
+    return await call_next(request)
 
 
 @app.exception_handler(ApiError)

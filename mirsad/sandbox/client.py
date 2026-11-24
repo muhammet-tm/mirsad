@@ -10,12 +10,18 @@ from ..config import DATA_DIR, http_client, settings
 CAPTURE_DIR = DATA_DIR / "captures"
 
 
+def _auth() -> dict:
+    """The shared token the sandbox VM checks when MIRSAD_SANDBOX_TOKEN is set on both sides."""
+    token = settings.key("MIRSAD_SANDBOX_TOKEN")
+    return {"X-Mirsad-Token": token} if token else {}
+
+
 def available() -> bool:
     if settings.sandbox_url.lower() == "off":  # a public server never opens suspect pages
         return False
     try:
         with http_client(timeout=3) as c:
-            return c.get(f"{settings.sandbox_url}/health").json().get("ok", False)
+            return c.get(f"{settings.sandbox_url}/health", headers=_auth()).json().get("ok", False)
     except Exception:
         return False
 
@@ -28,7 +34,8 @@ def capture(case_id: str, url: str, timeout_s: int = 15, device: str = "desktop"
     """
     try:
         with http_client(timeout=timeout_s + 20) as c:
-            r = c.post(f"{settings.sandbox_url}/capture", json={"url": url, "timeout_s": timeout_s, "device": device})
+            r = c.post(f"{settings.sandbox_url}/capture", json={"url": url, "timeout_s": timeout_s, "device": device},
+                       headers=_auth())
         data = r.json()
     except Exception:
         return None
@@ -47,7 +54,7 @@ def capture(case_id: str, url: str, timeout_s: int = 15, device: str = "desktop"
 def phishpedia(url: str, screenshot_b64: str) -> dict | None:
     try:
         with http_client(timeout=60) as c:
-            r = c.post(f"{settings.sandbox_url}/phishpedia", json={"url": url, "screenshot_b64": screenshot_b64})
+            r = c.post(f"{settings.sandbox_url}/phishpedia", json={"url": url, "screenshot_b64": screenshot_b64}, headers=_auth())
         data = r.json()
         return data if data.get("available", True) else None
     except Exception:

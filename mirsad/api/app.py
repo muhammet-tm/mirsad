@@ -14,8 +14,9 @@ import time
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 from pathlib import Path
+from urllib.parse import urlsplit
 
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, Response
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
@@ -35,15 +36,16 @@ _running: dict[str, bool] = {}
 DAY, HOUR = 86400, 3600
 RUN_BUDGET = {"search": (3, DAY), "maps": (4, DAY), "certificates": (2, HOUR), "feeds": (4, HOUR)}
 SAVED_CHECKS_PER_HOUR = 30  # each saved check may call DNS, reputation lists, and Jais
+PDF_PER_MINUTE = 20  # report PDFs rendered (cached copies do not count)
+CHECKS_PER_MINUTE = 600  # single-link checks across all visitors, about 10 a second
 _spent: dict[str, list[float]] = {}
 _batch_lock = threading.Lock()
 SCHEDULE = {"feeds": 3600, "certificates": 86400}  # seconds between scheduled runs
 
 
 def _within_budget(key: str, limit: int, window: int = HOUR) -> bool:
-    """Count one use against a budget per window; False when it is spent (public site only)."""
-    if not settings.public:
-        return True
+    """Count one use against a budget per window; False when it is spent. Applies in every mode, so a
+    forged request from another site cannot spend the paid quotas of an analyst's own server either."""
     cutoff = time.monotonic() - window
     used = [t for t in _spent.get(key, []) if t > cutoff]
     if len(used) >= limit:
@@ -100,8 +102,8 @@ CHANNELS = {"search": "Search monitor", "maps": "Maps check", "certificates": "C
 
 class Decision(BaseModel):
     action: str = Field(pattern="^(confirm|dismiss|reviewing|assign)$")
-    note: str = ""
-    analyst: str = "Duty analyst"
+    note: str = Field("", max_length=500)
+    analyst: str = Field("Duty analyst", min_length=1, max_length=60)
 
 
 class Check(BaseModel):
@@ -179,8 +181,8 @@ def get_kpis():
 
 
 @app.get("/api/cases")
-def get_cases(status: str = "open", channel: str = "all", limit: int = 50):
-    return list_cases(store, status, channel, min(limit, 500))
+def get_cases(status: str = "open", channel: str = "all", limit: int = Query(50, ge=1, le=500)):
+    return list_cases(store, status, channel, limit)
 
 
 @app.get("/api/cases/{cid}")
@@ -235,6 +237,8 @@ def _report_response(key: tuple, make_page, name: str, fmt: str):
     if hit and time.monotonic() - hit[0] < 60:
         pdf = hit[1]
     else:
+        if not _within_budget("pdf_render", PDF_PER_MINUTE, 60):  # each render starts a Chromium
+            raise HTTPException(429, "Too many reports are being generated; try again in a minute.")
         pdf = report.to_pdf(make_page())
         if pdf:
             _pdf_cache[key] = (time.monotonic(), pdf)
@@ -265,15 +269,20 @@ def summary_report(lang: str = "en", format: str = "pdf"):
 
 @app.post("/api/check")
 def check(c: Check):
+    if not _within_budget("checks", CHECKS_PER_MINUTE, 60):  # scoring is CPU work on one worker
+        raise HTTPException(429, "Too many checks right now; try again in a minute.")
     r = score(Signals(url=c.url, channel="report"))
-    out = {"url": redact(c.url), "risk": r.risk, "threshold": r.threshold, "votes": r.votes, "reasons": r.reasons,
+    # The caller sent this link, so it is echoed with plain placeholders: a keyed hash of caller input
+    # would let anyone test guesses against hashes shown elsewhere.
+    out = {"url": redact(c.url, digest=False), "risk": r.risk, "threshold": r.threshold, "votes": r.votes, "reasons": r.reasons,
            "imitates": r.imitates, "flagged": r.risk >= r.threshold, "scoring_ms": r.scoring_ms}
     if c.save and not _within_budget("saved_checks", SAVED_CHECKS_PER_HOUR):
         raise HTTPException(429, "This public demo saves at most 30 checked links an hour; try again later, or check without saving.")
     if c.save:
         cid, _ = pipeline.process(store, pipeline.Found(c.url, "report", "Reported link"), use_sandbox=sandbox.available())
         out["case_id"] = cid
-    store.audit("Duty analyst", "check", redact(c.url), json.dumps({"risk": r.risk}))
+    # On the public site the audit log is public, so it records that a check happened, not which link.
+    store.audit("Duty analyst", "check", "" if settings.public else redact(c.url), json.dumps({"risk": r.risk}))
     return out
 
 
@@ -290,7 +299,7 @@ def check_batch(c: CheckBatch):
     thr = threshold()
     store.audit("Duty analyst", "check_batch", f"{len(urls)} links", json.dumps({"flagged": sum(r.risk >= thr for r in results)}))
     return {"threshold": thr, "results": [
-        {"url": redact(u), "risk": r.risk, "flagged": r.risk >= thr, "votes": r.votes, "reasons": r.reasons,
+        {"url": redact(u, digest=False), "risk": r.risk, "flagged": r.risk >= thr, "votes": r.votes, "reasons": r.reasons,
          "imitates": r.imitates} for u, r in zip(urls, results)]}
 
 
@@ -314,8 +323,9 @@ def get_map():
 
 
 @app.get("/api/audit")
-def audit(limit: int = 100):
-    return {"items": store.rows("SELECT at, actor, action, target, detail FROM audit ORDER BY id DESC LIMIT ?", (min(limit, 1000),))}
+def audit(limit: int = Query(100, ge=1, le=1000)):
+    # The bound matters: SQLite reads a negative LIMIT as no limit at all.
+    return {"items": store.rows("SELECT at, actor, action, target, detail FROM audit ORDER BY id DESC LIMIT ?", (limit,))}
 
 
 @app.get("/captures/{name}")
@@ -331,17 +341,69 @@ def index():
     return FileResponse(WEB / "index.html")
 
 
+LOCAL_HOSTS = {"127.0.0.1", "localhost", "::1", "testserver"}
+MAX_BODY = 4 * 2**20  # a 10,000-link batch is about 1 MB
+
+
+def _host_only(value: str) -> str:
+    value = value.strip().lower()
+    if value.startswith("["):
+        return value[1:].split("]", 1)[0]
+    return value.rsplit(":", 1)[0] if value.count(":") == 1 else value
+
+
+@app.middleware("http")
+async def request_guard(request: Request, call_next):
+    """Refuse what a hostile web page could make a visitor's browser send.
+
+    The lab server answers only to its own names, which stops DNS rebinding. A state-changing request
+    must come from the site's own pages (or from a tool that sends no Origin, such as curl or the
+    test-set script), must be JSON when it has a body, and must be of a bounded size.
+    """
+    host = _host_only(request.headers.get("host", ""))
+    allowed = LOCAL_HOSTS | {h.strip().lower() for h in settings.env.get("MIRSAD_ALLOWED_HOSTS", "").split(",") if h.strip()}
+    if not settings.public and host not in allowed:
+        return JSONResponse({"detail": "Host not allowed"}, status_code=400)
+    if request.method in ("POST", "PUT", "PATCH", "DELETE"):
+        origin = request.headers.get("origin")
+        if origin is not None:
+            o = (urlsplit(origin).hostname or "").lower()
+            forwarded = _host_only(request.headers.get("x-forwarded-host", "").split(",")[0])
+            if not o or (o not in {host, forwarded} and not (settings.public and o.endswith(".hf.space"))):
+                return JSONResponse({"detail": "Cross-site request refused"}, status_code=403)
+        if "chunked" in request.headers.get("transfer-encoding", "").lower():
+            return JSONResponse({"detail": "Send a Content-Length"}, status_code=411)
+        try:
+            length = int(request.headers.get("content-length") or 0)
+        except ValueError:
+            return JSONResponse({"detail": "Bad Content-Length"}, status_code=400)
+        if length > MAX_BODY:
+            return JSONResponse({"detail": "Request too large"}, status_code=413)
+        ctype = request.headers.get("content-type", "").split(";")[0].strip().lower()
+        if length > 0 and ctype != "application/json":
+            return JSONResponse({"detail": "Send JSON (Content-Type: application/json)"}, status_code=415)
+    return await call_next(request)
+
+
 @app.middleware("http")
 async def security_headers(request: Request, call_next):
     resp: Response = await call_next(request)
     resp.headers["X-Content-Type-Options"] = "nosniff"
-    if not request.url.path.startswith(("/api/", "/captures/")):
-        resp.headers["Cache-Control"] = "no-cache"  # browsers revalidate the page and scripts after an update
-    if settings.public:  # the Hugging Face Space page shows the site in a frame
-        resp.headers["Content-Security-Policy"] = "frame-ancestors 'self' https://huggingface.co"
+    resp.headers["Referrer-Policy"] = "no-referrer"
+    # The Hugging Face Space page shows the public site in a frame; the lab server is never framed.
+    frame = "'self' https://huggingface.co" if settings.public else "'none'"
+    if settings.public:  # served over HTTPS only
+        resp.headers["Strict-Transport-Security"] = "max-age=31536000"
     else:
         resp.headers["X-Frame-Options"] = "DENY"
-    resp.headers["Referrer-Policy"] = "no-referrer"
+    if request.url.path.startswith(("/api/", "/captures/")):
+        resp.headers["Content-Security-Policy"] = f"frame-ancestors {frame}"
+    else:
+        resp.headers["Cache-Control"] = "no-cache"  # browsers revalidate the page and scripts after an update
+        resp.headers["Content-Security-Policy"] = (
+            "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+            "font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; "
+            f"object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors {frame}")
     return resp
 
 

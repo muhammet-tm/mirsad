@@ -1,8 +1,10 @@
 """Build the database the public demo starts from: our lab cases, safe to publish, plus the demo links.
 
 Steps, all on a copy (the lab database is never changed):
-1. Every stored link is replaced by its redacted form, so no query value that could hold a victim's
-   data leaves the lab. The audit log, which names analysts and their machines, is emptied.
+1. Every column that can hold a link (candidates url, url_redacted, and canonical; captures
+   final_url) keeps scheme, host, and path, and each query value becomes [redacted], with no keyed
+   hash, so no value that could hold a victim's data leaves the lab and none can be guessed back.
+   The audit log, which names analysts and their machines, is emptied.
 2. Cases at or near the threshold get hosting (address and network) and WHOIS (registrar, expiry,
    name servers) exhibits, looked up now and dated now, so the evidence the case file shows is
    current. Reserved demo domains are never looked up.
@@ -27,9 +29,27 @@ from mirsad import pipeline  # noqa: E402
 from mirsad.collectors.sources import Found  # noqa: E402
 from mirsad.config import DB_PATH  # noqa: E402
 from mirsad.enrich import hosting, passive  # noqa: E402
-from mirsad.features.url import hosting_platform, registered_domain  # noqa: E402
+from mirsad.features.url import canonical, hosting_platform, registered_domain  # noqa: E402
 from mirsad.scoring.engine import threshold  # noqa: E402
-from mirsad.store import Store  # noqa: E402
+from mirsad.store import Store, redact  # noqa: E402
+
+
+def scrub(path: Path) -> None:
+    """Every column that can hold a link keeps scheme, host, and path; each query value becomes
+    [redacted], with no keyed hash that a visitor could test guesses against."""
+    with sqlite3.connect(path) as c:
+        rows = c.execute("SELECT id, url FROM candidates").fetchall()
+        for cid, url in rows:
+            safe = redact(url, digest=False)
+            try:
+                c.execute("UPDATE candidates SET url = ?, url_redacted = ?, canonical = ? WHERE id = ?",
+                          (safe, safe, canonical(safe), cid))
+            except sqlite3.IntegrityError:  # two links that differ only in query values
+                c.execute("UPDATE candidates SET url = ?, url_redacted = ?, canonical = ? WHERE id = ?",
+                          (safe, safe, f"{canonical(safe)}#{cid}", cid))
+        for cid, final in c.execute("SELECT candidate_id, final_url FROM captures").fetchall():
+            c.execute("UPDATE captures SET final_url = ? WHERE candidate_id = ?", (redact(final or "", digest=False), cid))
+        c.execute("DELETE FROM audit")
 
 
 def main() -> None:
@@ -41,9 +61,7 @@ def main() -> None:
         a.out.unlink()
     with sqlite3.connect(DB_PATH) as src, sqlite3.connect(a.out) as dst:
         src.backup(dst)
-    with sqlite3.connect(a.out) as c:
-        c.execute("UPDATE candidates SET url = url_redacted")
-        c.execute("DELETE FROM audit")
+    scrub(a.out)
     store = Store(a.out)
 
     near = threshold() - pipeline.NEAR
@@ -69,9 +87,7 @@ def main() -> None:
                              use_sandbox=False)
             demo += 1
     store.count_screened("report", demo)
-    with sqlite3.connect(a.out) as c:
-        c.execute("UPDATE candidates SET url = url_redacted")  # the demo links are stored redacted too
-        c.execute("DELETE FROM audit")
+    scrub(a.out)  # the demo links too
     with sqlite3.connect(a.out) as c:
         c.execute("VACUUM")
     print(json.dumps({"out": str(a.out), "near_threshold_cases": len(rows), "added": added, "demo_links": demo}))

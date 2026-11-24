@@ -79,8 +79,10 @@ def env_values() -> list[str]:
         if p.exists():
             for line in p.read_text(encoding="utf-8", errors="ignore").splitlines():
                 if "=" in line and not line.lstrip().startswith("#"):
-                    v = line.split("=", 1)[1].strip().strip("'\"")
-                    if len(v) >= 12:
+                    k, v = line.split("=", 1)
+                    v = v.strip().strip("'\"")
+                    # Only secrets: settings such as a local stream address may appear in code on purpose.
+                    if len(v) >= 12 and re.search(r"KEY|TOKEN|SECRET|PASSWORD|ACCOUNT|CREDENTIAL", k.upper()):
                         vals.append(v)
     return vals
 
@@ -107,6 +109,32 @@ def check(files: list[Path]) -> None:
         sys.exit("refusing to deploy:\n  " + "\n  ".join(bad))
 
 
+def check_seed(path: Path) -> None:
+    """The seed must hold no query value: every link column keeps only [redacted] placeholders."""
+    import sqlite3
+
+    leaks = []
+    with sqlite3.connect(path) as c:
+        for table, col in (("candidates", "url"), ("candidates", "url_redacted"), ("candidates", "canonical"),
+                           ("captures", "final_url")):
+            for (v,) in c.execute(f"SELECT {col} FROM {table} WHERE {col} LIKE '%?%'"):
+                query = (v or "").split("?", 1)[1].split("#", 1)[0]
+                if any("=" in p and p.split("=", 1)[1] not in ("", "[redacted]") for p in query.split("&")):
+                    leaks.append(f"{table}.{col}")
+                    break
+        if c.execute("SELECT COUNT(*) FROM audit").fetchone()[0]:
+            leaks.append("audit rows")
+        # Free text too: a summary or an evidence line must not quote a link with its query values.
+        value = re.compile(r"\?[^\s\"'<>]*?=(?!\[redacted\]|&|$)[^&\s\"'<>\]]+")
+        for table, col in (("summaries", "en"), ("summaries", "ar"), ("evidence", "label"), ("evidence", "value_json"),
+                           ("captures", "title"), ("decisions", "note")):
+            if any(value.search(v or "") for (v,) in c.execute(f"SELECT {col} FROM {table}")):
+                leaks.append(f"{table}.{col}")
+    if leaks:
+        sys.exit("refusing to deploy: the seed database still holds query values or audit rows in "
+                 + ", ".join(sorted(set(leaks))) + "; rebuild it with scripts/make_snapshot.py")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description="Publish the Mirsad public demo to a Hugging Face Space.")
     ap.add_argument("--repo", help="Space id, user/name (default: <signed-in user>/mirsad)")
@@ -115,6 +143,7 @@ def main() -> None:
 
     files = stage()
     check(files)
+    check_seed(STAGE / "deploy" / "seed.sqlite3")
     size = sum(f.stat().st_size for f in files)
     print(f"staged {len(files)} files, {size / 2**20:.1f} MB, in {STAGE}; secret check passed")
     if a.dry_run:

@@ -30,6 +30,23 @@ import time
 import traceback
 
 
+class PlainUnpickler(pickle.Unpickler):
+    """Reads domain_map.pkl (brand names to lists of domains) and nothing else.
+
+    The file comes from a Google Drive download. A tampered pickle runs code by naming a function
+    (os.system and the like) for the unpickler to call; refusing every name stops that, while plain
+    dicts, lists, and strings need no names at all.
+    """
+
+    SAFE = {("builtins", "dict"), ("builtins", "list"), ("builtins", "set"), ("builtins", "tuple"),
+            ("builtins", "str"), ("collections", "OrderedDict")}
+
+    def find_class(self, module, name):
+        if (module, name) in self.SAFE:
+            return super().find_class(module, name)
+        raise pickle.UnpicklingError(f"domain_map.pkl names {module}.{name}, which a brand map never needs")
+
+
 def _protocol_stream():
     """Keep the real stdout for protocol lines and send everything else (library prints) to stderr."""
     proto = os.fdopen(os.dup(1), "w", encoding="utf-8", buffering=1)
@@ -68,7 +85,7 @@ def main(argv):
         logo_feats = np.asarray(logo_feats)
         logo_files = np.asarray(logo_files)
         with open(domain_map_path, "rb") as handle:
-            domain_map = pickle.load(handle)
+            domain_map = PlainUnpickler(handle).load()
     except Exception as exc:
         traceback.print_exc()
         send({"ready": False, "error": f"{type(exc).__name__}: {exc}"[:500]})

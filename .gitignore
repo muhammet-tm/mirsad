@@ -40,3 +40,6 @@ data/certstream/
 # Public demo database, built by scripts/make_snapshot.py from the lab database (never committed)
 deploy/seed.sqlite3
 deploy/_stage/
+
+# Per-install redaction key made by mirsad/store/db.py when MIRSAD_REDACTION_KEY is unset
+data/.redaction_key

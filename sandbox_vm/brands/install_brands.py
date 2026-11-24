@@ -35,6 +35,18 @@ IMAGE_EXT = (".png", ".jpg", ".jpeg")
 SKIP_PREFIXES = ("homepage", "loginpage")  # Phishpedia ignores files with these prefixes
 
 
+class _PlainUnpickler(pickle.Unpickler):
+    """Reads domain_map.pkl as plain dicts, lists, and strings; a tampered pickle cannot run code."""
+
+    SAFE = {("builtins", "dict"), ("builtins", "list"), ("builtins", "set"), ("builtins", "tuple"),
+            ("builtins", "str"), ("collections", "OrderedDict")}
+
+    def find_class(self, module, name):
+        if (module, name) in self.SAFE:
+            return super().find_class(module, name)
+        raise pickle.UnpicklingError(f"domain_map.pkl names {module}.{name}, which a brand map never needs")
+
+
 def load_mapping(path):
     with open(path, encoding="utf-8") as fh:
         data = json.load(fh)
@@ -78,7 +90,7 @@ def main(argv=None):
             sys.exit(f"Not found: {p}")
 
     with open(domain_map_path, "rb") as fh:
-        domain_map = pickle.load(fh)
+        domain_map = _PlainUnpickler(fh).load()
     upstream = {name.lower(): name for name in os.listdir(target_root) if not name.startswith(".")}
 
     plan = []

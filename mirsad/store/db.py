@@ -11,13 +11,15 @@ from __future__ import annotations
 import hashlib
 import hmac
 import json
+import os
+import secrets
 import sqlite3
 import threading
 from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
 
-from ..config import DB_PATH, settings
+from ..config import DATA_DIR, DB_PATH, settings
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS candidates (
@@ -57,20 +59,66 @@ def now() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
 
-def redact(url: str) -> str:
-    """Replace each query value with a short keyed hash, so victim emails or tokens never show."""
+KEY_FILE = DATA_DIR / ".redaction_key"
+_key: bytes | None = None
+_key_lock = threading.Lock()
+
+
+def _redaction_key() -> bytes:
+    """MIRSAD_REDACTION_KEY, or a random key made once for this installation.
+
+    There is no built-in fallback: a key in the public source would let anyone brute-force short
+    values such as phone numbers from their hashes. The generated key lives in data/, which git ignores.
+    """
+    with _key_lock:  # two first requests at once must not make two different keys
+        return _load_key()
+
+
+def _load_key() -> bytes:
+    global _key
+    if _key is None:
+        configured = settings.key("MIRSAD_REDACTION_KEY")
+        if configured:
+            _key = configured.encode()
+        else:
+            try:
+                _key = KEY_FILE.read_bytes()
+            except OSError:
+                _key = b""
+            if len(_key) < 32:
+                _key = secrets.token_bytes(32)
+                KEY_FILE.parent.mkdir(parents=True, exist_ok=True)
+                fd = os.open(KEY_FILE, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+                with os.fdopen(fd, "wb") as fh:
+                    fh.write(_key)
+    return _key
+
+
+def redact(url: str, digest: bool | None = None) -> str:
+    """Replace each query value, so victim emails or tokens never show.
+
+    With digest (the default in the lab), a value becomes a 12-hex keyed hash, so an analyst can see
+    that two links carry the same value without seeing it. Without it (the default on the public site,
+    and for links echoed back to whoever sent them), a value becomes [redacted], which no one can test
+    guesses against.
+    """
     from ..features.url import split
 
+    if digest is None:
+        digest = not settings.public
     p = split(url)
     base = f"{p.scheme}://{p.host}{':' + str(p.port) if p.port else ''}{p.path}"
     if not p.query:
         return base
-    key = (settings.key("MIRSAD_REDACTION_KEY") or "mirsad-local").encode()
     parts = []
     for pair in p.query.split("&"):
         name, _, value = pair.partition("=")
-        digest = hmac.new(key, value.encode(), hashlib.sha256).hexdigest()[:8] if value else ""
-        parts.append(f"{name}=[{digest}]" if value else name)
+        if not value:
+            parts.append(name)
+        elif digest:
+            parts.append(f"{name}=[{hmac.new(_redaction_key(), value.encode(), hashlib.sha256).hexdigest()[:12]}]")
+        else:
+            parts.append(f"{name}=[redacted]")
     return base + "?" + "&".join(parts)
 
 

@@ -445,6 +445,21 @@ step_phishpedia() {
     done_ "downloaded $name ($(du -h "$dst" | cut -f1))"
   done
 
+  # Integrity: the Drive files carry no published checksums, so the first install records their
+  # SHA-256 in models/SHA256SUMS and every later run refuses a file that changed since. The worker
+  # also reads domain_map.pkl with a restricted unpickler, so a swapped pickle cannot run code.
+  local sums="$PP_DIR/models/SHA256SUMS"
+  if [ -s "$sums" ]; then
+    (cd "$PP_DIR/models" && sha256sum -c --quiet SHA256SUMS) \
+      || die "a Phishpedia model file changed since it was first installed (record: $sums); restore it, or delete the file and its line in the record to download it again"
+    skip "model files match $sums"
+  else
+    local names=()
+    for entry in "${PP_FILES[@]}"; do names+=("${entry#* }"); done
+    (cd "$PP_DIR/models" && sha256sum "${names[@]}") | as_user tee "$sums" >/dev/null
+    warn "recorded the model files' SHA-256 in $sums; later runs refuse a changed file"
+  fi
+
   # 6f unpack the reference logo list (setup.sh: unzip, then flatten a nested expand_targetlist/)
   local tl="$PP_DIR/models/expand_targetlist" count
   count=$(find "$tl" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | wc -l || true)
@@ -537,8 +552,13 @@ PY
     fi
     die "Could not find a Q4_K_M GGUF in $FALCON_REPO"
   fi
-  if [ "$name" = "Falcon3-3B-Instruct-q4_k_m.gguf" ] && [ "$sha" != "$FALCON_PINNED_SHA256" ]; then
-    warn "the repo's checksum for $name changed since 23 Nov 2026; using the repo's current value"
+  # The pin is what protects against a replaced upstream file, so a mismatch stops the install.
+  if [ "$name" = "Falcon3-3B-Instruct-q4_k_m.gguf" ] && [ "$sha" != "$FALCON_PINNED_SHA256" ] \
+     && [ "${FALCON_ALLOW_UNPINNED:-0}" != "1" ]; then
+    die "the repo's checksum for $name (${sha:-none}) differs from the one pinned on 23 Nov 2026; refusing to install. Check the change upstream, then re-run with FALCON_ALLOW_UNPINNED=1 to accept it"
+  fi
+  if [ -z "$sha" ] && [ "${FALCON_ALLOW_UNPINNED:-0}" != "1" ]; then
+    die "no checksum is available for $name; refusing to install an unverified model"
   fi
   dst="$FALCON_DIR/$name"
   log "    model file: $name, $size bytes ($((size / 1024 / 1024)) MiB), sha256 ${sha:-unknown}"

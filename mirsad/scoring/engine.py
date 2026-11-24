@@ -18,7 +18,7 @@ import numpy as np
 
 from ..config import MODELS_DIR, settings
 from ..features.brands import Brand, is_official, lookalike, mentioned_brand
-from ..features.url import canonical, host_of, registered_domain, split
+from ..features.url import canonical, disguised_host, host_of, registered_domain, split
 
 
 LIVE_CHANNELS = {"search", "maps", "certificates"}
@@ -118,6 +118,12 @@ def score(sig: Signals, votes: dict[str, float] | None = None) -> Result:
         brand = named or look
         fire("brand_off_domain", 0.86 if young else 0.8,
              f"Name imitates {brand.name} but is not on the official list")
+
+    trick = disguised_host(sig.url)
+    if trick:
+        # Checked before the official-domain cap can apply: the trusted name in such a link is decoration.
+        fire("disguised_host", 0.9, f"Link hides its real host ({'a backslash' if trick == 'backslash' else 'a name before @'}); "
+                                    f"browsers open {host}")
 
     cap = sig.capture or {}
     forms = cap.get("forms") or []

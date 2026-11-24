@@ -39,6 +39,45 @@ def ensure_scheme(url: str) -> str:
     return url if _SCHEME.match(url) else "http://" + url
 
 
+_TAB_NEWLINE = re.compile(r"[\t\n\r]")
+_SPECIAL = ("http://", "https://", "ws://", "wss://", "ftp://")
+
+
+def browser_form(url: str) -> str:
+    """The URL as a browser reads it (WHATWG URL Standard), so Mirsad scores the host a victim reaches.
+
+    Browsers drop tabs and newlines anywhere, trim control characters and spaces at both ends, and in
+    http(s) URLs treat a backslash before the query as a slash. Python's urlsplit does none of this:
+    with a backslash between evil.top and @adpolice.gov.ae, Python reads the host as adpolice.gov.ae
+    while a browser goes to evil.top.
+    """
+    url = _TAB_NEWLINE.sub("", url).strip("".join(chr(c) for c in range(0x21)))
+    url = ensure_scheme(url)
+    if url.lower().startswith(_SPECIAL):
+        cut = min((i for i in (url.find("?"), url.find("#")) if i >= 0), default=len(url))
+        url = url[:cut].replace("\\", "/") + url[cut:]
+    return url
+
+
+def disguised_host(url: str) -> str | None:
+    """How a link hides the host a browser opens, or None.
+
+    Two tricks put a trusted name in front of the real host: a backslash in the authority (a browser
+    reads it as the start of the path) and userinfo before an @ (a browser ignores it). Neither has a
+    use in a link a real bank or government site would send.
+    """
+    raw = _TAB_NEWLINE.sub("", url).strip()
+    m = re.match(r"^[a-zA-Z][a-zA-Z0-9+.-]*://([^/?#]*)", raw)
+    if not m or not raw.lower().startswith(_SPECIAL):
+        return None
+    authority = m.group(1)
+    if "\\" in authority:
+        return "backslash"
+    if "@" in authority:
+        return "userinfo"
+    return None
+
+
 _FALLBACK = re.compile(r"^(?:(?P<scheme>[a-zA-Z][a-zA-Z0-9+.-]*)://)?(?P<netloc>[^/?#]*)(?P<path>[^?#]*)(?:\?(?P<query>[^#]*))?")
 
 
@@ -53,7 +92,7 @@ class Parts:
 
 def split(url: str) -> Parts:
     """Parse a URL without ever raising: real feeds contain broken brackets, ports, and encodings."""
-    url = ensure_scheme(url)
+    url = browser_form(url)
     try:
         p = urlsplit(url)
         host = (p.hostname or "").lower().rstrip(".")

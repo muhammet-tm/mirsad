@@ -83,13 +83,30 @@ def official_domains() -> set[str]:
 GOVERNMENT = Brand("UAE government entity", "Government", ("gov.ae",), (), False)
 
 
+_HOSTNAME = re.compile(r"[a-z0-9_-]+(?:\.[a-z0-9_-]+)*")
+
+
+def valid_hostname(name: str) -> bool:
+    """Letters, digits, hyphens, underscores, and dots only, after converting an international name."""
+    try:
+        ascii_name = name.encode("idna").decode("ascii")
+    except (UnicodeError, ValueError):
+        return False
+    return bool(_HOSTNAME.fullmatch(ascii_name))
+
+
 def is_official(registered_domain: str, host: str = "") -> Brand | None:
     """The brand that owns this domain, if any (host may be a subdomain of an official domain).
 
     Any name under .gov.ae counts as a government entity: the .ae registry restricts gov.ae
     registrations to government bodies (the adpolice.gov.ae WHOIS shows "Government Approved").
+    A name with characters no real hostname has is never official: the cap would otherwise trust
+    a string that a browser reads as a different host.
     """
     host = (host or registered_domain).lower().rstrip(".")
+    registered_domain = (registered_domain or "").lower().rstrip(".")
+    if not valid_hostname(host) or (registered_domain and not valid_hostname(registered_domain)):
+        return None
     for b in BRANDS:
         for d in b.domains:
             if host == d or host.endswith("." + d) or registered_domain == d:
