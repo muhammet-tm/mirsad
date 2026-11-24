@@ -40,9 +40,16 @@ def _rdap_base(tld: str) -> str | None:
     return _RDAP_BOOTSTRAP.get(tld.lower())
 
 
-@functools.lru_cache(maxsize=4096)
 def rdap_created(domain: str) -> str | None:
     """Registration date from RDAP (gTLDs). The .ae registry publishes no RDAP and hides dates."""
+    rec = rdap_record(domain)
+    return rec.get("created") if rec else None
+
+
+@functools.lru_cache(maxsize=4096)
+def rdap_record(domain: str) -> dict | None:
+    """The registry's RDAP record (the successor to WHOIS): dates, registrar, name servers, and status.
+    Registrant contacts are redacted by registries and are not read."""
     if _reserved(domain):
         return None
     tld = domain.rsplit(".", 1)[-1]
@@ -54,12 +61,34 @@ def rdap_created(domain: str) -> str | None:
             r = c.get(f"{base.rstrip('/')}/domain/{domain}")
         if r.status_code != 200:
             return None
-        for ev in r.json().get("events", []):
-            if ev.get("eventAction") == "registration":
-                return ev.get("eventDate")
+        j = r.json()
     except Exception:
         return None
-    return None
+    events = {ev.get("eventAction"): ev.get("eventDate") for ev in j.get("events", [])}
+    registrar = ""
+    for ent in j.get("entities", []):
+        if "registrar" in (ent.get("roles") or []):
+            card = (ent.get("vcardArray") or [None, []])[1]
+            registrar = next((x[3] for x in card if x and x[0] == "fn"), "") or registrar
+    return {"domain": domain, "created": events.get("registration"), "expires": events.get("expiration"),
+            "changed": events.get("last changed"), "registrar": registrar,
+            "nameservers": sorted({(n.get("ldhName") or "").lower().rstrip(".") for n in j.get("nameservers", [])} - {""}),
+            "status": j.get("status") or []}
+
+
+def whois_label(rec: dict) -> str:
+    """Evidence line, for example 'Registrar Namecheap, Inc.; expires 21 Nov 2027; name servers ns1.x.top, ns2.x.top'."""
+    parts = []
+    if rec.get("registrar"):
+        parts.append(f"Registrar {rec['registrar']}")
+    if rec.get("expires"):
+        try:
+            parts.append("expires " + datetime.fromisoformat(rec["expires"].replace("Z", "+00:00")).strftime("%d %b %Y").lstrip("0"))
+        except ValueError:
+            pass
+    if rec.get("nameservers"):
+        parts.append("name servers " + ", ".join(rec["nameservers"][:3]))
+    return "; ".join(parts)
 
 
 _last_crtsh = 0.0

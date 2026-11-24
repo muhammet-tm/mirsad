@@ -11,6 +11,8 @@ CAPTURE_DIR = DATA_DIR / "captures"
 
 
 def available() -> bool:
+    if settings.sandbox_url.lower() == "off":  # a public server never opens suspect pages
+        return False
     try:
         with http_client(timeout=3) as c:
             return c.get(f"{settings.sandbox_url}/health").json().get("ok", False)

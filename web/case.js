@@ -152,6 +152,8 @@ function renderChart() {
 /* ---------------------------------------------------------------- case file */
 function renderAll(print) {
   const c = C.c; if (!c) return;
+  const rb = $('reportBtn');
+  if (rb) { rb.href = '/api/cases/' + encodeURIComponent(c.id) + '/report?lang=' + M.S.lang; rb.hidden = M.S.mode !== 'live'; }
   renderSheet(c);
   renderSummary(c);
   renderDecision();

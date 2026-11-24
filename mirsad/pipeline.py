@@ -13,7 +13,7 @@ from datetime import datetime, timezone
 
 from .collectors import sources
 from .collectors.sources import Found
-from .config import PROCESSED_DIR
+from .config import PROCESSED_DIR, settings
 from .enrich import hosting, passive, redirects
 from .features.brands import is_official
 from .features.url import host_of, hosting_platform, registered_domain, strip_query
@@ -77,6 +77,9 @@ def process(store: Store, f: Found, use_sandbox: bool, summaries: bool = True) -
             created = passive.rdap_created(domain)
         if created:
             store.add_evidence(cid, "domain", f"Domain registered {_fmt_day(created)}", "RDAP", observed_at=created)
+            rec = passive.rdap_record(domain)
+            if rec and passive.whois_label(rec):
+                store.add_evidence(cid, "whois", passive.whois_label(rec), "RDAP (registry record)", rec)
         if not platform and (not created or f.channel == "certificates"):
             cert = passive.first_certificate(domain)
             if cert:
@@ -158,7 +161,10 @@ def run(channel: str, store: Store | None = None, use_sandbox: bool | None = Non
             detail = f"{stats.get('listings', 0)} listings"
         elif channel == "certificates":
             found, stats = sources.certificates_crtsh(tokens=kw.get("tokens", sources.CT_TOKENS))
-            live, live_stats = sources.certificates_stream(seconds=kw.get("stream_seconds", 45))
+            if settings.env.get("MIRSAD_CERTSTREAM", "").lower() == "off":  # crt.sh only, no live stream
+                live, live_stats = [], {}
+            else:
+                live, live_stats = sources.certificates_stream(seconds=kw.get("stream_seconds", 45))
             found += live
             stats["stream"] = live_stats
             if live_stats.get("certificates"):

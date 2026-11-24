@@ -6,6 +6,7 @@ import json
 from datetime import datetime, timedelta, timezone
 
 from ..features.brands import BRANDS
+from ..features.url import registered_domain
 from ..scoring.engine import threshold
 from ..store import Store
 
@@ -93,25 +94,52 @@ def build_case(store: Store, cid: str) -> dict | None:
     return case
 
 
+# Name servers that registrars and DNS hosts give to millions of customers; sharing them links nothing.
+COMMON_NS = {"cloudflare.com", "registrar-servers.com", "domaincontrol.com", "googledomains.com", "google.com",
+             "azure-dns.com", "azure-dns.net", "azure-dns.org", "azure-dns.info", "worldnic.com", "name-services.com",
+             "hostgator.com", "bluehost.com", "dnsowl.com", "nsone.net", "dynect.net", "ultradns.com", "ultradns.net",
+             "akam.net", "porkbun.com", "namebrightdns.com", "ovh.net", "hostinger.com", "dns-parking.com",
+             "parkingcrew.net", "sedoparking.com", "bodis.com", "wixdns.net", "squarespacedns.com", "vercel-dns.com",
+             "netlify.com", "dnspod.net", "hichina.com", "gname-dns.com", "share-dns.com", "share-dns.net"}
+
+
+def _ns_domains(names: list[str]) -> set[str]:
+    out = set()
+    for n in names or []:
+        d = registered_domain("http://" + n)
+        if d and d not in COMMON_NS and not d.startswith("awsdns-"):
+            out.add(d)
+    return out
+
+
 def linked_cases(store: Store, cid: str, domain: str, ev_rows: list[dict]) -> list[dict]:
-    """Other cases seen on one of this case's addresses, outside content delivery networks."""
-    mine = set()
+    """Other cases seen on one of this case's addresses (outside content delivery networks) or using the
+    same private name servers: a lead that one operator runs them, for the analyst to confirm."""
+    ips, ns = set(), set()
     for e in ev_rows:
-        if e["kind"] == "hosting":
-            v = json.loads(e.get("value_json") or "{}")
-            if not v.get("cdn"):
-                mine.update(v.get("ips", []))
-    if not mine:
+        v = json.loads(e.get("value_json") or "{}")
+        if e["kind"] == "hosting" and not v.get("cdn"):
+            ips.update(v.get("ips", []))
+        elif e["kind"] == "whois":
+            ns |= _ns_domains(v.get("nameservers", []))
+    if not ips and not ns:
         return []
     out: dict[str, dict] = {}
-    for o in store.rows("SELECT e.candidate_id AS id, e.value_json, c.domain, c.status, s.risk FROM evidence e "
+    for o in store.rows("SELECT e.candidate_id AS id, e.kind, e.value_json, c.domain, c.status, s.risk FROM evidence e "
                         "JOIN candidates c ON c.id = e.candidate_id LEFT JOIN scores s ON s.candidate_id = c.id "
-                        "WHERE e.kind = 'hosting' AND e.candidate_id != ?", (cid,)):
+                        "WHERE e.kind IN ('hosting', 'whois') AND e.candidate_id != ?", (cid,)):
+        if o["domain"] == domain or o["id"] in out:
+            continue
         v = json.loads(o.get("value_json") or "{}")
-        shared = sorted(mine & set(v.get("ips", [])))
-        if shared and not v.get("cdn") and o["domain"] != domain and o["id"] not in out:
+        if o["kind"] == "hosting":
+            shared = sorted(ips & set(v.get("ips", []))) if not v.get("cdn") else []
+            how = "address"
+        else:
+            shared = sorted(ns & _ns_domains(v.get("nameservers", [])))
+            how = "name servers"
+        if shared:
             out[o["id"]] = {"id": o["id"], "domain": o["domain"], "risk": o.get("risk"), "status": o["status"],
-                            "ip": shared[0]}
+                            "via": how, "shared": shared[0]}
     return sorted(out.values(), key=lambda x: -(x["risk"] or 0))
 
 
@@ -155,9 +183,11 @@ def _graph(case: dict) -> dict:
         elif k == "hosting":
             add("host", "host", e["label"].replace("Resolves to ", ""), "domain", "host", "hosted at")
     linked = case.get("linked") or []
-    if linked and "host" in have:
+    if linked:
         names = ", ".join(x["domain"] for x in linked[:2]) + (f" and {len(linked) - 2} more" if len(linked) > 2 else "")
-        add("network", "network", names, "host", "network", "also hosts")
+        by_address = "host" in have and any(x["via"] == "address" for x in linked)
+        add("network", "network", names, "host" if by_address else "domain", "network",
+            "also hosts" if by_address else "shares name servers")
     if case.get("imitates") and "brand" not in have:
         add("brand", "brand", case["imitates"], "domain", "brand", "imitates")
     return {"nodes": nodes, "edges": edges}

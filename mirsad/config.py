@@ -18,7 +18,7 @@ RAW_DIR = DATA_DIR / "raw"
 PROCESSED_DIR = DATA_DIR / "processed"
 MODELS_DIR = ROOT / "models"
 RESULTS_DIR = ROOT / "results"
-DB_PATH = DATA_DIR / "mirsad.sqlite3"
+DB_PATH = Path(os.environ["MIRSAD_DB"]) if os.environ.get("MIRSAD_DB") else DATA_DIR / "mirsad.sqlite3"
 
 # Older spellings that a team member may still have in .env; the first name in each tuple wins.
 _ALIASES = {
@@ -56,6 +56,12 @@ class Settings:
     @property
     def threshold(self) -> float:
         return float(self.env.get("MIRSAD_THRESHOLD", "0.80"))
+
+    @property
+    def public(self) -> bool:
+        """Public demo site (MIRSAD_PUBLIC=1): exports carry redacted links only, visitor addresses are
+        not logged, runs have hourly budgets, and the free channels run on a schedule."""
+        return self.env.get("MIRSAD_PUBLIC", "").lower() in ("1", "true", "yes")
 
     @property
     def sandbox_url(self) -> str:

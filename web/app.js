@@ -44,7 +44,7 @@ const AR = {
   'Demo data for: {list}. Select to retry the live service.': 'بيانات تجريبية لـ: {list}. اختر لإعادة محاولة الخدمة المباشرة.',
   'Links screened today': 'روابط تم فحصها اليوم', 'Flagged': 'مشبوهة', 'Awaiting review': 'بانتظار المراجعة',
   'Confirmed': 'مؤكدة', 'Median scoring time': 'الزمن الوسيط للتقييم', 'ms': 'ملّي ثانية', 'Key figures for today': 'أرقام اليوم الرئيسية',
-  'Watch queue': 'قائمة المراقبة', '{n} of {total} flagged today': '{n} من {total} مشبوهة اليوم', 'Risk': 'الخطورة',
+  'Watch queue': 'قائمة المراقبة', '{n} of {total} flagged today': '{n} من {total} مشبوهة اليوم', '{n} of {total} open cases': '{n} من {total} قضية مفتوحة', 'Risk': 'الخطورة',
   'Sorted by risk, highest first': 'مرتبة حسب الخطورة، الأعلى أولًا', 'Filter by channel': 'تصفية حسب القناة',
   'All': 'الكل', 'Search': 'البحث', 'Certificates': 'الشهادات', 'Maps': 'الخرائط',
   'Votes: AdaBoost, Bagging, Stacking, Voting': 'الأصوات: AdaBoost وBagging وStacking وVoting', 'First seen': 'أول ظهور',
@@ -694,7 +694,7 @@ function wireTopbar() {
   });
   document.querySelectorAll('[data-nav]').forEach(b => b.addEventListener('click', () => {
     if (b.dataset.nav === 'audit') openAudit();
-    else toast(t('Not part of this prototype'));
+    else openInfo(b.dataset.nav);
   }));
   const dlg = document.getElementById('auditDlg');
   if (dlg) {
@@ -740,6 +740,7 @@ document.addEventListener('keydown', e => {
     const pop = document.getElementById('checkPop');
     if (pop && !pop.hidden) { pop.hidden = true; return; }
     closeAudit();
+    closeInfo();
     return;
   }
   if (isTyping(e) || e.ctrlKey || e.metaKey || e.altKey) return;
@@ -754,6 +755,7 @@ function initCore() {
   wireTopbar();
   renderDemoBadge();
   S.langCbs.push(renderDemoBadge);
+  initInfo();
 }
 
 /* Exports for case.js */
@@ -859,7 +861,7 @@ function currentCase() { return W.detail[W.sel] || null; }
 function renderRows() {
   const L = W.list; if (!L) return;
   const total = W.filter === 'all' ? (W.kpis ? W.kpis.flagged : L.total) : L.total;
-  $('qcount').textContent = t('{n} of {total} flagged today', {n: L.items.length, total: num(total)});
+  $('qcount').textContent = t('{n} of {total} open cases', {n: L.items.length, total: num(L.total)});
   const focusId = document.activeElement && document.activeElement.classList.contains('row') ? document.activeElement.dataset.id : null;
   if (!L.items.length) { $('rows').innerHTML = '<li class="empty">' + esc(t('No cases in this channel today.')) + '</li>'; return; }
   const th = (W.status && W.status.model && W.status.model.threshold) || 0.8;
@@ -1250,6 +1252,227 @@ function renderActivity() {
   $('split').closest('.act').classList.toggle('five', rows.length > 4);
   $('split').innerHTML = rows.map(d =>
     '<div class="sr"><span>' + esc(t(d[1])) + '</span><span class="b"><i style="width:' + ((s[d[0]] || 0) / max * 100).toFixed(2) + '%"></i></span><b>' + num(s[d[0]] || 0) + '</b></div>').join('');
+}
+
+/* ================================================================ info panels, runs, and reports
+   Model, Early warning, and Settings explain each part of Mirsad and start runs; the public demo
+   opens "About this demo" on a first visit. Every value comes from /api/health, /api/model,
+   /api/status, or /api/cases; nothing here is typed in. */
+const INFO_EN = {
+  'about.p1': 'Mirsad watches search results and ads, map listings, new website certificates, and public phishing feeds for links that imitate UAE brands, and ranks them with their evidence for a police analyst.',
+  'about.p2': 'What you see: real cases from our runs and from the public feeds, with victim details removed from every link, plus five invented demo links on the reserved .example domain, marked Demo link.',
+  'about.p3': 'What you can do: open any case, check a link in the search box, start a run under Settings, confirm or dismiss a case, and download the evidence report for a case or the summary report. Every action is recorded in the audit log.',
+  'about.p4': 'On this public server Mirsad never opens a suspect page; page capture runs only in an isolated sandbox VM in the lab. Search and map runs are capped so the shared API quotas last.',
+  'model.p1': 'Each link is turned into character patterns and {f} lexical features, then scored by four ensembles: AdaBoost, Bagging, Stacking, and Voting. The risk is the mean of their four probabilities.',
+  'model.p2': 'A link enters the watch queue at {thr} or above. The threshold was set on validation data so that at most 1% of legitimate links cross it.',
+  'model.p3': 'On live channels the model alone is not enough: a link needs a score of at least {ma}, or one piece of evidence that agrees, such as a protected brand on a domain it does not own, a newly registered domain, a card form that posts to another domain, or a listing on a public phishing feed.',
+  'model.p4': 'Domains on the official list of each protected organization ({b} of them) are capped low, so real banks and government sites never reach the queue.',
+  'res.e1a': 'Public benchmark, random split', 'res.e2': 'Sites never seen in training', 'res.e3a': 'Deployed model on later months',
+  'early.p1': 'Every HTTPS site needs a certificate, and every certificate is published in public Certificate Transparency logs, usually before the site is advertised. Mirsad reads those logs (crt.sh for the protected brands, and the live stream in the lab) and flags new names that imitate a protected brand, often before the first victim sees the link.',
+  'watch.search': 'Google results and ads for {n} UAE brand searches',
+  'watch.maps': 'Google Maps listings for {n} business searches, with the website and phone checked against the brand',
+  'watch.certificates': 'New certificates for names that imitate protected brands (crt.sh)',
+  'watch.feeds': 'OpenPhish and PhishStats, filtered to UAE brands',
+  'limit.run': '{c}: at most {n} runs per {per}', 'limit.auto': 'Feeds run every hour and certificates every day on their own.',
+  'reports.p': 'The summary report holds the totals, the model results, the method, and every flagged case with all its evidence. Each case also has its own evidence report in the case file.'
+};
+Object.assign(AR, {
+  'About this demo': 'عن هذا العرض', 'What this site shows and what you can do': 'ما يعرضه الموقع وما يمكنك فعله',
+  'Summary report (PDF)': 'التقرير الموجز (PDF)', 'How the model works': 'كيف يعمل النموذج', 'Got it': 'فهمت',
+  'Source code': 'الشيفرة المصدرية', 'Close': 'إغلاق',
+  'about.p1': 'يراقب مرصاد نتائج البحث وإعلاناته، وإعلانات الخرائط، وشهادات المواقع الجديدة، وموجزات التصيّد العامة، بحثًا عن روابط تنتحل علامات إماراتية، ويرتّبها لمحلل الشرطة مع الأدلة.',
+  'about.p2': 'ما تراه: قضايا حقيقية من تشغيلاتنا ومن الموجزات العامة بعد إزالة بيانات الضحايا من كل رابط، إضافة إلى خمسة روابط تجريبية مختلقة على النطاق المحجوز example وعليها وسم Demo link.',
+  'about.p3': 'ما يمكنك فعله: فتح أي قضية، وفحص رابط من مربع البحث، وتشغيل قناة من الإعدادات، وتأكيد قضية أو استبعادها، وتنزيل تقرير الأدلة لأي قضية أو التقرير الموجز. ويُسجَّل كل إجراء في سجل التدقيق.',
+  'about.p4': 'على هذا الخادم العام لا يفتح مرصاد أي صفحة مشبوهة، إذ لا يجري التقاط الصفحات إلا داخل بيئة عزل افتراضية في المختبر. ويُحدّ عدد تشغيلات البحث والخرائط حفاظًا على حصص الخدمات المشتركة.',
+  'Model': 'النموذج', 'How a link gets its risk': 'كيف يحصل الرابط على درجة خطورته',
+  'Four ensembles, one score': 'أربع مجموعات نماذج ودرجة واحدة',
+  'model.p1': 'يُحوَّل كل رابط إلى أنماط من الحروف و{f} سمة لفظية، ثم تقيّمه أربع مجموعات نماذج: AdaBoost وBagging وStacking وVoting. والخطورة هي متوسط احتمالاتها الأربعة.',
+  'The threshold': 'العتبة',
+  'model.p2': 'يُرفع الرابط إلى قائمة المراقبة عند درجة {thr} أو أعلى. وقد ضُبطت العتبة على بيانات التحقق بحيث لا يتجاوزها أكثر من 1% من الروابط السليمة.',
+  'Two signals on live channels': 'إشارتان في القنوات الحية',
+  'model.p3': 'في القنوات الحية لا يكفي النموذج وحده: يحتاج الرابط إلى درجة {ma} على الأقل، أو إلى دليل واحد يتفق معه، مثل علامة محمية على نطاق لا تملكه، أو نطاق حديث التسجيل، أو نموذج بطاقة يرسل بياناته إلى نطاق آخر، أو إدراج في موجز تصيّد عام.',
+  'Official sites stay out': 'المواقع الرسمية تبقى خارج القائمة',
+  'model.p4': 'النطاقات المدرجة في القائمة الرسمية لكل جهة محمية ({b} جهة) تُخفَّض درجتها، فلا تصل المصارف والجهات الحكومية الحقيقية إلى القائمة.',
+  'Measured results': 'النتائج المقيسة', 'Test': 'الاختبار', 'Accuracy': 'الدقة', 'Fraud recall': 'نسبة اكتشاف الاحتيال',
+  'False-positive rate': 'معدل الإنذارات الخاطئة', 'ROC AUC': 'ROC AUC',
+  'res.e1a': 'المعيار العام، تقسيم عشوائي', 'res.e2': 'مواقع لم يرها النموذج في التدريب', 'res.e3a': 'النموذج المنشور على أشهر لاحقة',
+  'Trained on {d}, {a} to {b}': 'دُرّب على {d}، من {a} إلى {b}',
+  'Early warning': 'الإنذار المبكر', 'New certificates for lookalike names': 'شهادات جديدة لأسماء شبيهة',
+  'early.p1': 'يحتاج كل موقع HTTPS إلى شهادة، وتُنشر كل شهادة في سجلات الشفافية العامة، غالبًا قبل الإعلان عن الموقع. يقرأ مرصاد هذه السجلات (crt.sh للعلامات المحمية، والتدفق المباشر في المختبر) ويرصد الأسماء الجديدة التي تنتحل علامة محمية، وكثيرًا ما يحدث ذلك قبل أن يرى أول ضحية الرابط.',
+  'Flagged from certificates': 'قضايا مصدرها الشهادات', 'None yet.': 'لا شيء بعد.',
+  'Run the certificate check now': 'شغّل فحص الشهادات الآن',
+  'Settings': 'الإعدادات', 'Channels, runs, and reports': 'القنوات والتشغيلات والتقارير',
+  'Channel': 'القناة', 'What it watches': 'ما تراقبه', 'Key': 'المفتاح', 'Last run': 'آخر تشغيل', 'Run now': 'شغّل الآن',
+  'ready': 'جاهز', 'no key': 'لا يوجد مفتاح', 'not needed': 'غير مطلوب', 'never': 'لم يعمل',
+  'watch.search': 'نتائج Google وإعلاناته لـ {n} عبارة بحث عن علامات إماراتية',
+  'watch.maps': 'إعلانات خرائط Google لـ {n} بحثًا عن أعمال، مع مقارنة الموقع والهاتف بالجهة',
+  'watch.certificates': 'شهادات جديدة لأسماء تنتحل علامات محمية، من سجلات crt.sh',
+  'watch.feeds': 'موجزا OpenPhish وPhishStats بعد تصفيتهما للعلامات الإماراتية',
+  'Limits on this public site': 'الحدود على هذا الموقع العام',
+  'limit.run': '{c}: {n} تشغيلات كحد أقصى في {per}', 'day': 'اليوم', 'hour': 'الساعة',
+  'limit.auto': 'تعمل الموجزات كل ساعة والشهادات كل يوم تلقائيًا.',
+  'Report downloads': 'تنزيل التقارير', 'Summary report, English (PDF)': 'التقرير الموجز بالإنجليزية (PDF)',
+  'Summary report, Arabic (PDF)': 'التقرير الموجز بالعربية (PDF)',
+  'reports.p': 'يضم التقرير الموجز الأرقام الإجمالية ونتائج النموذج والطريقة وكل قضية مشبوهة مع جميع أدلتها. ولكل قضية تقرير أدلة خاص بها في ملف القضية.',
+  '{c} run started; new cases appear in the queue as they are scored.': 'بدأ تشغيل {c}؛ تظهر القضايا الجديدة في القائمة فور تقييمها.',
+  '{c} is already running.': '{c} قيد التشغيل بالفعل.', 'The run could not start: {e}': 'تعذّر بدء التشغيل: {e}',
+  'Not available on demo data': 'غير متاح على البيانات التجريبية',
+  'Package (JSON)': 'الحزمة (JSON)', 'Report (PDF)': 'التقرير (PDF)'
+});
+const INFO = {open: null, opener: null, health: null, model: null};
+const CH_NAME = {search: 'Search monitor', maps: 'Maps check', certificates: 'Certificate stream', feeds: 'Feeds'};
+/* Long passages: English from INFO_EN, Arabic from AR, both keyed the same. */
+const tx = (k, vars) => (S.lang === 'ar' ? t(k, vars) : t(INFO_EN[k] || k, vars));
+function reportHref(cid) {
+  return (cid ? '/api/cases/' + encodeURIComponent(cid) + '/report' : '/api/report') + '?lang=' + S.lang;
+}
+function infoDlg() {
+  let d = document.getElementById('infoDlg');
+  if (d) return d;
+  d = document.createElement('div');
+  d.className = 'dlg'; d.id = 'infoDlg'; d.hidden = true;
+  d.setAttribute('role', 'dialog'); d.setAttribute('aria-modal', 'true'); d.setAttribute('aria-labelledby', 'infoTitle');
+  d.innerHTML = '<div class="box info"><div class="bh"><h2 class="pt" id="infoTitle"></h2><span class="pm" id="infoSub"></span>' +
+    '<button type="button" class="x openbtn">' + I.x + '</button></div><div class="bb" id="infoBody"></div></div>';
+  document.body.appendChild(d);
+  d.addEventListener('click', e => { if (e.target === d) closeInfo(); });
+  d.querySelector('.x').addEventListener('click', closeInfo);
+  return d;
+}
+function openInfo(kind) {
+  const d = infoDlg();
+  INFO.open = kind; INFO.opener = document.activeElement;
+  d.querySelector('#infoBody').innerHTML = '';
+  d.hidden = false;
+  renderInfo();
+  d.querySelector('.x').focus();
+}
+function closeInfo() {
+  const d = document.getElementById('infoDlg');
+  if (!d || d.hidden) return;
+  d.hidden = true; INFO.open = null;
+  if (INFO.opener && INFO.opener.focus) INFO.opener.focus();
+}
+async function loadInfo(force) {
+  if (S.mode === 'mock') return;
+  if (force || !INFO.health) INFO.health = await api('GET', '/api/health').catch(() => null);
+  if (force || !INFO.model) INFO.model = await api('GET', '/api/model').catch(() => null);
+}
+const pctx = (v, d) => (v == null ? '' : (v * 100).toFixed(d == null ? 1 : d) + '%');
+async function renderInfo() {
+  const kind = INFO.open; if (!kind) return;
+  const d = infoDlg(), body = d.querySelector('#infoBody');
+  d.querySelector('.x').setAttribute('aria-label', t('Close'));
+  const titles = {about: ['About this demo', 'What this site shows and what you can do'], model: ['Model', 'How a link gets its risk'],
+    early: ['Early warning', 'New certificates for lookalike names'], settings: ['Settings', 'Channels, runs, and reports']};
+  d.querySelector('#infoTitle').textContent = t(titles[kind][0]);
+  d.querySelector('#infoSub').textContent = t(titles[kind][1]);
+  if (!body.innerHTML) body.innerHTML = '<p class="loading">' + esc(t('Loading')) + '</p>';
+  await probe();
+  await loadInfo(kind === 'settings');
+  if (INFO.open !== kind) return;
+  const rich = x => (S.lang === 'ar' ? latinRuns(x) : esc(x));  // isolate Latin runs only inside Arabic text
+  const P = (k, vars) => '<p>' + rich(tx(k, vars)) + '</p>';
+  const H = k => '<h3>' + esc(t(k)) + '</h3>';
+  const mock = S.mode === 'mock';
+  let h = '';
+  if (kind === 'about') {
+    h = P('about.p1') + P('about.p2') + P('about.p3') + P('about.p4') +
+      '<div class="ibtns">' + (mock ? '' : '<a class="btn" href="' + esc(reportHref()) + '" download>' + esc(t('Summary report (PDF)')) + '</a>') +
+      '<button type="button" class="btn" data-goto="model">' + esc(t('How the model works')) + '</button>' +
+      '<a class="btn" href="https://github.com/muhammet-tm/mirsad" target="_blank" rel="noopener">' + esc(t('Source code')) + '</a>' +
+      '<button type="button" class="btn pri" data-close="1">' + esc(t('Got it')) + '</button></div>';
+  } else if (kind === 'model') {
+    const m = INFO.model || {};
+    const r = {}; (m.results || []).forEach(x => { r[x.id] = x; });
+    h = H('Four ensembles, one score') + P('model.p1', {f: num(m.lexical_features || 0)}) +
+      H('The threshold') + P('model.p2', {thr: m.threshold != null ? m.threshold : ''}) +
+      H('Two signals on live channels') + P('model.p3', {ma: m.model_alone != null ? m.model_alone : ''}) +
+      H('Official sites stay out') + P('model.p4', {b: num(m.brands || 0)}) +
+      H('Measured results') + '<table><thead><tr><th>' + esc(t('Test')) + '</th><th>' + esc(t('Accuracy')) + '</th><th>' +
+      esc(t('Fraud recall')) + '</th><th>' + esc(t('False-positive rate')) + '</th><th>' + esc(t('ROC AUC')) + '</th></tr></thead><tbody>' +
+      ['e1a', 'e2', 'e3a'].map(id => {
+        const x = r[id] || {};
+        return '<tr><td>' + esc(tx('res.' + id)) + '</td><td class="tn">' + pctx(x.accuracy) + '</td><td class="tn">' + pctx(x.recall) +
+          '</td><td class="tn">' + pctx(x.false_positive_rate, 2) + '</td><td class="tn">' + (x.roc_auc == null ? '' : x.roc_auc.toFixed(2)) + '</td></tr>';
+      }).join('') + '</tbody></table>' +
+      (m.trained_on ? '<p class="fine">' + rich(t('Trained on {d}, {a} to {b}', {d: m.trained_on, a: fmtDate((m.train_date_range || [])[0]), b: fmtDate((m.train_date_range || [])[1])})) + '</p>' : '');
+  } else if (kind === 'early') {
+    let list = '<p class="fine">' + esc(t('Not available on demo data')) + '</p>';
+    if (!mock) {
+      const cs = await api('GET', '/api/cases?status=all&channel=certificates&limit=20').catch(() => null);
+      const items = (cs && cs.items) || [];
+      list = items.length ? '<table><tbody>' + items.map(o => '<tr><td class="tn">' + esc(rk(o.risk)) + '</td><td><a href="' + esc(caseHref(o.id)) + '">' + ltr(o.display) + '</a></td><td>' +
+        esc(o.imitates || '') + '</td><td class="tn">' + esc(fmtDate(o.first_seen)) + '</td></tr>').join('') + '</tbody></table>' : '<p class="fine">' + esc(t('None yet.')) + '</p>';
+    }
+    h = P('early.p1') + H('Flagged from certificates') + list +
+      (mock ? '' : '<div class="ibtns"><button type="button" class="btn" data-run="certificates">' + esc(t('Run the certificate check now')) + '</button></div>');
+  } else if (kind === 'settings') {
+    const hl = INFO.health || {}, ig = hl.integrations || {}, m = INFO.model || {};
+    const st = mock ? null : await api('GET', '/api/status').catch(() => null);
+    const last = {}; ((st && st.channels) || []).forEach(c => { last[c.id] = c; });
+    const need = {search: ig.search, maps: ig.maps, certificates: null, feeds: null};
+    h = '<table><thead><tr><th>' + esc(t('Channel')) + '</th><th>' + esc(t('What it watches')) + '</th><th>' + esc(t('Key')) + '</th><th>' + esc(t('Last run')) + '</th><th></th></tr></thead><tbody>' +
+      ['search', 'maps', 'certificates', 'feeds'].map(c => {
+        const key = mock ? '' : need[c] == null ? t('not needed') : need[c] ? t('ready') : t('no key');
+        const when = last[c] && last[c].last_run ? fmtWhen(last[c].last_run, st && st.now) : (mock ? '' : t('never'));
+        const what = tx('watch.' + c, {n: num(c === 'search' ? m.search_queries : m.maps_queries)});
+        return '<tr><td><b>' + esc(t(CH_NAME[c])) + '</b></td><td>' + rich(what) + '</td><td>' + esc(key) + '</td><td class="tn">' + esc(when) + '</td><td>' +
+          (mock || need[c] === false ? '' : '<button type="button" class="btn sm" data-run="' + c + '">' + esc(t('Run now')) + '</button>') + '</td></tr>';
+      }).join('') + '</tbody></table>';
+    if (hl.public && hl.budgets) {
+      h += H('Limits on this public site') + '<ul>' + Object.keys(hl.budgets).map(c => '<li>' +
+        esc(tx('limit.run', {c: t(CH_NAME[c]), n: hl.budgets[c].runs, per: S.lang === 'ar' ? t(hl.budgets[c].per) : hl.budgets[c].per})) + '</li>').join('') +
+        (hl.schedule ? '<li>' + esc(tx('limit.auto')) + '</li>' : '') + '</ul>';
+    }
+    h += H('Report downloads') + P('reports.p') +
+      '<div class="ibtns">' + (mock ? '' : '<a class="btn" href="/api/report?lang=en" download>' + esc(t('Summary report, English (PDF)')) + '</a>' +
+        '<a class="btn" href="/api/report?lang=ar" download>' + esc(t('Summary report, Arabic (PDF)')) + '</a>') +
+        '<button type="button" class="btn" data-goto="about">' + esc(t('About this demo')) + '</button></div>';
+  }
+  body.innerHTML = '<div class="info">' + h + '</div>';
+  body.querySelectorAll('[data-goto]').forEach(b => b.addEventListener('click', () => { INFO.open = b.dataset.goto; body.innerHTML = ''; renderInfo(); }));
+  body.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', closeInfo));
+  body.querySelectorAll('[data-run]').forEach(b => b.addEventListener('click', () => startRun(b.dataset.run, b)));
+}
+async function startRun(channel, btn) {
+  const name = t(CH_NAME[channel]);
+  if (btn) btn.disabled = true;
+  try {
+    const r = await api('POST', '/api/runs/' + channel);
+    toast(r && r.state === 'already running' ? t('{c} is already running.', {c: name}) : t('{c} run started; new cases appear in the queue as they are scored.', {c: name}));
+  } catch (e) {
+    toast(t('The run could not start: {e}', {e: e.message}), {error: true, timeout: 7000});
+  } finally {
+    if (btn) setTimeout(() => { btn.disabled = false; }, 3000);
+  }
+}
+function renderReportLink() {
+  const a = document.getElementById('repLink'); if (!a) return;
+  a.hidden = S.mode !== 'live';
+  a.href = reportHref();
+  a.querySelector('span').textContent = t('Summary report (PDF)');
+}
+function initInfo() {
+  const end = document.querySelector('.status .end');
+  if (end && !document.getElementById('repLink')) {
+    const a = document.createElement('a');
+    a.id = 'repLink'; a.className = 'replink'; a.hidden = true; a.setAttribute('download', '');
+    a.innerHTML = '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2.5v7M5 6.5l3 3 3-3M3 11.5v2h10v-2"/></svg><span></span>';
+    end.insertBefore(a, end.firstChild);
+  }
+  renderReportLink();
+  S.langCbs.push(() => { renderReportLink(); if (INFO.open) renderInfo(); });
+  probe().then(mode => {
+    renderReportLink();
+    if (mode !== 'live') return;
+    api('GET', '/api/health').then(h => {
+      INFO.health = h;
+      let seen = false;
+      try { seen = localStorage.getItem('mirsad.aboutSeen') === '1'; localStorage.setItem('mirsad.aboutSeen', '1'); } catch (e) { /* storage blocked */ }
+      if (h && h.public && !seen && document.body.dataset.page === 'watch') openInfo('about');
+    }).catch(() => {});
+  });
 }
 
 /* ================================================================ boot */

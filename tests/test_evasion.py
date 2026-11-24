@@ -127,7 +127,7 @@ def test_cases_on_the_same_address_are_linked_but_not_through_a_cdn(fake_world, 
     ids = {h: pipeline.process(fake_world, Found(f"https://{h}/pay", "report"), use_sandbox=False, summaries=False)[0]
            for h in homes}
     a = build_case(fake_world, ids["salik-topup.top"])
-    assert [x["domain"] for x in a["linked"]] == ["salik-recharge.top"]
+    assert [(x["domain"], x["via"]) for x in a["linked"]] == [("salik-recharge.top", "address")]
     assert any(n["kind"] == "network" for n in a["graph"]["nodes"])
     assert any(e["label"].startswith("Resolves to 203.0.113.7, AS64500 Example Hosting (NL)") for e in a["evidence"])
     assert build_case(fake_world, ids["tamm-fines.top"])["linked"] == []  # a shared CDN address links nothing
@@ -139,3 +139,25 @@ def test_hosting_label_and_owner_name():
     assert hosting.short_owner("CLOUDFLARENET - Cloudflare, Inc., US") == "Cloudflare, Inc."
     assert hosting.short_owner("OVH, FR") == "OVH"
     assert hosting.lookup("salik-topup-uae.example") is None  # reserved names are never looked up
+
+
+def test_cases_sharing_private_name_servers_are_linked(fake_world, monkeypatch):
+    from mirsad import pipeline
+    from mirsad.api.cases import build_case
+    from mirsad.collectors.sources import Found
+
+    ns = {"tamm-fines.top": ["ns1.fastflux-dns.top", "ns2.fastflux-dns.top"],
+          "tamm-pay.top": ["ns1.fastflux-dns.top", "ns2.fastflux-dns.top"],
+          "adcb-login.top": ["dns1.registrar-servers.com", "dns2.registrar-servers.com"],
+          "adcb-verify.top": ["dns1.registrar-servers.com", "dns2.registrar-servers.com"]}
+    monkeypatch.setattr(pipeline.passive, "rdap_created", lambda d: "2026-11-20T08:00:00Z")
+    monkeypatch.setattr(pipeline.passive, "rdap_record", lambda d: {
+        "domain": d, "created": "2026-11-20T08:00:00Z", "expires": "2027-11-20T08:00:00Z",
+        "registrar": "Example Registrar", "nameservers": ns[d], "status": []})
+    monkeypatch.setattr(pipeline.hosting, "lookup", lambda h: None)
+    ids = {d: pipeline.process(fake_world, Found(f"https://{d}/pay", "report"), use_sandbox=False, summaries=False)[0]
+           for d in ns}
+    a = build_case(fake_world, ids["tamm-fines.top"])
+    assert [(x["domain"], x["via"], x["shared"]) for x in a["linked"]] == [("tamm-pay.top", "name servers", "fastflux-dns.top")]
+    assert any(e["label"].startswith("Registrar Example Registrar; expires 20 Nov 2027") for e in a["evidence"])
+    assert build_case(fake_world, ids["adcb-login.top"])["linked"] == []  # a registrar's shared name servers link nothing
