@@ -36,3 +36,7 @@ deck/_render/
 
 # certstream-server-go binary, its config, and its log (downloaded and checked by mirsad/collectors/certstream_local.py)
 data/certstream/
+
+# Public demo database, built by scripts/make_snapshot.py from the lab database (never committed)
+deploy/seed.sqlite3
+deploy/_stage/
