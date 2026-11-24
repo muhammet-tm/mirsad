@@ -79,6 +79,16 @@ def derived(n: dict) -> None:
         t = datetime.fromisoformat(n["counts.first_run"]).astimezone(GST)
         n["counts.first_run_gst"] = f"{t.day} {t:%B %Y}, {t:%H:%M} GST"
         n["counts.first_run_day"] = f"{t.day} {t:%B %Y}"
+        # The days the live runs cover, in GST: "23 November 2026" or "23 to 24 November 2026".
+        e = datetime.fromisoformat(n.get("counts.last_run") or n["counts.first_run"]).astimezone(GST)
+        if t.date() == e.date():
+            n["counts.run_window"] = f"{t.day} {t:%B %Y}"
+        elif (t.year, t.month) == (e.year, e.month):
+            n["counts.run_window"] = f"{t.day} to {e.day} {e:%B %Y}"
+        elif t.year == e.year:
+            n["counts.run_window"] = f"{t.day} {t:%B} to {e.day} {e:%B %Y}"
+        else:
+            n["counts.run_window"] = f"{t.day} {t:%B %Y} to {e.day} {e:%B %Y}"
     a, b = "e1a.at_validation_threshold.dae2_mean.accuracy", "e1b.at_validation_threshold.dae2_mean.accuracy"
     if a in n and b in n:
         n["delta.e1.accuracy_points"] = round(100 * (n[a] - n[b]), 2)

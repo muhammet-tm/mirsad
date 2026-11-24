@@ -34,8 +34,8 @@ Notes: The money figure is recovered, not lost; no sourced loss total exists, so
 - One queue for an analyst, one case file per site, one evidence package per decision
 
 ## 5. The working product
-- Screenshot of the Watch screen with live data from the event (map, queue, case panel)
-- Caption: live data collected on {{counts.first_run}}; {{int:counts.screened_total}} links screened, {{int:counts.flagged_total}} flagged at the frozen threshold.
+- Screenshot of the Watch screen with live data from the open internet (map, queue, case panel)
+- Caption: live runs on {{counts.run_window}}; {{int:counts.screened_total}} links screened, {{int:counts.flagged_total}} flagged at the frozen threshold.
 
 ## 6. How Mirsad works (architecture)
 - Discover: search results and ads, map listings, new certificates, threat feeds
@@ -72,9 +72,9 @@ Notes: This is the slide that earns trust. The paper's dataset rewards recognizi
 - Every view, decision, and export audited; an officer decides; nothing is blocked automatically
 - Legal frame: Federal Decree-Law No. 34 of 2021 (Articles 11, 15, 40, and 48 describe what we detect; Articles 1 to 4 and 12 bound how we collect; Articles 62 and 66 are the powers our evidence feeds); PDPL principles applied by design
 
-## 11. What Mirsad found during the event
+## 11. What Mirsad found in its live runs
 - {{int:counts.screened_total}} links screened across four channels; {{int:counts.flagged_total}} flagged
-- Flags by channel and the brands most imitated, from the live run
+- Flags by channel and the brands most imitated, from the live runs
 - One case walked through end to end (from the queue to the evidence package)
 
 ## 12. Next: a 90-day pilot with the Cybercrime unit

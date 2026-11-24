@@ -1657,6 +1657,7 @@
  "counts.flagged_by_channel.maps": 0,
  "counts.first_run_gst": "23 November 2026, 03:59 GST",
  "counts.first_run_day": "23 November 2026",
+ "counts.run_window": "23 November 2026",
  "delta.e1.accuracy_points": 6.58,
  "delta.e1a_e2p.accuracy_points": 3.46
 }
