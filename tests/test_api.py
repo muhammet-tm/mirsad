@@ -68,3 +68,13 @@ def test_check_scores_a_link(client):
 def test_capture_path_traversal_blocked(client):
     c, _, _ = client
     assert c.get("/captures/..%2F..%2F.env").status_code == 404
+
+
+def test_check_batch(client):
+    c, _, _ = client
+    r = c.post("/api/check/batch", json={"urls": ["https://www.adcb.com/", "http://salik-topup-uae.top/pay"]})
+    assert r.status_code == 200
+    body = r.json()
+    assert len(body["results"]) == 2 and body["results"][0]["flagged"] is False
+    assert body["results"][1]["imitates"] == "Salik"
+    assert c.post("/api/check/batch", json={"urls": []}).status_code == 422

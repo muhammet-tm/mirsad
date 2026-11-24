@@ -1,0 +1,9 @@
+url,note
+https://salik-topup-uae.example/recharge,Invented lookalike of Salik (reserved .example domain)
+https://tamm-traffic-fines.example/pay,Invented lookalike of TAMM traffic fines (reserved .example domain)
+https://uaepass-login-verify.example/signin,Invented lookalike of UAE PASS (reserved .example domain)
+https://emiratesp0st-delivery.example/track?id=AE771,Invented lookalike of Emirates Post with a digit for a letter (reserved .example domain)
+https://adcb-secure-update.example/account,Invented lookalike of ADCB (reserved .example domain)
+https://www.salik.ae/,Real Salik site; the official-domain cap keeps it out of the queue
+https://www.adpolice.gov.ae/,Real Abu Dhabi Police site; the official-domain cap keeps it out of the queue
+https://www.emiratesnbd.com/en,Real Emirates NBD site; the official-domain cap keeps it out of the queue

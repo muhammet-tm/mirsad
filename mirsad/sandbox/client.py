@@ -18,11 +18,15 @@ def available() -> bool:
         return False
 
 
-def capture(case_id: str, url: str, timeout_s: int = 15) -> dict | None:
-    """Ask the sandbox to load the page once; store the screenshot locally and return the facts."""
+def capture(case_id: str, url: str, timeout_s: int = 15, device: str = "desktop") -> dict | None:
+    """Ask the sandbox to load the page once; store the screenshot locally and return the facts.
+
+    `device` is "desktop" (Chrome on Windows) or "mobile" (Chrome on Android); some scam kits show a
+    harmless page to visitors who do not look like their target, so a second, mobile load can reveal it.
+    """
     try:
         with http_client(timeout=timeout_s + 20) as c:
-            r = c.post(f"{settings.sandbox_url}/capture", json={"url": url, "timeout_s": timeout_s})
+            r = c.post(f"{settings.sandbox_url}/capture", json={"url": url, "timeout_s": timeout_s, "device": device})
         data = r.json()
     except Exception:
         return None

@@ -79,6 +79,8 @@ For a maps case, `listing` is `{"place_id": "...", "category": "Car rental", "we
 
 `POST /api/check` with `{"url": "https://example.top/pay", "save": false}`: scores one link on demand and returns the same shape as a case (without capture unless the sandbox is on).
 
+`POST /api/check/batch` with `{"urls": ["https://example.top/pay", "..."]}` (1 to 10,000 links): scores every link with the same model, rules, and official-domain cap as a single check, without storing cases, and returns `{"threshold", "results": [{"url", "risk", "flagged", "votes", "reasons", "imitates"}]}`. For files, `scripts/score_urls.py` does the same from the command line and writes a CSV.
+
 `POST /api/runs/{channel}` with channel `search`, `maps`, `feeds`, or `certificates`: starts one collector run and returns `{"run_id", "channel", "started"}`.
 
 ## Static

@@ -19,7 +19,7 @@ from pydantic import BaseModel, Field
 from .. import __version__, pipeline
 from ..config import DATA_DIR, ROOT, settings
 from ..sandbox import client as sandbox
-from ..scoring.engine import Signals, model_info, score, threshold
+from ..scoring.engine import Signals, model_info, score, score_batch, threshold
 from ..store import Store, now, redact
 from .cases import build_case, kpis, list_cases, map_data
 
@@ -40,6 +40,10 @@ class Decision(BaseModel):
 class Check(BaseModel):
     url: str = Field(min_length=4, max_length=2048)
     save: bool = False
+
+
+class CheckBatch(BaseModel):
+    urls: list[str] = Field(min_length=1, max_length=10_000)
 
 
 @app.get("/api/health")
@@ -130,6 +134,18 @@ def check(c: Check):
         out["case_id"] = cid
     store.audit("Duty analyst", "check", redact(c.url), json.dumps({"risk": r.risk}))
     return out
+
+
+@app.post("/api/check/batch")
+def check_batch(c: CheckBatch):
+    """Score up to 10,000 links at once (a test set or a bulk list); nothing is stored but an audit entry."""
+    urls = [u.strip()[:2048] for u in c.urls if u and u.strip()]
+    results = score_batch(urls)
+    thr = threshold()
+    store.audit("Duty analyst", "check_batch", f"{len(urls)} links", json.dumps({"flagged": sum(r.risk >= thr for r in results)}))
+    return {"threshold": thr, "results": [
+        {"url": redact(u), "risk": r.risk, "flagged": r.risk >= thr, "votes": r.votes, "reasons": r.reasons,
+         "imitates": r.imitates} for u, r in zip(urls, results)]}
 
 
 @app.post("/api/runs/{channel}")

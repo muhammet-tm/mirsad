@@ -6,6 +6,7 @@ the first-stage model or a rule has already marked suspicious, so quotas and rat
 
 from __future__ import annotations
 
+import dataclasses
 import json
 import logging
 from datetime import datetime, timezone
@@ -13,8 +14,9 @@ from datetime import datetime, timezone
 from .collectors import sources
 from .collectors.sources import Found
 from .config import PROCESSED_DIR
-from .enrich import passive
-from .features.url import hosting_platform, registered_domain
+from .enrich import passive, redirects
+from .features.brands import is_official
+from .features.url import host_of, hosting_platform, registered_domain, strip_query
 from .llm.summary import summarize
 from .sandbox import client as sandbox
 from .scoring.engine import Signals, score, threshold
@@ -31,9 +33,22 @@ def _fmt_day(iso: str | None) -> str:
         return iso or ""
 
 
+def _better(a, b):
+    """The more severe of two results for the same link (its address and its final destination)."""
+    return b if b.risk > a.risk else a
+
+
 def process(store: Store, f: Found, use_sandbox: bool, summaries: bool = True) -> tuple[str, float]:
+    short_link = None
+    if redirects.is_short_link(f.url):
+        # Score where a short link leads, not the shortener; the short link stays in the evidence.
+        target, _chain = redirects.expand_short_link(f.url)
+        if target != f.url:
+            short_link, f = f.url, dataclasses.replace(f, url=target)
     cid, _ = store.upsert_candidate(f.url, f.channel, channel_detail=f.channel_detail, query=f.query,
                                     rank=f.rank, is_ad=f.is_ad, listing=f.listing, first_seen=f.first_seen)
+    if short_link:
+        store.add_evidence(cid, "redirect", f"Short link {strip_query(short_link)} leads here", "Redirect check")
     sig = Signals(url=f.url, channel=f.channel, query=f.query, rank=f.rank, is_ad=f.is_ad,
                   listing=f.listing, reputation=dict(f.reputation))
     res = score(sig)
@@ -49,7 +64,8 @@ def process(store: Store, f: Found, use_sandbox: bool, summaries: bool = True) -
         if f.listing.get("phone_shared_with"):
             store.add_evidence(cid, "listing", f"Same phone number on {f.listing['phone_shared_with']} listings", "Maps check")
 
-    if res.risk >= thr - NEAR or res.rules:
+    # Official domains are capped by the engine; enriching them would only spend lookups.
+    if res.risk >= thr - NEAR or (res.rules and res.rules != ["official_domain"]):
         domain = registered_domain(f.url)
         platform = hosting_platform(f.url)
         created, cert = None, None
@@ -77,21 +93,39 @@ def process(store: Store, f: Found, use_sandbox: bool, summaries: bool = True) -
 
         if use_sandbox and res.risk >= thr - NEAR and not f.url.startswith("tel:"):
             cap = sandbox.capture(cid, f.url)
+            if cap and not cap.get("error") and not cap.get("forms"):
+                # Cloaking: some kits show a harmless page to desktop visitors and the scam to phones.
+                mobile = sandbox.capture(f"{cid}-mobile", f.url, device="mobile")
+                if mobile and not mobile.get("error") and (
+                        mobile.get("forms") or registered_domain(mobile.get("final_url") or f.url)
+                        != registered_domain(cap.get("final_url") or f.url)):
+                    store.add_evidence(cid, "cloaking", "Shows a different page to mobile visitors than to desktop "
+                                       "visitors (possible cloaking)", "Sandbox capture")
+                    cap = mobile
             if cap and not cap.get("error"):
                 sig.capture = cap
+                final = cap.get("final_url") or f.url
+                final_domain = registered_domain(final)
+                if final_domain and final_domain != domain:
+                    store.add_evidence(cid, "redirect", f"Redirects to {host_of(final)}", "Sandbox capture")
                 for form in cap.get("forms", []):
-                    if form.get("posts_to") and form["posts_to"] != domain:
-                        kind = "Card form" if form.get("card_like") else "Form"
+                    if form.get("posts_to") and form["posts_to"] != final_domain:
+                        kind = "Card form" if form.get("has_card_like") else "Form"
                         store.add_evidence(cid, "form_target", f"{kind} posts to {form['posts_to']} (another domain)", "Sandbox capture")
                 shot = cap.pop("_shot_b64", None)
-                logo = sandbox.phishpedia(f.url, shot) if shot else None
+                logo = sandbox.phishpedia(final, shot) if shot else None
                 if logo and logo.get("brand"):
                     sig.logo = logo
                     ok = "matches" if logo.get("domain_matches_brand") else "is not on that brand's domains"
                     store.add_evidence(cid, "logo_match", f"Logo match: {logo['brand']}, {logo.get('confidence', 0):.2f}, domain {ok}", "Phishpedia")
-                store.save_capture(cid, cap.get("screenshot"), cap.get("title", ""), cap.get("final_url", f.url),
+                store.save_capture(cid, cap.get("screenshot"), cap.get("title", ""), final,
                                    cap.get("forms", []), cap.get("text", ""), logo)
                 res = score(sig)
+                if final_domain and final_domain != domain:
+                    # The captured page belongs to the destination: score it there too. An official
+                    # destination keeps its cap; otherwise the more severe of the two results stands.
+                    at_final = score(dataclasses.replace(sig, url=final))
+                    res = at_final if is_official(final_domain, host_of(final)) else _better(res, at_final)
 
     store.save_score(cid, res.risk, res.model_mean, res.votes, res.reasons, res.rules, res.threshold, res.scoring_ms)
     with store.conn() as c:

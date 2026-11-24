@@ -15,6 +15,14 @@ from datetime import datetime, timezone
 from ..config import http_client, settings
 
 _RDAP_BOOTSTRAP: dict[str, str] | None = None
+# Top-level domains reserved for testing and examples (RFC 2606, RFC 6761): no registration or
+# certificate can exist, so lookups are skipped. The bundled demo links use them on purpose.
+RESERVED_TLDS = {"example", "test", "invalid", "localhost"}
+
+
+def _reserved(domain_or_url: str) -> bool:
+    host = domain_or_url.split("://")[-1].split("/")[0].split(":")[0].rstrip(".").lower()
+    return host.rsplit(".", 1)[-1] in RESERVED_TLDS
 
 
 def _rdap_base(tld: str) -> str | None:
@@ -35,6 +43,8 @@ def _rdap_base(tld: str) -> str | None:
 @functools.lru_cache(maxsize=4096)
 def rdap_created(domain: str) -> str | None:
     """Registration date from RDAP (gTLDs). The .ae registry publishes no RDAP and hides dates."""
+    if _reserved(domain):
+        return None
     tld = domain.rsplit(".", 1)[-1]
     base = _rdap_base(tld)
     if not base:
@@ -59,6 +69,8 @@ _last_crtsh = 0.0
 def first_certificate(domain: str) -> dict | None:
     """Earliest certificate logged for the domain (crt.sh), the age signal that works for .ae too."""
     global _last_crtsh
+    if _reserved(domain):
+        return None
     wait = 12.5 - (time.monotonic() - _last_crtsh)  # crt.sh asks for about 5 requests a minute
     if wait > 0:
         time.sleep(wait)
@@ -101,7 +113,7 @@ def age_days(iso: str | None) -> int | None:
 @functools.lru_cache(maxsize=4096)
 def urlhaus_lookup(url: str) -> dict | None:
     key = settings.key("ABUSECH_AUTH_KEY")
-    if not key:
+    if not key or _reserved(url):
         return None
     try:
         with http_client(timeout=20) as c:

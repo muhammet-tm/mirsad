@@ -22,6 +22,7 @@ from ..features.url import canonical, host_of, registered_domain, split
 
 
 LIVE_CHANNELS = {"search", "maps", "certificates"}
+ENSEMBLE_ORDER = ("adaboost", "bagging", "stacking", "voting")
 MODEL_ALONE = 0.97  # model-only score needed to enter the queue on a live channel
 WEAK_RULES = {"young_domain", "listing_site_unrelated", "organic_brand_query"}
 
@@ -79,14 +80,19 @@ def _query_brand(query: str) -> Brand | None:
     return mentioned_brand(query) if query else None
 
 
-def score(sig: Signals) -> Result:
+def _form_has(form: dict, flag: str) -> bool:
+    """A form flag as the sandbox reports it: "has_<flag>" on the form, or <flag> on any of its fields."""
+    return bool(form.get(f"has_{flag}") or form.get(flag) or any(x.get(flag) for x in form.get("fields") or []))
+
+
+def score(sig: Signals, votes: dict[str, float] | None = None) -> Result:
+    """Score one link. `votes` lets a batch caller pass the model's votes computed for many links at once."""
     t0 = time.perf_counter()
     model, _, _ = _model()
-    if model is not None:
+    if votes is None and model is not None:
         votes = {k: float(v[0]) for k, v in model.votes([sig.url]).items()}
-        model_mean = float(np.mean(list(votes.values())))
-    else:
-        votes, model_mean = {}, 0.0
+    votes = votes or {}
+    model_mean = float(np.mean(list(votes.values()))) if votes else 0.0
     host = host_of(sig.url)
     domain = registered_domain(host)
     owner = is_official(domain, host)
@@ -115,9 +121,9 @@ def score(sig: Signals) -> Result:
 
     cap = sig.capture or {}
     forms = cap.get("forms") or []
-    if owner is None and any(f.get("card_like") for f in forms):
+    if owner is None and any(_form_has(f, "card_like") for f in forms):
         fire("card_form", 0.9 if imitates else 0.75, "Page asks for a card number")
-    if owner is None and any(f.get("password") for f in forms):
+    if owner is None and any(_form_has(f, "password") for f in forms):
         fire("password_form", 0.88 if imitates else 0.72, "Page asks for a password")
     for f in forms:
         target = f.get("posts_to")
@@ -194,4 +200,20 @@ def score_url(url: str, **kwargs) -> Result:
     return score(Signals(url=url, **kwargs))
 
 
-__all__ = ["Signals", "Result", "score", "score_url", "model_info", "threshold", "canonical"]
+def score_batch(urls: list[str], channel: str = "report", chunk: int = 2000) -> list[Result]:
+    """Score many links: the model votes on whole chunks at once, then each link gets the same rules
+    and the official-domain cap as a single check. Used for test sets and bulk checks."""
+    model, _, _ = _model()
+    results: list[Result] = []
+    for i in range(0, len(urls), chunk):
+        part = urls[i:i + chunk]
+        if model is not None:
+            raw = model.votes(part)
+            per = [{k: float(v[j]) for k, v in raw.items()} for j in range(len(part))]
+        else:
+            per = [{} for _ in part]
+        results += [score(Signals(url=u, channel=channel), votes=v) for u, v in zip(part, per)]
+    return results
+
+
+__all__ = ["Signals", "Result", "score", "score_url", "score_batch", "model_info", "threshold", "canonical"]
