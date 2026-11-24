@@ -1,6 +1,6 @@
 # Mirsad API
 
-FastAPI service on `http://127.0.0.1:8600`. All responses are JSON. Times are ISO 8601 in UTC; the dashboard shows Gulf Standard Time (UTC+4). Every view, decision, and export is written to the audit log.
+The FastAPI service runs on `http://127.0.0.1:8600`. All responses are JSON. Times are ISO 8601 in UTC; the dashboard shows Gulf Standard Time (UTC+4). The service writes every view, decision, and export to the audit log.
 
 ## Read
 
@@ -13,7 +13,7 @@ FastAPI service on `http://127.0.0.1:8600`. All responses are JSON. Times are IS
 `GET /api/status`: one entry per discovery channel.
 ```json
 {"channels": [
-  {"id": "search", "label": "Search monitor", "state": "live", "last_run": "2026-11-24T17:40:00Z", "detail": "52 queries"},
+  {"id": "search", "label": "Search monitor", "state": "live", "last_run": "2026-11-24T17:40:00Z", "detail": "23 queries"},
   {"id": "maps", "label": "Maps check", "state": "live", "last_run": "2026-11-24T17:38:00Z", "detail": "31 listings"},
   {"id": "certificates", "label": "Certificate stream", "state": "live", "last_run": "2026-11-24T17:41:00Z", "detail": "1,240 certificates a minute"},
   {"id": "feeds", "label": "Feeds", "state": "synced", "last_run": "2026-11-24T17:30:00Z", "detail": "OpenPhish, URLhaus"}],
@@ -73,7 +73,7 @@ For a maps case, `listing` is `{"place_id": "...", "category": "Car rental", "we
 
 ## Act
 
-`POST /api/cases/{id}/decision` with `{"action": "confirm" | "dismiss" | "reviewing" | "assign", "note": "...", "analyst": "Duty analyst"}` returns the updated case. Confirm is only sent after the dashboard's hold-to-confirm completes.
+`POST /api/cases/{id}/decision` with `{"action": "confirm" | "dismiss" | "reviewing" | "assign", "note": "...", "analyst": "Duty analyst"}` returns the updated case. The dashboard sends `confirm` only after its hold-to-confirm completes.
 
 `GET /api/cases/{id}/export`: the evidence package (JSON) for a registrar abuse report, an aeDA complaint, or a police blocking request. Query strings are redacted; the raw URL is included only in the package, and the export is audited.
 

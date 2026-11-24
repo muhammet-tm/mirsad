@@ -1,14 +1,14 @@
 # UAE brand logos for Phishpedia
 
-Phishpedia recognizes a brand by comparing each logo it finds in a screenshot with a reference list of logos. The list it ships with covers 277 global brands. Most of the UAE brands that scammers imitate, such as Salik, Abu Dhabi Police, TAMM, and Emirates Post, are probably not in it. This folder explains how to add them inside the sandbox VM.
+Phishpedia recognizes a brand by comparing each logo it finds in a screenshot with a reference list of logos. The list it ships with covers 277 global brands. Most of the UAE brands that scammers imitate, such as Salik, Abu Dhabi Police, TAMM, and Emirates Post, are probably not in it. The install script in this folder, `install_brands.py`, adds them to Phishpedia inside the sandbox VM.
 
 ## Rules for the logo files
 
-The team fetches each logo at setup time from the brand's own official website, which means a domain in the table below. No other source qualifies: no search engine images, no logo collections, and no copies from phishing pages. A phishing copy may be altered, and its rights belong to the brand anyway.
+The team fetches each logo at setup time from the brand's own official website, which means a domain in the table below. No other source qualifies, including search engine images, logo collections, and copies from phishing pages. A phishing copy may be altered, and in any case its rights belong to the brand.
 
-Logo files never go into git. They are the brands' intellectual property, and Mirsad only needs them as local reference data in the VM. The `.gitignore` in `sandbox_vm` excludes `brands/logos/`. Keep the files in the VM at `/srv/scamshield/brands/logos/`. If you prepare them on Windows first, put them in `sandbox_vm\brands\logos\` and setup copies them across without committing them.
+Logo files never go into git. They are the brands' intellectual property, and Mirsad only needs them as local reference data in the VM. The `.gitignore` in `sandbox_vm` excludes `brands/logos/`. Keep the files in the VM at `/srv/scamshield/brands/logos/`. If you prepare them on Windows first, put them in `sandbox_vm\brands\logos\`, and setup copies them into the VM.
 
-Write a `SOURCE.txt` file next to each brand's logos with the page URL and the date it was fetched, for example `https://www.salik.ae/ fetched 2026-11-23 from the site header`. The install script warns when this file is missing. Delete the logos after the event, together with the captures.
+Write a `SOURCE.txt` file next to each brand's logos with the page URL and the date you fetched it, for example `https://www.salik.ae/ fetched 2026-11-23 from the site header`. The install script warns when this file is missing. Delete the logos after the event, together with the captures.
 
 ## How Phishpedia stores brands
 
@@ -26,7 +26,7 @@ domain_map.pkl                a pickled dict: brand name -> list of official dom
                               {"Salik": ["salik.ae"], "Abu Dhabi Police": ["adpolice.gov.ae"], ...}
 ```
 
-Every brand folder must have an entry with exactly the same name in `domain_map.pkl`. Phishpedia looks up the matched folder in this map. A folder without an entry raises an error for every page whose logo resembles it. Phishpedia also caches the reference embeddings in `LOGO_FEATS.npy` and `LOGO_FILES.npy` in its own folder. Rebuild them after any change; otherwise Phishpedia ignores the new logos.
+Every brand folder must have an entry with exactly the same name in `domain_map.pkl`. Phishpedia looks up the matched folder in this map and raises an error for every page whose logo resembles a folder that has no entry. Phishpedia also caches the reference embeddings in `LOGO_FEATS.npy` and `LOGO_FILES.npy` in its own folder. Rebuild them after any change; otherwise Phishpedia ignores the new logos.
 
 `install_brands.py` handles all three parts. It copies the logos, merges the domains into `domain_map.pkl` (after backing it up as `domain_map.pkl.orig` and a timestamped copy), and rebuilds the cache.
 
@@ -49,17 +49,17 @@ Every brand folder must have an entry with exactly the same name in `domain_map.
 
 4. Test with a real page of the brand. Capture the official site, then send the screenshot to `/phishpedia` with the official URL. The expected verdict is `brand_match`. The same screenshot with a made-up domain should give `brand_mismatch`.
 
-To undo every change, copy `domain_map.pkl.orig` back over `domain_map.pkl`, delete the `mirsad_*` files from `expand_targetlist`, delete `LOGO_FEATS.npy` and `LOGO_FILES.npy`, and restart the service. The cache is rebuilt on the next start, which takes several minutes.
+To undo every change, copy `domain_map.pkl.orig` back over `domain_map.pkl`, delete the `mirsad_*` files from `expand_targetlist`, delete `LOGO_FEATS.npy` and `LOGO_FILES.npy`, and restart the service. Phishpedia rebuilds the cache on the next start, which takes several minutes.
 
 ## Brand name to official domains
 
-`uae_brands.json` holds this list. It was generated on 23 November 2026 from `mirsad/features/brands.py`, which remains the source of truth. When `brands.py` changes, regenerate the file instead of editing it by hand. From the repository root, on the host:
+`uae_brands.json` holds this list. The team generated it on 23 November 2026 from `mirsad/features/brands.py`, which remains the source of truth. When `brands.py` changes, regenerate the file instead of editing it by hand. From the repository root, on the host:
 
 ```powershell
 .venv\Scripts\python.exe -c "import json; from mirsad.features.brands import BRANDS; json.dump({'source': 'mirsad/features/brands.py', 'brands': [{'name': b.name, 'sector': b.sector, 'domains': list(b.domains), 'verified': b.verified} for b in BRANDS]}, open('sandbox_vm/brands/uae_brands.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)"
 ```
 
-In `brands.py`, "verified" means that a source read on 22 November 2026 showed the domain as the brand's own. Every other row exists in DNS, but its ownership still needs checking before an operational deployment. Check the domain of each unverified brand when you visit its site for the logo, and update `brands.py` if it is wrong.
+In `brands.py`, "verified" means that a source read on 22 November 2026 showed the domain as the brand's own. The domains in every other row exist in DNS, but their ownership still needs checking before an operational deployment. Check the domain of each unverified brand when you visit its site for the logo, and update `brands.py` if it is wrong.
 
 | Brand (folder name) | Sector | Official domains | Verified |
 |---|---|---|---|

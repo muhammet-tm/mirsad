@@ -1,6 +1,6 @@
 # Security
 
-Mirsad handles links that attackers write, so its own security matters in two directions: an attacker must not be able to make a fraud link look official, and the system must not leak the victim data that fraud links often carry. This page describes the controls, the public demo's settings, and the audit that was run before the demo went live.
+Mirsad handles links that attackers write, so its own security matters in two directions: an attacker must not be able to make a fraud link look official, and the system must not leak the victim data that fraud links often carry.
 
 ## What an attacker could try
 
@@ -13,12 +13,12 @@ Mirsad handles links that attackers write, so its own security matters in two di
 
 ## Controls
 
-1. Links are read the way browsers read them. Tabs and newlines are dropped, and in http(s) links a backslash before the query becomes a slash, so Mirsad scores the host a victim actually reaches. A host with characters no real hostname has is never official, and a backslash or a name before an @ in the host part counts as evidence of a disguised link.
-2. The lab server answers only to its own names (127.0.0.1 and localhost), which stops DNS rebinding. A state-changing request from another site is refused, and request bodies must be JSON and at most 4 MB.
+1. Mirsad reads links the way a browser does. It drops tabs and newlines and, in http(s) links, treats a backslash before the query as a slash, so it scores the host a victim reaches. A host with characters no real hostname has is never official, and a backslash or a name before an @ in the host part counts as evidence of a disguised link.
+2. The lab server answers only to its own names (127.0.0.1 and localhost), which stops DNS rebinding. It refuses state-changing requests from other sites, and request bodies must be JSON and at most 4 MB.
 3. Runs, saved checks, single checks, and PDF reports have budgets in every mode, so neither a stranger on the public site nor a forged request can drain the API quotas.
 4. Query values in links are replaced before display: by a keyed hash in the lab (the key is random per installation, never a value in the source) and by a plain `[redacted]` on the public site and in links echoed back to their sender, so no one can test guesses against a hash.
-5. Pages are served with a Content Security Policy that allows scripts only from the site itself; every value written into a page is escaped. PDF reports are rendered by a headless Chromium with JavaScript off and every network request blocked.
-6. The summary model receives Mirsad's own facts and the link's host name, never the page's text or title or a map listing's name. A summary that names an unknown number or brand, or that calls a flagged site official, genuine, safe, or not fraudulent, is discarded and replaced by a template.
+5. Pages are served with a Content Security Policy that allows scripts only from the site itself; every value written into a page is escaped. A headless Chromium renders PDF reports with JavaScript off and every network request blocked.
+6. The summary model receives Mirsad's own facts and the link's host name, never the page's text or title or a map listing's name. Mirsad discards any summary that names an unknown number or brand, or that calls a flagged site official, genuine, safe, or not fraudulent, and uses a template instead.
 7. Secrets live in `.env` outside git, and on the public site as Space secrets entered by the account owner. The deploy script uploads an allow-list of files and refuses to upload if any file holds a secret pattern or a value from `.env`, or if the seed database holds a query value in any link, summary, evidence line, or note.
 8. Suspect pages open only inside the sandbox VM, which blocks private addresses and never submits a form. The VM service accepts requests only for its own host name, only as JSON, and with a shared token when one is set. It reads Phishpedia's brand map with an unpickler that cannot run code, checks the model files against a SHA-256 record made at the first install, and refuses a Falcon model whose checksum differs from the pinned one.
 
@@ -55,7 +55,7 @@ The findings and their fixes:
 | The brand map was unpickled without restriction | Low | Restricted unpickler |
 | Page titles reached the summary model | Low | Titles and listing names removed; clearing text rejected |
 
-Regression tests for these fixes are in `tests/test_security.py`. On 5,000 later-month PhreshPhish URLs scored before and after the parsing change, one verdict changed, a phishing link that used the @ disguise and is now caught, and the false-positive rate did not change.
+Regression tests for these fixes are in `tests/test_security.py`. On 5,000 later-month PhreshPhish URLs scored before and after the parsing change, one verdict changed: a phishing link that used the @ disguise is now caught. The false-positive rate did not change.
 
 ## Known limits
 

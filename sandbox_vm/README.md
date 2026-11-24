@@ -12,13 +12,13 @@ The VM runs three services, and the host reaches each one through a VirtualBox N
 | mirsad-falcon | 8602 | 127.0.0.1:8602 | Falcon instruct model behind llama-server, OpenAI-compatible (`/v1/chat/completions`) |
 | ssh | 22 | 127.0.0.1:2222 | Administration from Windows |
 
-There are two reasons for a separate VM. The first is isolation: a phishing page is hostile code, so it loads in a disposable linked clone that holds no credentials and cannot reach the host's private network. The second is Detectron2. Phishpedia needs it, and Detectron2 has no supported Windows build, while the laptop has no WSL, Docker, or CUDA (`01_Implementation_Plan.md`). On Linux, Phishpedia installs and runs on the CPU.
+Mirsad uses a separate VM for two reasons. The first is isolation: a phishing page is hostile code, so it loads in a disposable linked clone that holds no credentials and cannot reach the host's private network. The second is Detectron2. Phishpedia needs it, and Detectron2 has no supported Windows build, while the laptop has no WSL, Docker, or CUDA (`01_Implementation_Plan.md`). On Linux, Phishpedia installs and runs on the CPU.
 
 The Falcon model gives Mirsad a zero-egress mode for case summaries (`MIRSAD_LLM=falcon` on the host). It writes summaries only and never decides a case.
 
 ### The certificate stream does not run here
 
-The live Certificate Transparency stream (certstream-server-go) first ran in this VM, and it broke the VM's other services. It downloads every new certificate from every log, thousands a second. All of that traffic passed through VirtualBox's NAT, which also carries the port forwards, so on 23 November 2026 ports 8601 and 8602 stopped answering until the stream was stopped. Mirsad now starts the same server on the host, bound to 127.0.0.1, only for the minutes of a certificate run (`mirsad/collectors/certstream_local.py`); it downloads the official release once and checks it against a pinned SHA-256. If you installed the stream in the VM earlier, remove it with `sudo bash certstream_remove.sh`, and delete the old port forward on the host with `VBoxManage controlvm ScamShield-Sandbox natpf1 delete certstream` (already done on the development laptop).
+The live Certificate Transparency stream (certstream-server-go) first ran in this VM, and it broke the VM's other services. It downloads every new certificate from every log, thousands a second. All of that traffic passed through VirtualBox's NAT, which also carries the port forwards, so on 23 November 2026 ports 8601 and 8602 stopped answering until the team stopped the stream. Mirsad now starts the same server on the host, bound to 127.0.0.1, only for the minutes of a certificate run (`mirsad/collectors/certstream_local.py`); it downloads the official release once and checks it against a pinned SHA-256. If you installed the stream in the VM earlier, remove it with `sudo bash certstream_remove.sh`, and delete the old port forward on the host with `VBoxManage controlvm ScamShield-Sandbox natpf1 delete certstream` (already done on the development laptop).
 
 ## Files
 
@@ -68,7 +68,7 @@ Steps 1 to 5 are manual; setup does the rest.
    sudo bash setup.sh
    ```
 
-   Setup lists the empty disk it found and asks you to type `yes` before it formats the disk. It formats only a disk with no partitions, no partition table, and no filesystem signature. It mounts that disk at `/srv/scamshield` by UUID through `/etc/fstab` and backs up `fstab` first. If anything fails, fix the cause and run the same command again. Finished steps are skipped.
+   Setup lists the empty disk it found and asks you to type `yes` before it formats the disk. It formats only a disk with no partitions, no partition table, and no filesystem signature. It mounts that disk at `/srv/scamshield` by UUID through `/etc/fstab` and backs up `fstab` first. If anything fails, fix the cause and run the same command again; setup skips the steps that already finished.
 
 6. Read the summary at the end. The health check confirms that three private addresses are refused, captures `https://example.com/`, runs Phishpedia on its own bundled test page, and asks Falcon for a one-word reply. The full log is in `/var/log/mirsad-setup.log`.
 
@@ -88,7 +88,7 @@ Before capturing real suspicious links, connect the host to the network the orga
 
 Expect about 5 to 6 GB of downloads and 10 to 13 GB of disk use on the 30 GB data disk. On a 50 Mbit/s connection with 4 vCPUs, a first run should take 45 to 90 minutes. Most of the CPU time goes to the Detectron2 build (10 to 25 minutes), the llama.cpp build (5 to 15 minutes), and the first computation of Phishpedia's reference logo embeddings (several minutes). The totals and all time figures are estimates; only the rows marked with a source above were measured.
 
-Memory use with 6 GB of RAM: Falcon needs about 2.5 GB, an estimate for the model plus a 4,096-token context. The sandbox service, which runs Chromium and the Phishpedia worker, is capped at 3.5 GB by systemd so that a heavy page cannot starve Falcon or sshd.
+Memory use with 6 GB of RAM: Falcon needs about 2.5 GB, an estimate for the model plus a 4,096-token context. The systemd unit caps the sandbox service, which runs Chromium and the Phishpedia worker, at 3.5 GB, so a heavy page always leaves about 2.5 GB for Falcon, the system, and sshd.
 
 ## Checking health from Windows
 
@@ -103,13 +103,13 @@ Invoke-RestMethod -Method Post -Uri http://127.0.0.1:8601/capture -ContentType a
   -Body '{"url": "https://example.com/", "timeout_s": 15}' | Select-Object ok, status, title, final_url
 ```
 
-For a long session, `ssh -i "$env:USERPROFILE\.ssh\mirsad_sandbox" -p 2222 <vm-user>@127.0.0.1` and then `journalctl -u mirsad-sandbox -f` shows the request log live. After a boot, Phishpedia reports `"phishpedia": false` with `"phishpedia_state": "starting"` for a minute or two while its models load.
+For a long session, connect with `ssh -i "$env:USERPROFILE\.ssh\mirsad_sandbox" -p 2222 <vm-user>@127.0.0.1` and run `journalctl -u mirsad-sandbox -f` to watch the request log live. After a boot, Phishpedia reports `"phishpedia": false` with `"phishpedia_state": "starting"` for a minute or two while its models load.
 
 The host's settings already point at these ports: `MIRSAD_SANDBOX_URL=http://127.0.0.1:8601` and `FALCON_BASE_URL=http://127.0.0.1:8602/v1`. For the zero-egress summary mode, set `MIRSAD_LLM=falcon`. The model name that llama-server reports is `falcon` (set by `--alias`).
 
 ## Service API
 
-All responses are JSON. A page that cannot be loaded is a normal result, so it returns HTTP 200 with `"ok": false` and an error code. Bad input returns 422, a private target returns 403, and an unavailable browser or a full queue returns 503. No request crashes the service.
+All responses are JSON. The service treats a page that fails to load as a normal result and returns HTTP 200 with `"ok": false` and an error code. Bad input returns 422, a private target returns 403, and an unavailable browser or a full queue returns 503. No request crashes the service.
 
 `GET /health` returns `{"ok", "phishpedia": bool, "chromium": bool, "phishpedia_state", "version"}`, plus `phishpedia_reason` or `chromium_reason` when a part is down.
 
@@ -118,7 +118,7 @@ All responses are JSON. A page that cannot be loaded is a normal result, so it r
 | Field | Content |
 |---|---|
 | `ok`, `error` | `error` is `{"code", "message"}`; codes include `dns_failed`, `navigation_timeout`, `connection_failed`, `tls_error`, `blocked_private_address`, `download_blocked`, and `capture_timeout` |
-| `requested_url`, `final_url`, `final_ip` | `final_ip` is the address the egress proxy actually connected to |
+| `requested_url`, `final_url`, `final_ip` | `final_ip` is the address the egress proxy connected to |
 | `redirect_chain` | Every main-frame hop in order: `{"url", "status", "via": "initial" \| "http_redirect" \| "navigation"}`; `navigation` covers JavaScript and meta-refresh hops |
 | `status`, `title`, `tls` | `tls` is the certificate issuer, protocol, and validity period from Chromium |
 | `language` | `{"declared": <html lang>, "script": "arabic" \| "latin" \| "mixed" \| null}`; the script is counted from the visible text |
@@ -133,7 +133,7 @@ All responses are JSON. A page that cannot be loaded is a normal result, so it r
 
 URLs in the response keep their query strings, because the host decides what to redact. The VM's logs never contain them.
 
-`POST /phishpedia` takes `{"url": "...", "screenshot_b64": "<PNG or JPEG>"}`. It returns `{"brand": str | null, "confidence": float, "logo_box": [x1, y1, x2, y2] | null, "domain_matches_brand": bool, "elapsed_ms": int}` with `"available": true`, or `{"available": false, "reason"}` if Phishpedia is not installed or not loaded. Extra fields are `verdict` (`brand_mismatch`, `brand_match`, `no_brand`, or `no_logo`), `brand_domains`, `phishpedia_consistent`, `logos_detected`, and `threshold` (0.87, Phishpedia's default). The confidence is the Siamese cosine similarity of the best logo crop. A brand is named only when that similarity reaches the threshold. Otherwise `brand` is null, and `confidence` shows the best similarity that was found.
+`POST /phishpedia` takes `{"url": "...", "screenshot_b64": "<PNG or JPEG>"}`. It returns `{"brand": str | null, "confidence": float, "logo_box": [x1, y1, x2, y2] | null, "domain_matches_brand": bool, "elapsed_ms": int}` with `"available": true`, or `{"available": false, "reason"}` if Phishpedia is not installed or not loaded. Extra fields are `verdict` (`brand_mismatch`, `brand_match`, `no_brand`, or `no_logo`), `brand_domains`, `phishpedia_consistent`, `logos_detected`, and `threshold` (0.87, Phishpedia's default). The confidence is the Siamese cosine similarity of the best logo crop. The response names a brand only when that similarity reaches the threshold; otherwise `brand` is null, and `confidence` shows the best similarity found.
 
 `domain_matches_brand` is stricter than upstream Phishpedia. It is true only when the page's registered domain is one of the brand's own domains. Upstream also treats a page as benign when only the second-level label matches on a country-code domain, so `salik.co.ae` would pass for `salik.ae`. A scammer can register exactly that kind of name, so the service reports upstream's relaxed verdict separately as `phishpedia_consistent` and does not let it set the match.
 
@@ -141,15 +141,15 @@ URLs in the response keep their query strings, because the host decides what to 
 
 ### No form submission
 
-The service loads each page once and waits for the network to go quiet. It never types, clicks, or submits. A form that the page submits by itself is a POST navigation, and the route handler aborts every navigation that is not GET or HEAD, recording it in `blocked_requests`. Downloads are refused (`accept_downloads=False`), popups are closed, dialogs are dismissed, and no browser permission such as location or notifications is granted.
+The service loads each page once and waits for the network to go quiet. It never types, clicks, or submits. A form that the page submits by itself is a POST navigation, and the route handler aborts every navigation that is not GET or HEAD, recording it in `blocked_requests`. The service refuses downloads (`accept_downloads=False`), closes popups, dismisses dialogs, and grants no browser permission such as location or notifications.
 
 ### Private-address block
 
-The VM must never reach a private network. Setup installs no firewall; two layers in `sandbox_service.py` enforce the rule instead. First, a Playwright route handler resolves each request's host with `socket.getaddrinfo`, for both IPv4 and IPv6, and aborts the request if any address is private, loopback, link-local, multicast, reserved, unspecified, or otherwise not global. It also unwraps IPv4-mapped, 6to4, NAT64, and Teredo forms and the browser's shorthand IPv4 notation (2130706433, 0x7f.1, and 127.1 all mean 127.0.0.1). Second, Chromium sends all traffic, WebSockets included, through a SOCKS5 proxy inside the service. The proxy resolves the host again, applies the same rule, and connects only to the exact address it checked. That second check closes the DNS-rebinding gap between two lookups. Chromium's own DNS is switched off, and WebRTC may not send UDP outside the proxy. The targets that matter most under VirtualBox NAT are 10.0.2.2 (the host, where Mirsad's API listens on 127.0.0.1:8600) and 10.0.2.3 (the NAT DNS), together with the VM's own ports 8601, 8602, and 22.
+The VM must never reach a private network. Setup installs no firewall; two layers in `sandbox_service.py` enforce the rule instead. First, a Playwright route handler resolves each request's host with `socket.getaddrinfo`, for both IPv4 and IPv6, and aborts the request if any address is private, loopback, link-local, multicast, reserved, unspecified, or otherwise not global. It also unwraps IPv4-mapped, 6to4, NAT64, and Teredo forms and the browser's shorthand IPv4 notation (2130706433, 0x7f.1, and 127.1 all mean 127.0.0.1). Second, Chromium sends all traffic, WebSockets included, through a SOCKS5 proxy inside the service. The proxy resolves the host again, applies the same rule, and connects only to the exact address it checked. That second check closes the DNS-rebinding gap between two lookups. The service also switches off Chromium's own DNS and does not let WebRTC send UDP outside the proxy. The targets that matter most under VirtualBox NAT are 10.0.2.2 (the host, where Mirsad's API listens on 127.0.0.1:8600) and 10.0.2.3 (the NAT DNS), together with the VM's own ports 8601, 8602, and 22.
 
 ### Fresh context
 
-Every capture gets a new browser context with no cookies, storage, or credentials, and with service workers blocked. The service closes the context afterwards and restarts the Chromium process itself after every 50 captures. Chromium runs with its own sandbox on: the service runs as your normal account, not root, and `chromium_sandbox=True` is set explicitly, because Playwright otherwise passes `--no-sandbox`. systemd adds `NoNewPrivileges` (so nothing started by the service can use sudo), `ProtectHome` (the browser cannot read `~/.ssh`), `PrivateTmp`, and a read-only `/usr`, `/boot`, and `/etc`.
+Every capture gets a new browser context with no cookies, storage, or credentials, and with service workers blocked. The service closes the context afterward and restarts the Chromium process itself after every 50 captures. Chromium runs with its own sandbox on: the service runs as your normal account, not root, and sets `chromium_sandbox=True` explicitly, because Playwright otherwise passes `--no-sandbox`. systemd adds `NoNewPrivileges` (so nothing started by the service can use sudo), `ProtectHome` (the browser cannot read `~/.ssh`), `PrivateTmp`, and a read-only `/usr`, `/boot`, and `/etc`.
 
 ### No credentials
 
@@ -157,11 +157,11 @@ The VM holds no API keys, tokens, or passwords, and neither service needs any. D
 
 ### Response size cap
 
-Each upstream connection may deliver at most 5 MB (`MIRSAD_MAX_BODY_BYTES`), so no response body can be larger. With HTTP/2 the cap applies to everything one origin sends over one connection, so a very heavy legitimate page may render with some images missing.
+Each upstream connection may deliver at most 5 MB (`MIRSAD_MAX_BODY_BYTES`), so no response body can be larger. With HTTP/2 the cap applies to everything one origin sends over one connection, so a legitimate page that sends more than 5 MB over one connection may render with some images missing.
 
 ### Logs
 
-The service writes one line per request with the time, the URL host, and the outcome, for example `2026-11-23T08:12:03Z capture host=salik-topup-uae.top outcome=ok status=200 device=desktop blocked=0 ms=4310`. Paths and query strings are never logged, because phishing URLs often carry victims' data. The log goes to journald and to `/srv/scamshield/logs/sandbox_requests.log`, which rotates at 5 MB.
+The service writes one line per request with the time, the URL host, and the outcome, for example `2026-11-23T08:12:03Z capture host=salik-topup-uae.top outcome=ok status=200 device=desktop blocked=0 ms=4310`. The service never logs paths or query strings, because phishing URLs often carry victims' data. The log goes to journald and to `/srv/scamshield/logs/sandbox_requests.log`, which rotates at 5 MB.
 
 ### Limits
 
@@ -173,7 +173,7 @@ A Chromium exploit that also escaped Chromium's sandbox would reach your VM acco
 - Phishpedia's `load_config` returns Python lists right after it builds the logo cache, while `pred_brand` expects NumPy arrays. The worker converts them.
 - Setup adds `tldextract` to the requested pip packages, to report each form's registered domain. It also adds `unzip`, `ninja-build`, `libgl1`, `libglib2.0-0`, and `e2fsprogs` to the apt list, for the logo archive, a parallel Detectron2 build, OpenCV, and `mkfs.ext4`.
 - llama-server gets `--alias falcon --no-ui` in addition to the requested flags. Its default port is now 9931, so `--port 8602` is required.
-- Falcon3-3B-Instruct supports English, French, Spanish, and Portuguese according to its model card, and Arabic is not on that list. For Arabic summaries, TII's Falcon-H1-3B-Instruct-GGUF lists Arabic, and its Q4_K_M file is 1,888,612,384 bytes. To switch, run `sudo FALCON_REPO=tiiuae/Falcon-H1-3B-Instruct-GGUF bash setup.sh`. This alternative has not been tested here.
+- Falcon3-3B-Instruct supports English, French, Spanish, and Portuguese according to its model card, and Arabic is not on that list. For Arabic summaries, TII's Falcon-H1-3B-Instruct-GGUF lists Arabic, and its Q4_K_M file is 1,888,612,384 bytes. To switch, run `sudo FALCON_REPO=tiiuae/Falcon-H1-3B-Instruct-GGUF bash setup.sh`. The team has not tested this alternative.
 
 ## Sources read on 23 November 2026
 
@@ -182,7 +182,7 @@ A Chromium exploit that also escaped Chromium's sandbox would reach your VM acco
 - Falcon: the Hugging Face file listing and model card of `tiiuae/Falcon3-3B-Instruct-GGUF` at revision `142f28a` (last modified 14 January 2025). The license is the TII Falcon-LLM License 2.0.
 - pixi v0.84.2 (released 10 November 2026), with the SHA-256 from its GitHub release asset; gdown 6.5.2 (18 November 2026); and Detectron2 `main` at `247691a` (27 October 2026).
 
-Setup pins every one of these versions, and each pin can be overridden with an environment variable listed at the top of `setup.sh`.
+Setup pins every one of these versions, and you can override each pin with an environment variable listed at the top of `setup.sh`.
 
 ## Troubleshooting
 

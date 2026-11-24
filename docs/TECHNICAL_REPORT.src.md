@@ -4,7 +4,7 @@ Technical report, ScamShield AI hackathon (Abu Dhabi Police and 42 Abu Dhabi), N
 Team: Muhammet Yalkapov (team lead), Sulaymon Sadullo, and Ahmed Mohamed Almheiri, Abu Dhabi University.
 Academic supervisor: Dr. Moatsum Alawida, Abu Dhabi University.
 
-Every number in this report is generated from the result files in `results/` by `scripts/build_docs.py`; none is typed by hand.
+The script `scripts/build_docs.py` generates every measured result in this report from the result files in `results/`; none is typed by hand.
 
 ## Abstract
 
@@ -38,13 +38,13 @@ A FastAPI service on the laptop runs the collectors, the model, and a SQLite sto
 
 ## 3. Data collection
 
-Search results and ads. Mirsad runs {{app.search_queries}} UAE service searches in English and Arabic (for example "salik recharge", "pay traffic fine abu dhabi", and "تتبع شحنة بريد الإمارات") through SerpApi, with Serper as a fallback, and keeps every organic result and paid ad. When a search names a brand, each result is compared with that brand's official domains, so an ad for a Salik search that points elsewhere carries that fact into scoring.
+Search results and ads. Mirsad runs {{app.search_queries}} UAE service searches in English and Arabic (for example "salik recharge", "pay traffic fine abu dhabi", and "تتبع شحنة بريد الإمارات") through SerpApi, with Serper as a fallback, and keeps every organic result and paid ad. When a search names a brand, Mirsad compares each result with that brand's official domains, so an ad for a Salik search that points elsewhere carries that fact into scoring.
 
 Map listings. Mirsad runs {{app.maps_queries}} searches through Google Places around Abu Dhabi and checks three things: a website unrelated to the business, a brand name on a domain the brand does not own, and one phone number shared across listings with different websites. Under Google's terms Mirsad keeps only the place ID, category, website domain, coordinates for at most 30 days, and a hashed phone group.
 
 New certificates. A scam site needs a certificate before the browser shows a padlock, and every certificate is published in Certificate Transparency logs within minutes. Mirsad starts certstream-server-go on the laptop, bound to 127.0.0.1, only for the minutes of a certificate run, and reads its feed of newly certified names; it also queries crt.sh for recent certificates that contain a protected brand. The stream carries thousands of names a second, so its brand check is stricter than elsewhere: a brand token of seven letters or more, or a near-miss spelling of one, counts on its own, while shorter or ordinary-word tokens count only beside UAE context (.ae, "dubai", "uae") or a scam word ("pay", "fines", "track").
 
-Threat feeds. OpenPhish, URLhaus, and PhishStats supply links that others have already reported. Query strings are stripped on intake, because feed records can carry victims' details.
+Threat feeds. OpenPhish, URLhaus, and PhishStats supply links that others have already reported. Mirsad strips query strings on intake, because feed records can carry victims' details.
 
 ## 4. The detection model
 
@@ -61,17 +61,17 @@ The four schemes combine learners differently.
 - AdaBoost trains weak learners one after another. After each round it raises the weight of the training examples the current ensemble gets wrong, so the next learner concentrates on them, and each learner's vote is weighted by how accurate it was. With weighted error e_m in round m, the learner's weight is a_m = r * ln((1 - e_m) / e_m), where r is the learning rate, and misclassified examples have their weights multiplied by exp(a_m).
 - Bagging trains many learners in parallel, each on a random sample of the training data, and averages their predicted probabilities. It mainly reduces variance, which suits deep decision trees.
 - Stacking trains several base learners and then a meta-learner that takes their predicted probabilities as input and learns how much to trust each one. The meta-learner is trained on out-of-fold predictions, so it never sees a base learner's prediction on that learner's own training rows.
-- Voting averages the probabilities of a few strong but different learners (soft voting). It is the simplest combination and is robust when no single learner dominates.
+- Voting averages the probabilities of a few strong but different learners (soft voting). It is the simplest combination and works well when no single learner dominates.
 
 Mirsad keeps all four and scores each link with the mean of their probabilities:
 
 p(u) = (p_AdaBoost(u) + p_Bagging(u) + p_Stacking(u) + p_Voting(u)) / 4.
 
-Keeping all four, instead of selecting one, has a practical benefit beyond accuracy: the four votes are shown to the analyst, and a case where all four agree reads differently from one where a single ensemble fires.
+Keeping all four, instead of selecting one, has a practical benefit beyond accuracy: the analyst sees all four votes, and a case where all four agree reads differently from one where a single ensemble fires.
 
 ### 4.3 Representation
 
-Our representation is designed so that the model cannot learn which source list a URL came from, a shortcut Section 7.2 measures.
+We designed the representation so that the model cannot learn which source list a URL came from, a shortcut that Section 7.2 measures.
 
 1. Canonical form. Each URL is reduced to its host (lowercased, without the scheme, "www.", default port, or trailing slash), path, and query. The benchmark's malicious rows usually carry a scheme and its benign rows usually do not, so leaving the scheme in lets a model learn the list, not the fraud.
 2. Character n-grams. The canonical string is split into overlapping character sequences of three to five characters, hashed into 2^19 columns, and weighted by TF-IDF with sublinear term frequency: w(t, u) = (1 + ln tf(t, u)) * idf(t), with idf(t) = ln((1 + N) / (1 + df(t))) + 1, followed by L2 normalization. Character n-grams capture lookalike spellings, digit substitutions, and suspicious word pieces that whole-word tokens miss.
@@ -90,11 +90,11 @@ A second representation, word-level TF-IDF of the raw URL string, is kept only f
 | Stacking | Logistic regression, complement naive Bayes, calibrated linear SVM (sparse); random forest of 60 trees and a decision tree of depth 18 (dense) | Both | Logistic-regression meta-learner on 3-fold out-of-fold probabilities |
 | Voting | K-nearest neighbors (k = 15, distance-weighted, fitted on a 50,000-row sample), logistic regression, calibrated linear SVM | Both | Soft voting (mean probability) |
 
-Two implementation decisions changed during the build. Boosting logistic regression on the hashed TF-IDF block collapsed to a constant output, so AdaBoost boosts shallow trees on the dense block. Exact nearest neighbors over half a million rows was too slow for live scoring, so the KNN member is fitted on a stratified sample. The linear SVM is wrapped in sigmoid calibration, because stacking and voting need probabilities, not margins.
+Two implementation decisions changed during the build. Boosting logistic regression on the hashed TF-IDF block collapsed to a constant output, so AdaBoost boosts shallow trees on the dense block. Exact nearest neighbors over every training row was too slow for live scoring, so the KNN member is fitted on a stratified sample. Separately, the linear SVM is wrapped in sigmoid calibration, because stacking and voting need probabilities rather than margins.
 
 ### 4.5 Threshold
 
-Thresholds are never tuned on the test set. Each experiment holds out 10% of its training rows as a validation slice; after fitting, the threshold is set to the lowest score at which the validation false-positive rate is at most 1%, and it is frozen before the test rows are scored. The deployed threshold is {{n2:e3a.at_validation_threshold.dae2_mean.threshold}}. A police queue full of false alarms would be ignored, so the false-positive rate is the constraint and recall is what the model achieves under it.
+We never tune thresholds on the test set. Each experiment holds out 10% of its training rows as a validation slice; after fitting, we set the threshold to the lowest score at which the validation false-positive rate is at most 1% and freeze it before scoring the test rows. The deployed threshold is {{n2:e3a.at_validation_threshold.dae2_mean.threshold}}. Officers would ignore a queue full of false alarms, so the false-positive rate is the constraint and recall is what the model achieves under it.
 
 ### 4.6 Engineering for live scoring
 
@@ -102,13 +102,13 @@ Training uses all processor cores; live scoring switches every estimator to one 
 
 ## 5. Methods and approaches
 
-Dr. Moatsum Alawida, our academic supervisor and the corresponding author of the DaE2 paper [1], gave the team permission to use the paper's methodology. This section describes that methodology in our own words, shows where each of its parts appears in Mirsad and where we departed from it, and then covers the other learning methods in the system: the deep learning models of the second stage and the analytics that turn scores into decisions. The paper's text, tables, and figures are not reproduced here, because the publisher holds their copyright; [1] remains the source for them.
+Dr. Moatsum Alawida, our academic supervisor and the corresponding author of the DaE2 paper [1], gave the team permission to use the paper's methodology. Sections 5.1 and 5.2 restate it in our own words and show where Mirsad follows it and where we departed from it. The paper's text, tables, and figures are not reproduced here, because the publisher holds their copyright; [1] remains the source for them.
 
 ### 5.1 The DaE2 methodology
 
 DaE2 treats malicious URL detection as supervised classification: a URL is mapped to a feature vector x, and a learned function f assigns the label sign(f(x)), malicious or benign. The paper organizes the evidence a detector can use into six feature families: blacklist membership, lexical features of the URL string, host features such as registration and network data, content features of the page (HTML, JavaScript, and visual appearance), context features, and popularity features. Its pre-processing pipeline removes noise, encodes the URL text numerically with TF-IDF, rebalances the classes by resampling, ranks features by importance, and reduces dimensionality with principal component analysis.
 
-On these features the paper trains a pool of diverse base learners (support vector machines, random forests, logistic regression, decision trees, naive Bayes, Bayesian networks, k-nearest neighbors, and artificial neural networks) and combines them through four ensemble schemes: AdaBoost, Bagging, Stacking, and Voting. Hyperparameters are tuned by grid search, models are validated with k-fold cross-validation, and the ensembles are compared on accuracy, precision, recall, F-score, and detection time, so that the chosen model balances accuracy against speed. The paper also sketches a deployment architecture beyond its offline experiments: a live URL feed and crawler, feature extraction from lexical, WHOIS, HTML, and blacklist sources, a predictor, and online updating from analyst feedback.
+On these features the paper trains a pool of diverse base learners (support vector machines, random forests, logistic regression, decision trees, naive Bayes, Bayesian networks, k-nearest neighbors, and artificial neural networks) and combines them through four ensemble schemes: AdaBoost, Bagging, Stacking, and Voting. It tunes hyperparameters by grid search, validates models with k-fold cross-validation, and compares the ensembles on accuracy, precision, recall, F-score, and detection time, so that the chosen model balances accuracy against speed. The paper also sketches a deployment architecture beyond its offline experiments: a live URL feed and crawler, feature extraction from lexical, WHOIS, HTML, and blacklist sources, a predictor, and online updating from analyst feedback.
 
 ### 5.2 From the methodology to Mirsad
 
@@ -143,15 +143,15 @@ The logo check runs Phishpedia [2] in the sandbox virtual machine. A Faster R-CN
 
 Case summaries come from transformer language models: Jais 3, a bilingual Arabic and English model from MBZUAI's Institute of Foundation Models, reached through its API, or a local Falcon model served by llama.cpp inside the sandbox. The model writes at temperature zero from facts Mirsad has already established, a fact check rejects any unsupported statement, and the model never changes a score or a decision (Section 8).
 
-Deep learning was also considered for the URL model itself and left out. Character-level convolutional networks such as URLNet [8] and transformers trained on URLs such as URLTran [9] and URLBERT [10] are strong published approaches. We did not use them for three reasons: training or fine-tuning them on our data did not fit the event on a laptop processor, they would add to the scoring time of every link, and their decisions are harder to explain in a case file than four votes and a list of rules. A compact transformer added as a fifth vote, and tested under the same domain and time splits, is the next experiment.
+We also considered deep learning for the URL model itself and left it out. Character-level convolutional networks such as URLNet [8] and transformers trained on URLs such as URLTran [9] and URLBERT [10] are strong published approaches. We did not use them for three reasons: training or fine-tuning them on our data did not fit the event on a laptop processor, they would add to the scoring time of every link, and their decisions are harder to explain in a case file than four votes and a list of rules. A compact transformer added as a fifth vote, and tested under the same domain and time splits, is the next experiment.
 
 ### 5.4 Analytics
 
 Analytics in Mirsad work at three levels.
 
-Model analytics decide whether the classifier can be trusted: per-class precision, recall, and F1, the false-positive rate at the frozen threshold, ROC AUC, and the precision to expect at a realistic share of fraud (Section 6.4). The dataset audit (Section 7.2) applies the same discipline to the data, testing whether a trivial rule or shared domains explain a score.
+Model analytics show whether the classifier can be trusted: per-class precision, recall, and F1, the false-positive rate at the frozen threshold, ROC AUC, and the precision to expect at a realistic share of fraud (Section 6.4). The dataset audit (Section 7.2) applies the same discipline to the data, testing whether a trivial rule or shared domains explain a score.
 
-Case analytics explain one link: the four ensemble votes against the threshold, the rules that fired with one sentence each, numbered exhibits with their source and time, a timeline, and a graph of how the evidence connects. Infrastructure analytics then place the link among others. The hosting address and its network owner come from DNS over HTTPS and Team Cymru's IP-to-ASN service, and a case links to other cases that share its address or its private name servers; content-delivery networks and common name-server providers are excluded, so a shared link means shared infrastructure.
+Case analytics explain one link: the four ensemble votes against the threshold, the rules that fired with one sentence each, numbered exhibits with their source and time, a timeline, and a graph of how the evidence connects. Infrastructure analytics then place the link among others. The hosting address and its network owner come from DNS over HTTPS and Team Cymru's IP-to-ASN service, and a case links to other cases that share its address or its private name servers. Mirsad excludes content-delivery networks and common name-server providers, so a shared link means shared infrastructure.
 
 Operational analytics show the watch as a whole on the dashboard: links screened and flagged per channel, flags per hour over the last day, cases awaiting review and confirmed, the median scoring time, the map-check results (listings whose website matches the business, mismatches, and phone numbers shared across listings), and the audit log of views, decisions, and exports. The summary report gathers the same picture into one PDF in English or Arabic.
 
@@ -159,11 +159,11 @@ Operational analytics show the watch as a whole on the dashboard: links screened
 
 ### 6.1 Passive enrichment
 
-For links near or above the threshold, Mirsad collects evidence by looking only: the registration date from RDAP, the first certificate from crt.sh (which stands in for .ae domains, whose registry hides dates), URLhaus and VirusTotal verdicts, and, when the sandbox is running, one page load. It never logs in, submits a form, or probes a server. Sites on shared hosting platforms (framer.app, github.io, and others in the Public Suffix List's private section) are marked as such, because the platform's registration date says nothing about the site.
+For links near or above the threshold, Mirsad collects evidence by looking only: the registration date from RDAP, the first certificate from crt.sh (which stands in for .ae domains, whose registry hides dates), URLhaus and VirusTotal verdicts, and, when the sandbox is running, one page load. It never logs in, submits a form, or probes a server. Mirsad marks sites on shared hosting platforms (framer.app, github.io, and others in the Public Suffix List's private section) as such, because the platform's registration date says nothing about the site.
 
 ### 6.2 Sandbox capture and logo check
 
-The sandbox service loads the page once in a fresh Playwright Chromium context and returns a screenshot, the redirect chain, and every form with its fields and target domain. A route handler and an internal SOCKS proxy resolve each request's host and refuse private, loopback, link-local, and other non-global addresses, which closes the DNS-rebinding gap between two lookups. Navigations other than GET and HEAD are aborted, so a page cannot submit a form by itself. Phishpedia then looks for a known brand's logo in the screenshot and checks whether the page's registered domain belongs to that brand; Mirsad counts a match only on the brand's exact domains, stricter than Phishpedia's default.
+The sandbox service loads the page once in a fresh Playwright Chromium context and returns a screenshot, the redirect chain, and every form with its fields and target domain. A route handler and an internal SOCKS proxy resolve each request's host and refuse private, loopback, link-local, and other non-global addresses, which closes the DNS-rebinding gap between two lookups. The service aborts navigations other than GET and HEAD, so a page cannot submit a form by itself. Phishpedia then looks for a known brand's logo in the screenshot and checks whether the page's registered domain belongs to that brand; Mirsad counts a match only on the brand's exact domains, stricter than Phishpedia's default.
 
 ### 6.3 Evidence rules
 
@@ -190,7 +190,7 @@ The validation results imply that a URL score alone cannot carry a live queue. I
 
 ### 7.1 Data
 
-Two public datasets were used. malicious_phish (Kaggle) is the common benchmark for URL classification: {{int:e0.rows}} URLs labeled benign, defacement, phishing, or malware, pooled from several older sources. PhreshPhish (Hugging Face, CC BY 4.0) holds phishing and benign pages from July 2024 to December 2025 with a strictly later test split; Mirsad reads only its URL, label, and date columns. Each experiment trains on a stratified sample of up to 200,000 rows, a limit set by the build time; the exact counts are in the result files.
+We used two public datasets. malicious_phish (Kaggle) is the common benchmark for URL classification: {{int:e0.rows}} URLs labeled benign, defacement, phishing, or malware, pooled from several older sources. PhreshPhish (Hugging Face, CC BY 4.0) holds phishing and benign pages from July 2024 to December 2025 with a strictly later test split; Mirsad reads only its URL, label, and date columns. Each experiment trains on a stratified sample of up to 200,000 rows, a limit set by the build time; the exact counts are in the result files.
 
 ### 7.2 Dataset audit (E0)
 
@@ -209,7 +209,7 @@ All experiments are binary (benign against malicious). Thresholds come from the 
 
 ### 7.4 E1: public benchmark, random split
 
-Random, stratified 80/20 split of the benchmark sample ({{int:e1a.train_rows}} training rows, {{int:e1a.validation_rows}} validation rows, {{int:e1a.test_rows}} test rows).
+E1 uses a random, stratified 80/20 split of the benchmark sample ({{int:e1a.train_rows}} training rows, {{int:e1a.validation_rows}} validation rows, {{int:e1a.test_rows}} test rows).
 
 E1a, raw URL with word TF-IDF (the conventional setting):
 
@@ -223,7 +223,7 @@ Removing the scheme and "www." costs the ensemble mean about {{n2:delta.e1.accur
 
 ### 7.5 E2: sites never seen in training
 
-Duplicates and conflicting labels removed; the split is grouped by registered domain, so no domain appears on both sides ({{int:e2o.domains_shared_between_train_and_test}} shared domains).
+E2 removes duplicates and conflicting labels and groups the split by registered domain, so no domain appears on both sides ({{int:e2o.domains_shared_between_train_and_test}} shared domains).
 
 With the raw representation:
 
@@ -235,7 +235,7 @@ With ours:
 
 ### 7.6 E3: recent threats, later months
 
-Trained on PhreshPhish URLs from {{e3a.train_date_range.0}} to {{e3a.train_date_range.1}} ({{int:e3a.train_rows}} training rows) and tested on {{int:e3a.test_rows}} URLs from {{e3a.test_date_range.0}} to {{e3a.test_date_range.1}}, a strictly later period. This is the deployed model.
+E3a trains on PhreshPhish URLs from {{e3a.train_date_range.0}} to {{e3a.train_date_range.1}} ({{int:e3a.train_rows}} training rows) and tests on {{int:e3a.test_rows}} URLs from {{e3a.test_date_range.0}} to {{e3a.test_date_range.1}}, a strictly later period. Its model is the one Mirsad deploys.
 
 {{table:e3a}}
 
@@ -245,23 +245,23 @@ E3b scores the same later test set with the E1a model, trained the conventional 
 
 ### 7.7 Discussion
 
-The benchmark score in the conventional setting is mostly a measure of the dataset, not of fraud detection: one rule about the scheme reaches {{pct:e0.scheme_only_rule.accuracy}}, and accuracy falls to {{pct:e2o.at_validation_threshold.dae2_mean.accuracy}} once sites cannot be shared between training and test. The temporal test is the one that matters for a police deployment, and it separates the two training choices sharply. The benchmark-trained model flags {{pct:e3b.at_validation_threshold.dae2_mean.false_positive_rate}} of legitimate later URLs, while the model retrained on recent data holds a {{pct2:e3a.at_validation_threshold.dae2_mean.false_positive_rate}} false-positive rate with {{pct:e3a.at_validation_threshold.dae2_mean.fraud_class.recall}} recall. Even so, at realistic prevalence about {{pct:e3a.at_validation_threshold.dae2_mean.precision_at_1pct_prevalence}} of model-only flags would be right, which is why Section 6 exists.
+In the conventional setting, the benchmark score measures the dataset more than it measures fraud detection: one rule about the scheme reaches {{pct:e0.scheme_only_rule.accuracy}}, and accuracy falls to {{pct:e2o.at_validation_threshold.dae2_mean.accuracy}} once training and test cannot share sites. The temporal test is the one that matters for a police deployment, and it separates the two training choices sharply. The benchmark-trained model flags {{pct:e3b.at_validation_threshold.dae2_mean.false_positive_rate}} of legitimate later URLs, while the model retrained on recent data holds a {{pct2:e3a.at_validation_threshold.dae2_mean.false_positive_rate}} false-positive rate with {{pct:e3a.at_validation_threshold.dae2_mean.fraud_class.recall}} recall. Even so, at realistic prevalence about {{pct:e3a.at_validation_threshold.dae2_mean.precision_at_1pct_prevalence}} of model-only flags would be right, which is why Mirsad adds the second stage described in Section 6.
 
 ## 8. Analyst workflow
 
-The Watch screen shows the ranked queue, a stylized map of Abu Dhabi with map-check results, flags per hour, and the selected case. The case page shows the four ensemble votes, the final risk against the threshold, a timeline, a graph of how the evidence connects, numbered exhibits with their sources, and the reasons in plain words. An analyst confirms a case by holding a button, which prevents accidental decisions; the evidence package then exports the redacted link, exhibits, timeline, and a request shaped for the registrar, aeDA, or a police blocking request.
+The Watch screen shows the ranked queue, a stylized map of Abu Dhabi with map-check results, flags per hour, and the selected case. The case page shows the four ensemble votes, the final risk against the threshold, a timeline, a graph of how the evidence connects, numbered exhibits with their sources, and the reasons in plain words. An analyst confirms a case by holding a button, which prevents accidental decisions; the evidence package then exports the redacted link, the exhibits, the timeline, and a request text addressed to the registrar, aeDA, or the police for blocking.
 
-Case summaries in English and Arabic are written by Jais 3 (MBZUAI Institute of Foundation Models) or, in a zero-egress mode, by a local Falcon in the sandbox. The model receives only facts Mirsad has established, never page text, because a page can carry instructions aimed at a language model (prompt injection). A fact check rejects any summary with a number, a protected brand, or an imitation claim that the facts do not support, and summaries may not say a site is live; a template is written instead. Summaries are rewritten whenever cases are rescored.
+Jais 3 (MBZUAI Institute of Foundation Models) writes the case summaries in English and Arabic; in a zero-egress mode, a local Falcon model in the sandbox writes them instead. The model receives only facts Mirsad has established, never page text, because a page can carry instructions aimed at a language model (prompt injection). A fact check rejects any summary with a number, a protected brand, or an imitation claim that the facts do not support, and summaries may not say a site is live; a template replaces any summary that fails these checks. Mirsad rewrites the summaries whenever it rescores cases.
 
 ## 9. Privacy, security, and legal design
 
-The subject of Mirsad is websites, not people. It collects no visitor data, cookies, or form inputs. Query values in stored links, which can carry a victim's email or token, appear in every list view only as keyed HMAC-SHA-256 hashes, and feed URLs lose their query strings on intake. Suspicious pages load only in the sandbox, with private addresses blocked and no form submission. The lab server binds to localhost. The public demo on Hugging Face Spaces runs in a separate public mode that never opens a suspect page, replaces every query value with a placeholder, caps live runs per hour and per day, and accepts changes only from its own origin (`docs/SECURITY.md`). On both, every case view, decision, export, and on-demand check is written to an append-only audit table. No case is blocked automatically; an officer decides.
+Mirsad studies websites rather than people, and it collects no visitor data, cookies, or form inputs. Query values in stored links, which can carry a victim's email or token, appear in every list view only as keyed HMAC-SHA-256 hashes, and feed URLs lose their query strings on intake. Suspicious pages load only in the sandbox, with private addresses blocked and no form submission. The lab server binds to localhost. The public demo on Hugging Face Spaces runs in a separate public mode that never opens a suspect page, replaces every query value with a placeholder, caps live runs per hour and per day, and accepts changes only from its own origin (`docs/SECURITY.md`). On both, Mirsad writes every case view, decision, export, and on-demand check to an append-only audit table. No case is blocked automatically; an officer decides.
 
 The legal frame is Federal Decree-Law No. 34 of 2021 on countering rumors and cybercrimes. Articles 11, 15, 40, and 48 describe the offenses Mirsad detects (fake websites, card-data capture, internet fraud, and misleading online advertisements); Articles 1 to 4 and 12 bound how it collects (public pages only, one load per page, rate limits, no logins or form submission, no vulnerability scanning); Articles 62 and 66 provide the blocking powers its evidence package serves. Mirsad also applies the principles of the Personal Data Protection Law (Federal Decree-Law No. 45 of 2021): purpose limitation, minimization, accuracy, and security. Details are in `docs/PRIVACY.md`.
 
 ## 10. Live results
 
-In live runs on {{counts.run_window}}, Mirsad screened {{int:counts.screened_total}} links across the four channels and flagged {{int:counts.flagged_total}}: {{counts.flagged_by_channel.feeds}} from the threat feeds and {{counts.flagged_by_channel.certificates}} from the certificate stream (emirates-airlines.battery.cam, which places the Emirates airline name on an unrelated domain). The search and map channels produced candidates but no flags under the two-signal policy. Testing exposed and fixed five problems:
+In live runs on {{counts.run_window}}, Mirsad screened {{int:counts.screened_total}} links across the four channels and flagged {{int:counts.flagged_total}}: {{counts.flagged_by_channel.feeds}} from the threat feeds and {{counts.flagged_by_channel.certificates}} from the certificate stream (emirates-airlines.battery.cam, which places the Emirates airline name on an unrelated domain). The search and map channels produced candidates but no flags under the two-signal policy. Testing exposed five problems, which the team fixed:
 
 - address-only flags on ordinary business sites, fixed by the two-signal policy and host-only brand matching;
 - stale summaries that named brands a case no longer had, fixed by the fact check and rewriting on rescore;

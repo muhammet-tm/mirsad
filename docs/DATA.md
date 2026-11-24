@@ -1,7 +1,7 @@
 <!-- Generated from DATA.src.md by scripts/build_docs.py. Edit the source. -->
 # Data and services
 
-Every dataset and service Mirsad uses, with its license or terms and what the code keeps. Checked on 22 and 23 November 2026.
+The tables below list every dataset and service that Mirsad uses, with the license or terms of each and what the code keeps. The entries were checked on 22 and 23 November 2026.
 
 ## Training and evaluation data
 
@@ -30,9 +30,10 @@ Every dataset and service Mirsad uses, with its license or terms and what the co
 | Jais 3 (MBZUAI Institute of Foundation Models) | Case summaries in English and Arabic | Built in the UAE; hosting location not verified | `JAIS_API_KEY` |
 | Falcon (TII), local | Zero-egress summaries inside the sandbox VM | TII Falcon License | none |
 | Phishpedia | Logo-versus-domain check on captured pages, inside the sandbox VM | CC0-1.0 | none |
+| Hugging Face Spaces (Docker) | Hosts the public demo at muhammettm-mirsad.hf.space | Keys are stored as Space secrets; the demo server opens no suspect page | none in `.env` |
 
 A hackathon prototype is non-commercial. An operational deployment for the police would move to commercial tiers (Google Web Risk instead of Safe Browsing, paid OpenPhish and VirusTotal access) and would need the brand list verified with each brand.
 
 ## What is never stored
 
-Visitor data, cookies, anything behind a login, form inputs (Mirsad never submits a form), map business names and addresses, raw query-string values outside the evidence package, the DaE2 paper itself (Elsevier copyright), and raw datasets (rebuilt by scripts).
+Mirsad never stores visitor data, cookies, anything behind a login, form inputs (it never submits a form), map business names and addresses, or raw query-string values outside the evidence package. The repository also leaves out the DaE2 paper itself (Elsevier copyright) and the raw datasets, which the scripts download again.

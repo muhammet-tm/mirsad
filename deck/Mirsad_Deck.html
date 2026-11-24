@@ -118,7 +118,7 @@
   <div class="stage" style="top:437px" data-a="rise"><div class="nm"><span class="n">02</span><span class="t">Enrich</span><span class="tag">(passive only)</span></div><ul><li><b>Domain age and registrar</b> (RDAP, first certificate)</li><li><b>Hosting network</b> (DNS over HTTPS, Team Cymru)</li><li><b>Reputation</b> (URLhaus, VirusTotal)</li><li><b>Sandbox capture and logo match</b> in an isolated VM</li></ul></div>
   <div class="stage" style="top:636px" data-a="rise"><div class="nm"><span class="n">03</span><span class="t">Score</span></div><ul><li><b>Stage 1, DaE2 ensemble</b> on every URL (AdaBoost, Bagging, Stacking, Voting)</li><li><b>Stage 2, evidence rules</b> that only raise risk</li><li><b>Official-domain cap</b></li><li><b>Plain-language reasons</b></li></ul></div>
   <div class="stage" style="top:835px" data-a="rise"><div class="nm"><span class="n">04</span><span class="t">Act</span></div><ul><li><b>Risk-ranked analyst queue</b></li><li><b>Case file</b> with numbered exhibits</li><li><b>Hold to confirm</b></li><li><b>Evidence package and PDF report</b> (English or Arabic) for a registrar, aeDA, or a police blocking request</li></ul></div>
-  <p class="note" style="left:652px;top:990px" data-a="rise">The host laptop never loads a suspicious page. Summaries by Jais (or a local Falcon) never decide.</p>
+  <p class="note" style="left:652px;top:990px" data-a="rise">The host laptop never loads a suspicious page. Jais (or a local Falcon) writes summaries and makes no decision.</p>
   <aside class="notes">Four stages. Discover collects links from the four channels. Enrich adds passive evidence only: domain age and registrar, the hosting network, reputation, and a sandbox capture with a logo match in an isolated VM. Score runs DaE2 on every URL and then evidence rules that can only raise the risk. Act gives the analyst a queue, a case file, and an evidence package with a PDF report in English or Arabic.</aside>
 </section>
 
@@ -158,7 +158,7 @@
     <p class="q" data-a="rise">One rule, "malicious if the URL starts with http", already scores 83.8% on the public benchmark dataset.</p>
     <p class="src" data-a="rise">Accuracy of the four-ensemble mean at a threshold fixed on validation data. Measured by our code; every value is generated from results/*.json.</p>
   </div>
-  <aside class="notes">This is the slide that earns trust. The public benchmark rewards recognizing which list a URL came from: one rule about the scheme already scores 83.8%. On never-seen sites accuracy drops to 84.1%. On real later traffic, a model trained the conventional way on that benchmark flags most legitimate sites, with a false-positive rate of 88.6%. Our deployed model keeps false alarms near 1% on months it never saw.</aside>
+  <aside class="notes">The public benchmark rewards recognizing which list a URL came from: one rule about the scheme already scores 83.8%. On never-seen sites accuracy drops to 84.1%. On real later traffic, a model trained the conventional way on that benchmark flags most legitimate sites, with a false-positive rate of 88.6%. Our deployed model keeps false alarms near 1% on months it never saw.</aside>
 </section>
 
 <!-- ============================================================ 09 evidence -->
@@ -180,7 +180,7 @@
     <div class="v" data-count data-split>41.9%</div>
     <p data-a="rise">If 1% of links are fraudulent, even this model is right on about this share of its flags. The queue therefore ranks cases, and an officer confirms each one.</p>
   </div>
-  <aside class="notes">A URL alone is not enough. At a realistic prevalence of 1% fraudulent links, even a strong model would be right on about 41.9% of its flags. So on live channels a link needs either a very high model score or one piece of evidence that agrees, and every case reaches an officer with plain reasons.</aside>
+  <aside class="notes">A URL alone is not enough. At a realistic prevalence of 1% fraudulent links, even a strong model would be right on about 41.9% of its flags. So on live channels a link needs either a model score of at least 0.97 or one piece of evidence that agrees, and every case reaches an officer with plain reasons.</aside>
 </section>
 
 <!-- ============================================================ 10 privacy -->
@@ -220,7 +220,7 @@
     </tbody>
   </table>
   <div class="block" data-a="wipe"><div class="brule"></div><div class="folio">11 / 14</div>
-    <p class="q" data-a="rise">A flag is a lead, not a verdict. Each flagged site waits in the queue until an officer confirms it or dismisses it.</p>
+    <p class="q" data-a="rise">Each flag is a lead for review. The site waits in the queue until an officer confirms it or dismisses it.</p>
     <p class="src" data-a="rise">Live runs on 23 November 2026. Counts are generated from results/counts.json.</p>
   </div>
   <aside class="notes">These are the counts from our live runs on 23 November 2026. Every flag is a lead with its reasons and exhibits; an officer confirms or dismisses it.</aside>
@@ -233,7 +233,7 @@
   <div class="phases">
     <div data-a="rise"><span class="w">Weeks 1 to 4</span><h3>Run on the unit's lists</h3><p>Mirsad runs on the unit's own query list and brand list, and officers label the cases.</p></div>
     <div data-a="rise"><span class="w">Weeks 5 to 8</span><h3>Learn from decisions</h3><p>The second stage learns from officer decisions, and registrar and aeDA abuse channels are connected.</p></div>
-    <div data-a="rise"><span class="w">Weeks 9 to 12</span><h3>Measure the gain</h3><p>Time from first certificate to takedown is measured against today's baseline.</p></div>
+    <div data-a="rise"><span class="w">Weeks 9 to 12</span><h3>Measure the gain</h3><p>We measure the time from first certificate to takedown against today's baseline.</p></div>
   </div>
   <div class="block" data-a="wipe"><div class="brule"></div><div class="folio">12 / 14</div>
     <div class="lab" data-a="rise">The ask</div>
