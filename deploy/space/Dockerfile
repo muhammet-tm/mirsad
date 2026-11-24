@@ -13,9 +13,10 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     MIRSAD_SANDBOX_URL=off \
     MIRSAD_CERTSTREAM=off
 
-# Noto fonts give the PDF reports proper Arabic text.
+# Noto fonts give the PDF reports proper Arabic text. libatomic1 is needed by Playwright's Node driver,
+# which the slim image does not include.
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends fonts-noto-core \
+    && apt-get install -y --no-install-recommends fonts-noto-core libatomic1 \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app

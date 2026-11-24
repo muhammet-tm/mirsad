@@ -5,6 +5,8 @@ Mirsad ("the watchtower") finds fraudulent links and websites where people in th
 
 Built for ScamShield AI (Abu Dhabi Police and 42 Abu Dhabi, 24 and 25 November 2026). Challenge: "Detecting Fraudulent Links and Websites Used in Cybercrimes and Financial Fraud ... across the open internet, including those appearing in Search Engine results and Maps", with the objective of early identification and proactive measures.
 
+Live demo: [muhammettm-mirsad.hf.space](https://muhammettm-mirsad.hf.space) runs the public version on Hugging Face Spaces, in English and Arabic. It holds our lab cases with every query value redacted, refreshes the public phishing feeds every hour, and lets anyone check a link, open a case file, and download the case or summary report as a PDF. Live search and map runs are capped per day to protect the API quotas; the controls of the public site are described in [docs/SECURITY.md](docs/SECURITY.md).
+
 ## The problem
 
 Abu Dhabi Police warned three times in 2026 (17 April, 7 June, and 13 June) about fake websites that rank near the top of search results or buy search ads for government services, consumer protection, fines, and deliveries. Abu Dhabi Police handled 15,642 online fraud cases and recovered AED 140 million for victims in the two years to October 2025 (The National, 22 October 2025). The UAE already protects individuals at the moment of contact: the RZAM browser extension (Dubai Electronic Security Center) blocks known malicious sites, and TDRA's Digital FraudHunter checks a suspicious message a person received. What is missing is the step before contact: finding the fraudulent site where the scammer placed it, early, and handing investigators the evidence.
