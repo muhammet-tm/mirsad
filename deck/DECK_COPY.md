@@ -88,7 +88,7 @@ Notes: This is the slide that earns trust. The paper's dataset rewards recognizi
 - Team: Muhammet Yalkapov (lead), Sulaymon Sadullo, and Ahmed Mohamed Almheiri, Abu Dhabi University
 - Academic mentor: Dr. Moatsum Alawida, Abu Dhabi University
 - Detection method: DaE2, Omolara and Alawida, Computers & Security 148 (2025)
-- All code written by the team; open data and services credited in docs/DATA.md
+- Use of AI tools: Anthropic's Claude Code helped with research about datasets and UAE fraud context; implemented the prototype and experiments. Open data and services credited in docs/DATA.md
 
 ## Appendix
 - A1 Data sources and terms (docs/DATA.md)

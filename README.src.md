@@ -124,6 +124,10 @@ node deck\tools\build_pptx.cjs
 
 Muhammet Yalkapov (team lead, security and product), Sulaymon Sadullo (data and AI), and Ahmed Mohamed Almheiri (deployment and partnerships), Abu Dhabi University. Academic mentor: Dr. Moatsum Alawida, Abu Dhabi University.
 
+## Use of AI tools
+
+The team chose the challenge, the approach, the scope, the data sources, the design direction, and every product decision. Anthropic's Claude Code helped with research about datasets and UAE fraud context; implemented the prototype and experiments. The team reviewed the results and is responsible for the submission. Inside the product, Jais (or a local Falcon) writes case summaries from Mirsad's own facts and never decides; see [docs/AI_USE.md](docs/AI_USE.md).
+
 ## Credits
 
-Detection method: DaE2, Omolara, A.E. and Alawida, M. (2025), Computers & Security 148, 104170, https://doi.org/10.1016/j.cose.2024.104170. Dr. Moatsum Alawida (Abu Dhabi University) mentored the team as academic advisor. All code in this repository was written by the team. Third-party components and data keep their own licenses (see [LICENSE.md](LICENSE.md) and [docs/DATA.md](docs/DATA.md)).
+Detection method: DaE2, Omolara, A.E. and Alawida, M. (2025), Computers & Security 148, 104170, https://doi.org/10.1016/j.cose.2024.104170. Dr. Moatsum Alawida (Abu Dhabi University) mentored the team as academic advisor. Third-party components and data keep their own licenses (see [LICENSE.md](LICENSE.md) and [docs/DATA.md](docs/DATA.md)).
