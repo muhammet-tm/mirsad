@@ -1653,6 +1653,7 @@
  "app.search_queries": 23,
  "app.maps_queries": 11,
  "app.lexical_features": 25,
+ "app.model_alone": 0.97,
  "counts.flagged_by_channel.search": 0,
  "counts.flagged_by_channel.maps": 0,
  "counts.first_run_gst": "23 November 2026, 03:59 GST",

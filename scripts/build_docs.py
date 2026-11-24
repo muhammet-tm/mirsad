@@ -67,6 +67,8 @@ def app_numbers(n: dict) -> None:
     n["app.search_queries"] = len(SEARCH_QUERIES)
     n["app.maps_queries"] = len(MAPS_QUERIES)
     n["app.lexical_features"] = len(lexical_features("https://example.com/"))
+    from mirsad.scoring.engine import MODEL_ALONE
+    n["app.model_alone"] = MODEL_ALONE
 
 
 def derived(n: dict) -> None:
