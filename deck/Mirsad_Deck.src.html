@@ -32,6 +32,7 @@
   <h1 class="title" data-a="rise">Finding fraudulent links in search results and maps before victims do</h1>
   <div class="credits" data-a="rise">
     <p><b>Team</b>Muhammet Yalkapov (lead), Sulaymon Sadullo, and Ahmed Mohamed Almheiri, Abu Dhabi University</p>
+    <p><b>Academic supervisor</b>Dr. Moatsum Alawida, Abu Dhabi University</p>
   </div>
   <aside class="notes">Mirsad means the watchtower. It watches the places where people in the UAE meet fraudulent links, and it hands the police evidence before victims report. Its detection model scores every link with four ensembles, and Dr. Moatsum Alawida of Abu Dhabi University is our academic supervisor.</aside>
 </section>
@@ -102,8 +103,9 @@
     <div class="stat" data-a="rise"><span class="big" data-count>{{int:counts.screened_total}}</span><span>links screened across four channels</span></div>
     <div class="stat hot" data-a="rise"><span class="big" data-count>{{int:counts.flagged_total}}</span><span>flagged at the frozen threshold</span></div>
     <p data-a="rise">Live runs on {{counts.run_window}}. Median scoring time {{n2:e4.median_ms_single_url}} ms per link on a laptop CPU.</p>
+    <p data-a="rise">Live at <b>muhammettm-mirsad.hf.space</b>, in English and Arabic.</p>
   </div>
-  <aside class="notes">This is the Watch screen with live data: the risk-ranked queue on the left, the map check around Abu Dhabi in the middle, and the selected case on the right. Every number on this slide comes from our live runs, collected from the open internet, not from test data.</aside>
+  <aside class="notes">This is the Watch screen with live data: the risk-ranked queue on the left, the map check around Abu Dhabi in the middle, and the selected case on the right. Every number on this slide comes from our live runs, collected from the open internet, not from test data. The same product is live on Hugging Face Spaces: anyone can check a link, open a case, and download the case or summary report as a PDF in English or Arabic.</aside>
 </section>
 
 <!-- ============================================================ 06 architecture -->
@@ -112,11 +114,11 @@
   <h2 data-a="rise" style="top:64px">How Mirsad works</h2>
   <!--include:assets/iso_stack.svg-->
   <div class="stage" style="top:238px" data-a="rise"><div class="nm"><span class="n">01</span><span class="t">Discover</span></div><ul><li><b>Search results and ads</b> ({{app.search_queries}} UAE service queries, English and Arabic)</li><li><b>Map listings</b> (Google Places, Abu Dhabi)</li><li><b>New certificates</b> (lookalikes of {{app.brands}} UAE brands)</li><li><b>Threat feeds</b> (OpenPhish, URLhaus, PhishStats)</li></ul></div>
-  <div class="stage" style="top:437px" data-a="rise"><div class="nm"><span class="n">02</span><span class="t">Enrich</span><span class="tag">(passive only)</span></div><ul><li><b>Domain age</b> (RDAP, first certificate)</li><li><b>Reputation</b> (URLhaus, VirusTotal)</li><li><b>Sandbox capture</b> in an isolated VM</li><li><b>Phishpedia logo match</b></li></ul></div>
+  <div class="stage" style="top:437px" data-a="rise"><div class="nm"><span class="n">02</span><span class="t">Enrich</span><span class="tag">(passive only)</span></div><ul><li><b>Domain age and registrar</b> (RDAP, first certificate)</li><li><b>Hosting network</b> (DNS over HTTPS, Team Cymru)</li><li><b>Reputation</b> (URLhaus, VirusTotal)</li><li><b>Sandbox capture and logo match</b> in an isolated VM</li></ul></div>
   <div class="stage" style="top:636px" data-a="rise"><div class="nm"><span class="n">03</span><span class="t">Score</span></div><ul><li><b>Stage 1, DaE2 ensemble</b> on every URL (AdaBoost, Bagging, Stacking, Voting)</li><li><b>Stage 2, evidence rules</b> that only raise risk</li><li><b>Official-domain cap</b></li><li><b>Plain-language reasons</b></li></ul></div>
-  <div class="stage" style="top:835px" data-a="rise"><div class="nm"><span class="n">04</span><span class="t">Act</span></div><ul><li><b>Risk-ranked analyst queue</b></li><li><b>Case file</b> with numbered exhibits</li><li><b>Hold to confirm</b></li><li><b>Evidence package</b> for a registrar, aeDA, or a police blocking request</li></ul></div>
+  <div class="stage" style="top:835px" data-a="rise"><div class="nm"><span class="n">04</span><span class="t">Act</span></div><ul><li><b>Risk-ranked analyst queue</b></li><li><b>Case file</b> with numbered exhibits</li><li><b>Hold to confirm</b></li><li><b>Evidence package and PDF report</b> (English or Arabic) for a registrar, aeDA, or a police blocking request</li></ul></div>
   <p class="note" style="left:652px;top:990px" data-a="rise">The host laptop never loads a suspicious page. Summaries by Jais (or a local Falcon) never decide.</p>
-  <aside class="notes">Four stages. Discover collects links from the four channels. Enrich adds passive evidence only: domain age, reputation, a sandbox capture in an isolated VM, and a logo match. Score runs DaE2 on every URL and then evidence rules that can only raise the risk. Act gives the analyst a queue, a case file, and an evidence package.</aside>
+  <aside class="notes">Four stages. Discover collects links from the four channels. Enrich adds passive evidence only: domain age and registrar, the hosting network, reputation, and a sandbox capture with a logo match in an isolated VM. Score runs DaE2 on every URL and then evidence rules that can only raise the risk. Act gives the analyst a queue, a case file, and an evidence package with a PDF report in English or Arabic.</aside>
 </section>
 
 <!-- ============================================================ 07 model -->
@@ -135,7 +137,7 @@
     <div data-a="rise"><span class="v" data-count>{{int:e4.urls_per_second_batch}}</span>links a second, batched</div>
     <div data-a="rise"><span class="v" data-count>{{n2:e3a.at_validation_threshold.dae2_mean.threshold}}</span>frozen threshold</div>
   </div>
-  <aside class="notes">We chose a four-ensemble model because it is fast on a laptop CPU and explainable: each link gets four votes. We first measured it in the conventional benchmark setting so the comparison is fair, and then changed only what the audit showed was wrong. The technical report describes every learner and setting.</aside>
+  <aside class="notes">We chose a four-ensemble model because it is fast on a laptop CPU and explainable: each link gets four votes. The design is DaE2, published by Omolara and Alawida, and Dr. Alawida gave us permission to use its methodology. We first measured it in the conventional benchmark setting so the comparison is fair, and then changed only what the audit showed was wrong. Section 5 of the technical report maps every element of the method to Mirsad, including the deep learning we use in the second stage.</aside>
 </section>
 
 <!-- ============================================================ 08 evaluation -->
@@ -186,7 +188,7 @@
   <div class="folio">10 / 14</div>
   <h2 data-a="rise">The subject is websites, not people</h2>
   <!--include:assets/iso_sandbox.svg-->
-  <p class="side" data-a="rise">Suspicious pages load only in an isolated VM. The host receives a screenshot and the page facts, never the page itself.</p>
+  <p class="side" data-a="rise">Suspicious pages load only in an isolated VM. The host receives a screenshot and the page facts, never the page itself. The public demo opens no suspect page at all.</p>
   <ul class="pts">
     <li data-a="rise">No visitor data, cookies, or form inputs are collected</li>
     <li data-a="rise">Query strings that may carry victim data are stored only as keyed hashes</li>
@@ -266,8 +268,7 @@
   </div>
   <div class="credits" data-a="rise">
     <p><b>Academic supervisor</b>Dr. Moatsum Alawida, Abu Dhabi University</p>
-    <p><b>Built on</b>The DaE2 ensemble design (Omolara and Alawida, Computers &amp; Security 148, 2025). Open data and services are credited in docs/DATA.md.</p>
-    <p><b>Use of AI tools</b>Anthropic's Claude Code helped with research about datasets and UAE fraud context; implemented the prototype and experiments.</p>
+    <p><b>Built on</b>The DaE2 design (Omolara and Alawida, Computers &amp; Security, 2025), used with Dr. Alawida's permission. Data credits: docs/DATA.md.</p>    <p><b>Use of AI tools</b>Anthropic's Claude Code helped with research about datasets and UAE fraud context; implemented the prototype and experiments.</p>
   </div>
   <div class="block" data-a="wipe"><div class="brule"></div><div class="folio">13 / 14</div>
     <div class="thanks" data-a="rise">Thank you.</div>
