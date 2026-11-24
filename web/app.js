@@ -15,7 +15,13 @@ const GST_MS = 4 * 3600 * 1000;
 const HOLD_MS = 1500;
 const UNDO_S = 5;
 const REFRESH_MS = 15000;
-const CHANNELS = ['search', 'certificates', 'maps', 'feeds'];
+const CHANNELS = ['search', 'certificates', 'maps', 'feeds', 'report'];
+/* Links checked by hand or loaded as demo cases; shown only when there are some. */
+function channelDefs(split) {
+  const d = [['search', 'Search'], ['certificates', 'Certificates'], ['maps', 'Maps'], ['feeds', 'Feeds']];
+  if ((split && split.report) || W.filter === 'report') d.push(['report', 'Reports']);
+  return d;
+}
 const EXPORT_LABEL = {registrar_abuse_report: 'registrar abuse report', aeda: 'aeDA', police_blocking_request: 'police blocking request'};
 
 const S = {mode: FORCED_MOCK ? 'mock' : 'unknown', mockParts: new Set(), lang: 'en', langCbs: [], retryCbs: [], conn: true};
@@ -30,7 +36,7 @@ const AR = {
   'Skip to the watch queue': 'انتقل إلى قائمة المراقبة', 'Skip to the case file': 'انتقل إلى ملف القضية',
   'Live': 'مباشر', 'live': 'مباشر', 'Synced': 'متزامن', 'synced': 'تمت المزامنة', 'Idle': 'خامل', 'Error': 'خطأ', 'Off': 'متوقف',
   'last run {t}': 'آخر تشغيل {t}', 'synced {t}': 'تمت المزامنة {t}', 'threshold {v}': 'العتبة {v}',
-  'Certificate stream': 'تدفق الشهادات', 'Feeds': 'الموجزات',
+  'Certificate stream': 'تدفق الشهادات', 'Feeds': 'الموجزات', 'Reports': 'البلاغات',
   'Demo data': 'بيانات تجريبية', 'Connection lost, showing the last data': 'انقطع الاتصال، تُعرض آخر البيانات',
   'Demo data. The live service did not answer; select to retry.': 'بيانات تجريبية. لم تستجب الخدمة المباشرة؛ اختر لإعادة المحاولة.',
   'Demo data, as requested by the address.': 'بيانات تجريبية بطلب من العنوان.',
@@ -839,7 +845,7 @@ function renderKpis() {
 function renderChips() {
   const split = (W.kpis && W.kpis.channel_split) || {};
   const all = W.kpis ? W.kpis.flagged : (W.list ? W.list.total : null);
-  const defs = [['all', 'All', all], ['search', 'Search', split.search], ['certificates', 'Certificates', split.certificates], ['maps', 'Maps', split.maps], ['feeds', 'Feeds', split.feeds]];
+  const defs = [['all', 'All', all], ...channelDefs(split).map(d => [d[0], d[1], split[d[0]]])];
   $('seg').innerHTML = defs.map(d => '<button type="button" data-ch="' + d[0] + '" aria-pressed="' + (W.filter === d[0]) + '">' + esc(t(d[1])) + (d[2] != null ? ' <em>' + num(d[2]) + '</em>' : '') + '</button>').join('');
 }
 function itemById(id) { return W.list && W.list.items.find(i => i.id === id); }
@@ -1234,7 +1240,7 @@ function renderActivity() {
   const max = Math.max(1, ...Object.values(s));
   const total = Object.values(s).reduce((a, b) => a + b, 0);
   $('splitSub').textContent = t("today's {n} flags", {n: num(W.kpis.flagged != null ? W.kpis.flagged : total)});
-  $('split').innerHTML = [['search', 'Search'], ['certificates', 'Certificates'], ['maps', 'Maps'], ['feeds', 'Feeds']].map(d =>
+  $('split').innerHTML = channelDefs(s).map(d =>
     '<div class="sr"><span>' + esc(t(d[1])) + '</span><span class="b"><i style="width:' + ((s[d[0]] || 0) / max * 100).toFixed(2) + '%"></i></span><b>' + num(s[d[0]] || 0) + '</b></div>').join('');
 }
 

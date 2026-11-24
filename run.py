@@ -4,10 +4,12 @@
     python run.py --score FILE     score a list of URLs (one per line, or a CSV with a url column)
     python run.py --test           run the test suite
 
-The first run creates a virtual environment in .venv and installs requirements.txt (about 5 minutes
-and 400 MB of downloads); later runs reuse it. Python 3.11 to 3.13 is required, because the deployed
-model was saved with NumPy 2.3 and scikit-learn 1.7. No API key is needed to explore the dashboard,
-check links, or score a test set; keys in .env (see .env.example) switch on the live search and map
+The first run creates a virtual environment in .venv and installs requirements.txt (about 130 MB of
+downloads and 560 MB on disk, measured on Windows with Python 3.12); later runs reuse it. The virtual
+environment needs Python 3.11 to 3.13, because the deployed model was saved with NumPy 2.3 and
+scikit-learn 1.7; when run.py is started with another version, it looks for one of these on PATH
+(py -3.12 on Windows, python3.12 elsewhere). No API key is needed to explore the dashboard, check
+links, or score a test set; keys in .env (see .env.example) switch on the live search and map
 channels and the Jais summaries.
 """
 
@@ -35,10 +37,26 @@ def say(msg: str) -> None:
     print(f"[mirsad] {msg}", flush=True)
 
 
-def ensure_python() -> None:
-    if not ((3, 11) <= sys.version_info[:2] <= (3, 13)):
-        sys.exit(f"[mirsad] Python 3.11 to 3.13 is required; this is {sys.version.split()[0]}. "
-                 "Install one from python.org and run it, for example: py -3.12 run.py (Windows) or python3.12 run.py")
+SUPPORTED = ((3, 11), (3, 13))
+
+
+def find_python() -> list[str]:
+    """An interpreter that can build .venv: this one if its version fits, otherwise one found on PATH."""
+    if SUPPORTED[0] <= sys.version_info[:2] <= SUPPORTED[1]:
+        return [sys.executable]
+    for v in ("3.12", "3.13", "3.11"):
+        cmd = ["py", f"-{v}"] if os.name == "nt" else [f"python{v}"]
+        try:
+            out = subprocess.run([*cmd, "-c", "import sys; print(sys.executable)"],
+                                 capture_output=True, text=True, timeout=20)
+        except (OSError, subprocess.TimeoutExpired):
+            continue
+        if out.returncode == 0 and out.stdout.strip():
+            say(f"this is Python {sys.version.split()[0]}; using Python {v} for .venv")
+            return [out.stdout.strip()]
+    sys.exit(f"[mirsad] Python 3.11 to 3.13 is needed to build .venv; this is {sys.version.split()[0]} and no other "
+             "version was found. Install Python 3.12 from python.org and run: py -3.12 run.py (Windows) or "
+             "python3.12 run.py (macOS and Linux)")
 
 
 def ensure_env() -> None:
@@ -48,7 +66,15 @@ def ensure_env() -> None:
         return
     if not PY.exists():
         say("creating the virtual environment in .venv")
-        venv.EnvBuilder(with_pip=True).create(VENV)
+        base = find_python()
+        if base == [sys.executable]:
+            try:
+                venv.EnvBuilder(with_pip=True).create(VENV)
+            except Exception as exc:  # Debian and Ubuntu ship venv and ensurepip as a separate package
+                sys.exit(f"[mirsad] could not create .venv ({exc}). On Debian or Ubuntu, install the venv package "
+                         "first, for example: sudo apt install python3.12-venv")
+        else:
+            subprocess.run([*base, "-m", "venv", str(VENV)], check=True)
     say("installing requirements (first run only; this takes a few minutes)")
     subprocess.run([str(PY), "-m", "pip", "install", "--disable-pip-version-check", "-q", "--upgrade", "pip"], check=True)
     subprocess.run([str(PY), "-m", "pip", "install", "--disable-pip-version-check", "-q", "-r",
@@ -83,7 +109,6 @@ def main() -> None:
     ap.add_argument("--no-browser", action="store_true")
     a = ap.parse_args()
 
-    ensure_python()
     ensure_env()
     if a.test:
         sys.exit(in_env("-m", "pytest", "-q"))

@@ -51,16 +51,36 @@ The detection model combines four ensembles (AdaBoost, Bagging, Stacking, and Vo
 - Free tiers (OpenPhish community, VirusTotal public) are non-commercial; an operational deployment needs commercial tiers.
 - With more time: learn the second stage from analyst decisions, add Arabic-script and Punycode lookalikes to the certificate watch at scale, push confirmed cases to registrars automatically through their abuse APIs, and run a pilot with a bank's fraud team.
 
-## Build and run (Windows, PowerShell)
+## Quick start (Windows, macOS, or Linux)
 
-Requirements: Python 3.12, Git, about 2 GB of disk; VirtualBox for the optional sandbox VM.
+You need Git and Python 3.11, 3.12, or 3.13. No API key, sandbox, or training is needed, because the trained model ships in `models/`.
 
-```powershell
+```
 git clone https://github.com/muhammet-tm/mirsad.git
 cd mirsad
-py -3.12 -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
-copy .env.example .env   # then fill in the keys you have; every integration is optional
+python run.py
+```
+
+The first run creates a virtual environment in `.venv`, installs the requirements (a few minutes), loads demo cases, starts the service on http://127.0.0.1:8600, and opens the dashboard; later runs start in seconds. If `python` is another version, `run.py` looks for Python 3.12, 3.13, or 3.11 on its own (`py -3.12` on Windows, `python3.12` elsewhere).
+
+The demo cases are five invented lookalikes of UAE brands (Salik, TAMM, UAE PASS, Emirates Post, ADCB) on the reserved `.example` domain, which can never belong to a real site, and three official sites that the official-domain cap keeps out of the queue. When the machine is online, the public phishing feeds (OpenPhish and PhishStats) are screened as well. Type any address into "Check a link" to score it.
+
+To score a test set, pass a text file with one URL per line, or a CSV file with a `url` column and an optional `label` column:
+
+```
+python run.py --score test_urls.csv --out scored.csv
+```
+
+`python run.py --score demo/demo_links.csv` tries it on the demo links. Each row of `scored.csv` holds the risk, the verdict at the frozen threshold of 0.6574, the four ensemble votes, the brand imitated, and the reasons. When labels are present, the command also prints accuracy, precision, recall, F1, false-positive rate, and ROC AUC. With `--expand-short-links`, short links (bit.ly and the like) are scored at their destination, which Mirsad learns from the shortener without contacting the destination. The same scoring is available to other systems as `POST /api/check/batch` ([docs/API.md](docs/API.md)).
+
+`python run.py --test` runs the test suite, and `python run.py --help` lists the other options (`--port`, `--no-browser`, `--no-demo`, `--no-feeds`).
+
+## Full build and live channels (Windows, PowerShell)
+
+The steps below rebuild the data and the model from scratch and switch on the channels that need keys. They need about 2 GB of disk, and VirtualBox for the optional sandbox VM. Run `python run.py --test` once first if you skipped the quick start, so that `.venv` exists. Keys go in `.env`, and every integration is optional:
+
+```powershell
+copy .env.example .env
 ```
 
 Data and models (about 15 minutes of downloads and 1 to 2 hours of training on a laptop CPU):
@@ -80,9 +100,9 @@ Run the service and open the dashboard at http://127.0.0.1:8600:
 .\.venv\Scripts\python.exe -m uvicorn mirsad.api.app:app --host 127.0.0.1 --port 8600
 ```
 
-A fresh install has no cases, so the dashboard opens empty. Two ways to see it working:
+Started this way, the service loads no demo cases (run `.\.venv\Scripts\python.exe scripts\load_demo.py` for them). Two other ways to see it working:
 
-- Demo data, no network: open http://127.0.0.1:8600/?mock=1. The screen marks the data as demo data.
+- Interface preview, no network and no database: open http://127.0.0.1:8600/?mock=1. The screen marks the data as demo data.
 - Real data without any API key: the feeds channel (OpenPhish and PhishStats) and the certificate channel need no key. The certificate channel downloads the certstream-server-go release once, checks its SHA-256, and runs it on 127.0.0.1 only while the run listens; it downloads every new certificate from the public logs, tens of megabits a second, so keep runs short on shared networks.
 
 ```powershell
