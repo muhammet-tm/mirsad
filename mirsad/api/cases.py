@@ -87,9 +87,32 @@ def build_case(store: Store, cid: str) -> dict | None:
         "listing": listing, "decisions": decisions,
         "exports": ["registrar_abuse_report", "aeda", "police_blocking_request"],
     }
+    case["linked"] = linked_cases(store, cid, r["domain"], ev_rows)
     case["timeline"] = [{"at": e["at"], "label": e["label"], "evidence": e["id"]} for e in evidence if e["at"]]
     case["graph"] = _graph(case)
     return case
+
+
+def linked_cases(store: Store, cid: str, domain: str, ev_rows: list[dict]) -> list[dict]:
+    """Other cases seen on one of this case's addresses, outside content delivery networks."""
+    mine = set()
+    for e in ev_rows:
+        if e["kind"] == "hosting":
+            v = json.loads(e.get("value_json") or "{}")
+            if not v.get("cdn"):
+                mine.update(v.get("ips", []))
+    if not mine:
+        return []
+    out: dict[str, dict] = {}
+    for o in store.rows("SELECT e.candidate_id AS id, e.value_json, c.domain, c.status, s.risk FROM evidence e "
+                        "JOIN candidates c ON c.id = e.candidate_id LEFT JOIN scores s ON s.candidate_id = c.id "
+                        "WHERE e.kind = 'hosting' AND e.candidate_id != ?", (cid,)):
+        v = json.loads(o.get("value_json") or "{}")
+        shared = sorted(mine & set(v.get("ips", [])))
+        if shared and not v.get("cdn") and o["domain"] != domain and o["id"] not in out:
+            out[o["id"]] = {"id": o["id"], "domain": o["domain"], "risk": o.get("risk"), "status": o["status"],
+                            "ip": shared[0]}
+    return sorted(out.values(), key=lambda x: -(x["risk"] or 0))
 
 
 def _graph(case: dict) -> dict:
@@ -129,6 +152,12 @@ def _graph(case: dict) -> dict:
                 add("listing", "listing", (case.get("listing") or {}).get("category", "Maps listing"), "listing", "domain", "points to")
         elif k == "reputation":
             add("reputation", "link", e["label"], "reputation", "domain", "lists")
+        elif k == "hosting":
+            add("host", "host", e["label"].replace("Resolves to ", ""), "domain", "host", "hosted at")
+    linked = case.get("linked") or []
+    if linked and "host" in have:
+        names = ", ".join(x["domain"] for x in linked[:2]) + (f" and {len(linked) - 2} more" if len(linked) > 2 else "")
+        add("network", "network", names, "host", "network", "also hosts")
     if case.get("imitates") and "brand" not in have:
         add("brand", "brand", case["imitates"], "domain", "brand", "imitates")
     return {"nodes": nodes, "edges": edges}

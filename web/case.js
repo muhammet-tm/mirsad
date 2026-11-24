@@ -8,10 +8,10 @@ const $ = id => document.getElementById(id);
 const C = {status: null, kpis: null, list: null, c: null, id: null, exportedAt: null, stampAnim: false};
 const WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
 const count = n => (M.S.lang === 'en' && n < 10 ? WORDS[n] : String(n));
-const KIND = {search_ad: 'Search ad', certificate: 'Certificate', domain: 'Domain', page: 'Captured page', brand: 'Imitated brand', form_target: 'Form target', listing: 'Maps listing', phone: 'Phone', link: 'Link'};
-const KIND_SHORT = {search_ad: 'ad', certificate: 'certificate', domain: 'domain', page: 'page', brand: 'brand', form_target: 'form target', listing: 'listing', phone: 'phone'};
-const EV_KIND = {search_ad: ['search_ad', 'search_result'], certificate: ['certificate'], domain: ['domain'], brand: ['logo_match', 'brand'], form_target: ['form_target'], listing: ['listing'], phone: ['phone']};
-const RISK_KINDS = ['brand', 'form_target', 'phone'];
+const KIND = {search_ad: 'Search ad', certificate: 'Certificate', domain: 'Domain', page: 'Captured page', brand: 'Imitated brand', form_target: 'Form target', listing: 'Maps listing', phone: 'Phone', link: 'Link', host: 'Hosting', network: 'Linked cases'};
+const KIND_SHORT = {search_ad: 'ad', certificate: 'certificate', domain: 'domain', page: 'page', brand: 'brand', form_target: 'form target', listing: 'listing', phone: 'phone', host: 'hosting', network: 'linked cases'};
+const EV_KIND = {search_ad: ['search_ad', 'search_result'], certificate: ['certificate'], domain: ['domain'], brand: ['logo_match', 'brand'], form_target: ['form_target'], listing: ['listing'], phone: ['phone'], host: ['hosting']};
+const RISK_KINDS = ['brand', 'form_target', 'phone', 'network'];
 const latinRuns = M.latinRuns;
 
 /* ---------------------------------------------------------------- boot */
@@ -258,6 +258,8 @@ const GIC = {
   form_target: '<path d="M1 5.5h7M5.5 3l2.5 2.5L5.5 8M10 1.5v8"/>',
   listing: '<path d="M5.5 10.5s3.5-3.2 3.5-5.7a3.5 3.5 0 0 0-7 0c0 2.5 3.5 5.7 3.5 5.7z"/><circle cx="5.5" cy="4.8" r="1.1"/>',
   phone: '<rect x="2.5" y=".5" width="6" height="10" rx="1.2"/><path d="M4.5 8.8h2"/>',
+  host: '<rect x="1" y="1" width="9" height="3.6" rx=".8"/><rect x="1" y="6.4" width="9" height="3.6" rx=".8"/><path d="M3 2.8h.1M3 8.2h.1"/>',
+  network: '<circle cx="2.2" cy="5.5" r="1.5"/><circle cx="8.8" cy="2.2" r="1.5"/><circle cx="8.8" cy="8.8" r="1.5"/><path d="M3.6 4.8 7.4 2.9M3.6 6.2l3.8 1.9"/>',
   domain: '<circle cx="5.5" cy="5.5" r="4.5"/><path d="M1 5.5h9M5.5 1c1.4 1.3 1.4 7.7 0 9M5.5 1c-1.4 1.3-1.4 7.7 0 9"/>'
 };
 const MCTX = document.createElement('canvas').getContext('2d');

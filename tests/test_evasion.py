@@ -74,6 +74,7 @@ def fake_world(tmp_path, monkeypatch):
     monkeypatch.setattr(passive, "rdap_created", lambda d: None)
     monkeypatch.setattr(passive, "first_certificate", lambda d: None)
     monkeypatch.setattr(passive, "urlhaus_lookup", lambda u: None)
+    monkeypatch.setattr(pipeline.hosting, "lookup", lambda h: None)
     monkeypatch.setattr(pipeline.sandbox, "phishpedia", lambda u, s: None)
     return Store(tmp_path / "t.sqlite3")
 
@@ -106,3 +107,35 @@ def test_cloaking_uses_the_mobile_capture(fake_world, monkeypatch):
     labels = [e["label"] for e in fake_world.rows("SELECT label FROM evidence WHERE candidate_id=?", (cid,))]
     assert any("possible cloaking" in lab for lab in labels)
     assert risk >= 0.85
+
+
+def test_cases_on_the_same_address_are_linked_but_not_through_a_cdn(fake_world, monkeypatch):
+    from mirsad import pipeline
+    from mirsad.api.cases import build_case
+    from mirsad.collectors.sources import Found
+    from mirsad.enrich import hosting
+
+    homes = {"salik-topup.top": ("203.0.113.7", 64500), "salik-recharge.top": ("203.0.113.7", 64500),
+             "tamm-fines.top": ("198.51.100.9", 13335), "tamm-pay.top": ("198.51.100.9", 13335)}
+
+    def lookup(host):
+        ip, asn = homes[host]
+        return {"host": host, "ips": [ip], "ip": ip, "asn": asn, "as_name": "TEST-NET - Example Hosting, NL",
+                "cc": "NL", "cdn": asn in hosting.CDN_ASNS, "resolved_at": "2026-11-24T08:00:00+00:00"}
+
+    monkeypatch.setattr(pipeline.hosting, "lookup", lookup)
+    ids = {h: pipeline.process(fake_world, Found(f"https://{h}/pay", "report"), use_sandbox=False, summaries=False)[0]
+           for h in homes}
+    a = build_case(fake_world, ids["salik-topup.top"])
+    assert [x["domain"] for x in a["linked"]] == ["salik-recharge.top"]
+    assert any(n["kind"] == "network" for n in a["graph"]["nodes"])
+    assert any(e["label"].startswith("Resolves to 203.0.113.7, AS64500 Example Hosting (NL)") for e in a["evidence"])
+    assert build_case(fake_world, ids["tamm-fines.top"])["linked"] == []  # a shared CDN address links nothing
+
+
+def test_hosting_label_and_owner_name():
+    from mirsad.enrich import hosting
+
+    assert hosting.short_owner("CLOUDFLARENET - Cloudflare, Inc., US") == "Cloudflare, Inc."
+    assert hosting.short_owner("OVH, FR") == "OVH"
+    assert hosting.lookup("salik-topup-uae.example") is None  # reserved names are never looked up

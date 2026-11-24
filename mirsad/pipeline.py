@@ -14,7 +14,7 @@ from datetime import datetime, timezone
 from .collectors import sources
 from .collectors.sources import Found
 from .config import PROCESSED_DIR
-from .enrich import passive, redirects
+from .enrich import hosting, passive, redirects
 from .features.brands import is_official
 from .features.url import host_of, hosting_platform, registered_domain, strip_query
 from .llm.summary import summarize
@@ -85,6 +85,12 @@ def process(store: Store, f: Found, use_sandbox: bool, summaries: bool = True) -
         first = created or (cert["not_before"] + "Z" if cert else None) or f.first_seen
         store.set_first_seen(cid, first)
         sig.domain_age_days = passive.age_days(first)
+        if not platform:
+            # The platform's shared addresses would link every site built on it, so only own hosting counts.
+            h = hosting.lookup(host_of(f.url))
+            if h:
+                store.add_evidence(cid, "hosting", hosting.label(h), "DNS over HTTPS, Team Cymru", h,
+                                   observed_at=h["resolved_at"])
         hit = passive.urlhaus_lookup(f.url)
         if hit:
             sig.reputation["urlhaus"] = hit

@@ -36,7 +36,7 @@ const AR = {
   'Skip to the watch queue': 'انتقل إلى قائمة المراقبة', 'Skip to the case file': 'انتقل إلى ملف القضية',
   'Live': 'مباشر', 'live': 'مباشر', 'Synced': 'متزامن', 'synced': 'تمت المزامنة', 'Idle': 'خامل', 'Error': 'خطأ', 'Off': 'متوقف',
   'last run {t}': 'آخر تشغيل {t}', 'synced {t}': 'تمت المزامنة {t}', 'threshold {v}': 'العتبة {v}',
-  'Certificate stream': 'تدفق الشهادات', 'Feeds': 'الموجزات', 'Reports': 'البلاغات', 'not run yet': 'لم يعمل بعد',
+  'Certificate stream': 'تدفق الشهادات', 'Feeds': 'الموجزات', 'Reports': 'البلاغات', 'Hosting': 'الاستضافة', 'Linked cases': 'قضايا مرتبطة', 'not run yet': 'لم يعمل بعد',
   'Demo data': 'بيانات تجريبية', 'Connection lost, showing the last data': 'انقطع الاتصال، تُعرض آخر البيانات',
   'Demo data. The live service did not answer; select to retry.': 'بيانات تجريبية. لم تستجب الخدمة المباشرة؛ اختر لإعادة المحاولة.',
   'Demo data, as requested by the address.': 'بيانات تجريبية بطلب من العنوان.',
